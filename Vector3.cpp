@@ -161,3 +161,31 @@ inline f3 cross(const f3& a, const f3& b)
         a.x * b.y - a.y * b.x
     );
 }
+
+inline f3 lerp(const f3& start, const f3& end, const float t)
+{
+    return f3(
+        start.x + (end.x - start.x) * t,
+        start.y + (end.y - start.y) * t,
+        start.z + (end.z - start.y) * t
+    );
+}
+
+f3 slerp(const f3& start, const f3& end, const float t)
+{
+    // (((sin(1 - t) theta) / (sin theta)) * start) + ((sin t theta)/(sin theta)) * end)
+    if (t < (100.0f * epsilon)) { return lerp(start, end, t); }
+    f3 from = normalized(start);
+    f3 to = normalized(end);
+    float theta = angle(from, to);
+    float sinTheta = sinf(theta);
+    float a = sinf((1.0f - t) * theta) / sinTheta;
+    float b = sinf(t * theta) / sinTheta;
+    return from * a + to * b;
+
+}
+
+f3 nlerp(const f3& start, const f3& end, const float t)
+{
+    return normalized(lerp(start, end, t));
+}

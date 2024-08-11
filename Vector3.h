@@ -75,7 +75,7 @@ inline f3 cross(const f3& a, const f3& b);
 /// <param name="b"></param>
 /// <param name="t"></param>
 /// <returns></returns>
-inline f3 lerp(const f3& a, const f3& b, const float t);
+inline f3 lerp(const f3& start, const f3& end, const float t);
 
 /// <summary>
 /// Spherical Linear Interpolation
@@ -84,7 +84,7 @@ inline f3 lerp(const f3& a, const f3& b, const float t);
 /// <param name="b"></param>
 /// <param name="t"></param>
 /// <returns></returns>
-f3 slerp(const f3& a, const f3& b, const float t);
+f3 slerp(const f3& start, const f3& end, const float t);
 
 /// <summary>
 /// Nonlinear Interpolation, a cheap substitute for slerp
@@ -93,7 +93,7 @@ f3 slerp(const f3& a, const f3& b, const float t);
 /// <param name="b"></param>
 /// <param name="t"></param>
 /// <returns></returns>
-f3 nlerp(const f3& a, const f3& b, const float t);
+f3 nlerp(const f3& start, const f3& end, const float t);
 
 #endif
 
