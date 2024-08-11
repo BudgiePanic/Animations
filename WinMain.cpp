@@ -157,8 +157,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
             if (msg.message == WM_QUIT) {
                 break; // I'm outta here
             }
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
+            TranslateMessage(&msg); // Convert keyboard input into localized data
+            DispatchMessage(&msg);  // offload to event handler method
         }
         // update the 'application'
         DWORD tick = GetTickCount();
@@ -233,5 +233,6 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam) {
     case WM_ERASEBKGND:
         return 0;
     }
-    return DefWindowProc(hwnd, iMsg, wParam, lParam);
+    // remaining cases are sent to default window event processor method
+    return DefWindowProc(hwnd, iMsg, wParam, lParam); 
 }
