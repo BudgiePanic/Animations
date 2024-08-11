@@ -33,28 +33,28 @@ bool operator==(const f3& a, const f3& b);
 
 bool operator!=(const f3& a, const f3& b);
 
-float dot(const f3& a, const f3& b);
+inline float dot(const f3& a, const f3& b);
 
 // AKA magnitude squared
 inline float lengthSquared(const f3& a);
 
 // AKA magnitude
-inline float length(const f3& a);
+float length(const f3& a);
 // distance(f3 a, f3 b) length(a-b)
 
-void normalize(const f3& a);
+void normalize(f3& a);
 
 f3 normalized(const f3& a);
 
 float angle(const f3& a, const f3& b); 
 
 /// <summary>
-/// Determines the projection distance of 'a' onto 'b'.
+/// Determines the projection distance of 'a' onto 'b'. /_|
 /// </summary>
 /// <param name="a"></param>
 /// <param name="b"></param>
 /// <returns>A vector representing the projection of 'a' onto 'b'</returns>
-f3 project(const f3& a, const f3& b);
+inline f3 project(const f3& a, const f3& b);
 
 /// <summary>
 /// Determines the rejection vector resulting from projecting 'a' onto b'
