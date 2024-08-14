@@ -22,3 +22,4 @@ struct TVec4 {
 
 typedef TVec4<float> f4;
 typedef TVec4<int> i4;
+typedef TVec4<unsigned int> ui4;

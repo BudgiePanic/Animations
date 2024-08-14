@@ -12,8 +12,9 @@ struct f3 {
 		};
 		float v[3];
 	};
-	inline f3() : x(0.0f), y(0.0f), z(0.0f) {}
-	inline f3(const float _x, const float _y, const float _z) : x(_x), y(_y), z(_z) {}
+	
+	inline f3() : x(0.0f), y(0.0f), z(0.0f) { }
+	inline f3(const float _x, const float _y, const float _z) : x(_x), y(_y), z(_z) { }
 	inline f3(const float* floatArr) : x(floatArr[0]), y(floatArr[1]), z(floatArr[2]) {}
 	inline f3(const float a) : v{a,a,a} {}
 };

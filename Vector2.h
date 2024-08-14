@@ -20,3 +20,4 @@ struct TVec2 {
 
 typedef TVec2<float> f2;
 typedef TVec2<int> i2;
+typedef TVec2<unsigned int> ui2;
