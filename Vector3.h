@@ -67,7 +67,7 @@ f3 reject(const f3& a, const f3& b);
 
 f3 reflect(const f3& a, const f3& b);
 
-inline f3 cross(const f3& a, const f3& b);
+f3 cross(const f3& a, const f3& b);
 
 /// <summary>
 /// Linear Interpolation

@@ -121,3 +121,11 @@ float minor(const mat4f& m, int row, int col);
 Mat3f submatrix(const mat4f& m, int row, int col);
 
 void invert(mat4f& m);
+
+mat4f perspective(float fov, float aspect, float near, float far);
+
+mat4f orthographic(float left, float right, float bottom, float top, float near, float far);
+
+mat4f lookAt(const f3& position, const f3& target, const f3& up);
+
+mat4f frustum(float left, float right, float bottom, float top, float near, float far);

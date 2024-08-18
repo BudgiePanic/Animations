@@ -204,3 +204,68 @@ void invert(mat4f& m)
     m = invert;
     return;
 }
+
+mat4f perspective(float fov, float aspect, float near, float far)
+{
+    float ymax = near * tanf(fov * 3.14159265359f / 360.0f);
+    float xmax = ymax * aspect;
+    return frustum(-xmax, xmax, -ymax, ymax, near, far);
+}
+
+mat4f orthographic(float left, float right, float bottom, float top, float near, float far)
+{
+    if (FloatCompare(left, right) == AequalsB ||
+        FloatCompare(top, bottom) == AequalsB ||
+        FloatCompare(near, far) == AequalsB)
+    {
+        std::cout << "invalid orthographic parameters, returning identity instead\n";
+        return mat4f();
+    }
+    return mat4f(
+        ((2.0f)/(right-left)), 0, 0, 0,
+        0,((2.0f)/(top-bottom)), 0, 0,
+        0,0,((-2.0f)/(far-near)), 0,
+        (-((right+1.0f)/(right-1.0f))), (-((top+bottom)/(top-bottom))), (-((far+near)/(far-near))), 1.0f
+    );
+}
+
+mat4f lookAt(const f3& position, const f3& target, const f3& up)
+{
+    f3 forward = normalized(target - position) * -1.0f;
+    f3 right = cross(up, forward); // right handed coordinate system
+    if (right == f3(0.0f,0.0f,0.0f)) { return mat4f(); }
+    normalize(right);
+    f3 u = normalized(cross(forward, right)); // "true up"
+    f3 translate = f3(
+        -dot(right, position),
+        -dot(u, position),
+        -dot(forward, position)
+    );
+    return mat4f(
+        right.x, u.x, forward.x, 0.0f,
+        right.y, u.y, forward.y, 0.0f,
+        right.z, u.z, forward.z, 0.0f,
+        translate.x, translate.y, translate.z, 1.0f
+    );
+}
+
+/// <summary>
+/// Creates a view frustum matrix
+/// </summary>
+/// <returns></returns>
+mat4f frustum(float left, float right, float bottom, float top, float near, float far)
+{
+    if (FloatCompare(left, right) == AequalsB ||
+        FloatCompare(top, bottom) == AequalsB || 
+        FloatCompare(near, far) == AequalsB)
+    {
+        std::cout << "invalid frustum parameters, returning identity instead\n";
+        return mat4f();
+    }
+    return mat4f(
+        ((2.0f * near)/(right-1.0f)), 0, 0, 0,
+        0,((2.0f*near)/(top-bottom)), 0, 0,
+        ((right+1.0f)/(right-1.0f)), ((top+bottom)/(top-bottom)), ((-(far+near))/(far-near)), -1,
+        0,0,((-2.0f*far*near)/(far-near)), 0
+    );
+}

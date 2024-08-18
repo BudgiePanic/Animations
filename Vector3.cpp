@@ -153,7 +153,7 @@ f3 reflect(const f3& a, const f3& b)
 /// <param name="a"></param>
 /// <param name="b"></param>
 /// <returns></returns>
-inline f3 cross(const f3& a, const f3& b)
+f3 cross(const f3& a, const f3& b)
 {
     return f3(
         a.y * b.z - a.z * b.y,
