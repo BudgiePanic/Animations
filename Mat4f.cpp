@@ -12,7 +12,7 @@
 bool operator==(const mat4f& a, const mat4f& b)
 {
     for (int i = 0; i < 16; i++) {
-        if (FloatCompare(a.v[i], b.v[i] != AequalsB)) {
+        if (FloatCompare(a.v[i], b.v[i]) != AequalsB) {
             return false;
         }
     }
