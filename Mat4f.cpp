@@ -169,8 +169,9 @@ Mat3f submatrix(const mat4f& m, int row, int col)
         if (r == row) { continue; }
         for (int c = 0; c < 4; c++) {
             if (c == col) { continue; }
-            int index = r * 4 + c;
-            temp[_row][_col++] = m.v[index];
+            int index = (c * 4) + r;
+            const float value = m.v[index];
+            temp[_row][_col++] = value;
             if (_col == 3) {
                 _row++;
                 _col = 0;
