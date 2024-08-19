@@ -178,9 +178,9 @@ Mat3f submatrix(const mat4f& m, int row, int col)
         }
     }
     return Mat3f(
-        temp[0][0], temp[0][1], temp[0][2],
-        temp[1][0], temp[1][1], temp[1][2],
-        temp[2][0], temp[2][1], temp[2][2]
+        temp[0][0], temp[1][0], temp[2][0],
+        temp[0][1], temp[1][1], temp[2][1],
+        temp[0][2], temp[1][2], temp[2][2]
     );
 }
 
