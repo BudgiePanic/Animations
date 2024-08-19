@@ -132,8 +132,8 @@ float determinant(const mat4f& m)
 mat4f inverse(const mat4f& m)
 {
     float det = determinant(m);
-    if (!(FloatCompare(det, 0.0f) == AequalsB)) {
-        // if the determinant is not zero, then the inverse does not exist
+    if (FloatCompare(det, 0.0f) == AequalsB) {
+        // if the determinant is zero, then the inverse does not exist
         std::cout << "cannot invert a matrix, returning the identity matrix instead";
         return mat4f();
     }
