@@ -25,10 +25,10 @@ struct mat4f {
 	union {
 		float v[16]; // v ==> vector
 		struct {
-			f4 c0; // Access matrix column vectors
-			f4 c1; //
-			f4 c2; //
-			f4 c3; //
+			f4 c0; // right | Access matrix column vectors
+			f4 c1; // up
+			f4 c2; // forward
+			f4 c3; // position
 		};
 		struct {
 			float xx; float xy; float xz; float xw; // "basis vector component notation"
