@@ -12,7 +12,7 @@
 bool operator==(const mat4f& a, const mat4f& b)
 {
     for (int i = 0; i < 16; i++) {
-        if (FloatCompare(a.v[i], b.v[i] != AequalsB)) {
+        if (FloatCompare(a.v[i], b.v[i]) != AequalsB) {
             return false;
         }
     }
@@ -132,8 +132,8 @@ float determinant(const mat4f& m)
 mat4f inverse(const mat4f& m)
 {
     float det = determinant(m);
-    if (!(FloatCompare(det, 0.0f) == AequalsB)) {
-        // if the determinant is not zero, then the inverse does not exist
+    if (FloatCompare(det, 0.0f) == AequalsB) {
+        // if the determinant is zero, then the inverse does not exist
         std::cout << "cannot invert a matrix, returning the identity matrix instead";
         return mat4f();
     }
@@ -169,8 +169,9 @@ Mat3f submatrix(const mat4f& m, int row, int col)
         if (r == row) { continue; }
         for (int c = 0; c < 4; c++) {
             if (c == col) { continue; }
-            int index = r * 4 + c;
-            temp[_row][_col++] = m.v[index];
+            int index = (c * 4) + r;
+            const float value = m.v[index];
+            temp[_row][_col++] = value;
             if (_col == 3) {
                 _row++;
                 _col = 0;
@@ -178,9 +179,9 @@ Mat3f submatrix(const mat4f& m, int row, int col)
         }
     }
     return Mat3f(
-        temp[0][0], temp[0][1], temp[0][2],
-        temp[1][0], temp[1][1], temp[1][2],
-        temp[2][0], temp[2][1], temp[2][2]
+        temp[0][0], temp[1][0], temp[2][0],
+        temp[0][1], temp[1][1], temp[2][1],
+        temp[0][2], temp[1][2], temp[2][2]
     );
 }
 

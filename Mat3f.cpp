@@ -21,7 +21,7 @@ Mat2::Mat2f submatrix(const Mat3f& m, int row, int col)
             if (c == col) { continue; }
             int index = r * 3 + c;
             temp[rIndex][cIndex++] = m.v[index];
-            if (cIndex == 3) {
+            if (cIndex == 2) {
                 cIndex = 0;
                 rIndex++;
             }

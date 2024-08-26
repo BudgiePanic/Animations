@@ -25,10 +25,10 @@ struct mat4f {
 	union {
 		float v[16]; // v ==> vector
 		struct {
-			f4 c0; // Access matrix column vectors
-			f4 c1; //
-			f4 c2; //
-			f4 c3; //
+			f4 c0; // right | Access matrix column vectors
+			f4 c1; // up
+			f4 c2; // forward
+			f4 c3; // position
 		};
 		struct {
 			float xx; float xy; float xz; float xw; // "basis vector component notation"
@@ -57,10 +57,10 @@ struct mat4f {
 						r0c3(0.0f), r1c3(0.0f), r2c3(0.0f), r3c3(1.0f) {}
 	// copy constructor from float array
 	#pragma warning(disable:26495)
-	inline mat4f(const float* arr) :	xx(arr[0]),  xy(arr[2]),  xz(arr[3]),  xw(arr[4]),
-										yx(arr[5]),  yy(arr[6]),  yz(arr[7]),  yw(arr[8]),
-										zx(arr[9]),  zy(arr[10]), zz(arr[11]), zw(arr[12]),
-										tx(arr[13]), ty(arr[14]), tz(arr[15]), tw(arr[16]) {}
+	inline mat4f(const float* arr) :	xx(arr[0]),  xy(arr[1]),  xz(arr[2]),  xw(arr[3]),
+										yx(arr[4]),  yy(arr[5]),  yz(arr[6]),  yw(arr[7]),
+										zx(arr[8]),  zy(arr[9]), zz(arr[10]), zw(arr[11]),
+										tx(arr[12]), ty(arr[13]), tz(arr[14]), tw(arr[15]) {}
 	// hand specified matrix constructor
 	#pragma warning(disable:26495)
 	inline mat4f(
