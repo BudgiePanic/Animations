@@ -55,6 +55,7 @@ namespace transforms {
 	/// <summary>
 	/// Convert a transformation matrix to SRT.
 	/// Useful when parsing animation data from fileformats that store poses as matrices.
+	/// The conversion is lossy, the scale information may be inaccurate due to skew also being encoded in the matrix.
 	/// </summary>
 	/// <param name="transform"></param>
 	/// <returns></returns>
