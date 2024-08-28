@@ -135,6 +135,7 @@
     <ClInclude Include="Mat3f.h" />
     <ClInclude Include="Mat4f.h" />
     <ClInclude Include="rotation\quaternion.h" />
+    <ClInclude Include="transforms\srt.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="Vector4.h" />
@@ -145,6 +146,7 @@
     <ClCompile Include="Mat3f.cpp" />
     <ClCompile Include="Mat4f.cpp" />
     <ClCompile Include="rotation\quaternion.cpp" />
+    <ClCompile Include="transforms\srt.cpp" />
     <ClCompile Include="Vector3.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
