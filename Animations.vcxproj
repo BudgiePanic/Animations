@@ -134,6 +134,7 @@
     <ClInclude Include="Mat2f.h" />
     <ClInclude Include="Mat3f.h" />
     <ClInclude Include="Mat4f.h" />
+    <ClInclude Include="render\Attribute.h" />
     <ClInclude Include="render\Shader.h" />
     <ClInclude Include="rotation\quaternion.h" />
     <ClInclude Include="transforms\srt.h" />
