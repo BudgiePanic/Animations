@@ -16,7 +16,7 @@ private:
 	/// </summary>
 	unsigned int mHandle;
 	/// <summary>
-	/// shader attributes are inputs to the shader program, such as vertex position data.
+	/// shader attributes are 'per vertex' inputs to the shader program, such as vertex position, vertex normal, and vertex color.
 	/// shaders can only accept a finite number of input attributes.
 	/// </summary>
 	std::map<std::string, unsigned int> mAttributes;
