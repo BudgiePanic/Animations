@@ -138,6 +138,7 @@
     <ClInclude Include="render\Draw.h" />
     <ClInclude Include="render\IndexBuffer.h" />
     <ClInclude Include="render\Shader.h" />
+    <ClInclude Include="render\Texture.h" />
     <ClInclude Include="render\Uniform.h" />
     <ClInclude Include="rotation\quaternion.h" />
     <ClInclude Include="stb_image.h" />
@@ -161,6 +162,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="LICENSE" />
+    <None Include="resource\shaders\frag_lit.glsl" />
+    <None Include="resource\shaders\static_vert.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
