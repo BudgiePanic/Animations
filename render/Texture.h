@@ -32,7 +32,7 @@ public:
 	/// TODO
 	/// </summary>
 	/// <param name="textureIndex"></param>
-	void UnSet(unsigned int textureIndex);
+	void Unset(unsigned int textureIndex);
 	/// <summary>
 	/// TODO
 	/// </summary>
