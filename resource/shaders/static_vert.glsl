@@ -1,5 +1,5 @@
 #version 330 core
-// VERTEX SHADER FOR VIEWING STATIC GEOMETRY OR MESHES THAT ARE SKINNED ON THE GPU
+// VERTEX SHADER FOR VIEWING STATIC GEOMETRY OR MESHES THAT ARE SKINNED ON THE CPU
 // uniforms
 uniform mat4 model_transform; // model space to world space
 uniform mat4 view_transform; // world space to view space
