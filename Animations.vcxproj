@@ -135,8 +135,12 @@
     <ClInclude Include="Mat3f.h" />
     <ClInclude Include="Mat4f.h" />
     <ClInclude Include="render\Attribute.h" />
+    <ClInclude Include="render\Draw.h" />
+    <ClInclude Include="render\IndexBuffer.h" />
     <ClInclude Include="render\Shader.h" />
+    <ClInclude Include="render\Uniform.h" />
     <ClInclude Include="rotation\quaternion.h" />
+    <ClInclude Include="stb_image.h" />
     <ClInclude Include="transforms\srt.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />
@@ -147,8 +151,10 @@
     <ClCompile Include="Mat2f.cpp" />
     <ClCompile Include="Mat3f.cpp" />
     <ClCompile Include="Mat4f.cpp" />
+    <ClCompile Include="render\Draw.cpp" />
     <ClCompile Include="render\Shader.cpp" />
     <ClCompile Include="rotation\quaternion.cpp" />
+    <ClCompile Include="stb_image.cpp" />
     <ClCompile Include="transforms\srt.cpp" />
     <ClCompile Include="Vector3.cpp" />
     <ClCompile Include="WinMain.cpp" />
