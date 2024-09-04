@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 namespace render {
 
 /// <summary>
@@ -67,3 +69,5 @@ public:
 	/// <returns></returns>
 	unsigned int GetHandle();
 };
+
+}
