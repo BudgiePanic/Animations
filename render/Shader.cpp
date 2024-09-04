@@ -108,6 +108,82 @@ bool Shader::LinkShaders(unsigned int vertex, unsigned int fragment)
     return linkStatus == GL_TRUE;
 }
 
+void Shader::PopulateAttributes()
+{
+    glad_glUseProgram(this->mHandle); // book author doesn't explain why we have to set active shader program here.
+    int numbAttributes = -1;
+    glad_glGetProgramiv(this->mHandle, GL_ACTIVE_ATTRIBUTES, &numbAttributes);
+    constexpr int maxNameSize = 128; // I don't know what would happen if the attribute name was > 128 characters.
+    for (int i = 0; i < numbAttributes; i++) {
+        char attribName[maxNameSize]{};
+        GLenum attibuteDataType;
+        int attribNameLength;
+        int attribDataSize;
+        // https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGetActiveAttrib.xhtml
+        glad_glGetActiveAttrib(
+            this->mHandle, 
+            (GLuint) i, 
+            maxNameSize, // Tell OpenGL how big the name buffer is
+            &attribNameLength,
+            &attribDataSize,
+            &attibuteDataType,
+            attribName
+        );
+        int attribIndex = glad_glGetAttribLocation(this->mHandle, attribName);
+        if (attribIndex >= 0) {
+            this->mAttributes[std::string(attribName)] = attribIndex;
+        }
+    }
+    glad_glUseProgram(0);
+}
+
+void Shader::PopulateUniforms()
+{
+    glad_glUseProgram(this->mHandle);
+    int numbUniforms = -1;
+    glad_glGetProgramiv(this->mHandle, GL_ACTIVE_UNIFORMS, &numbUniforms);
+    constexpr int maxNameSize = 128; 
+    for (int i = 0; i < numbUniforms; i++) {
+        char uniformName[maxNameSize]{};
+        GLenum uniformDataType;
+        int uniformNameLength;
+        int uniformDataSize;
+        // https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGetActiveUniform.xhtml
+        glad_glGetActiveAttrib(
+            this->mHandle,
+            (GLuint)i,
+            maxNameSize,
+            &uniformNameLength,
+            &uniformDataSize,
+            &uniformDataType,
+            uniformName
+        );
+        int uniformLocation = glad_glGetUniformLocation(this->mHandle, uniformName);
+        if (uniformLocation >= 0) {
+            // check if the uniform is an array
+            std::string name(uniformName);
+            std::size_t position = name.find('[');
+            if (position != std::string::npos) {
+                // if it is an array, we need to get the uniform locations for each array index
+                // i.e. v[0], v[1], v[2], etc, etc.
+                name.erase(name.begin() + position, name.end()); // chop off the array index part of the name[]
+                for (unsigned int index = 0;;index++) {
+                    char uniformArrName[256]{}; // not sure why the author chose 256
+                    sprintf(uniformArrName, "%s[%d]", name.c_str(), index);
+                    int uniformArrLocation = glad_glGetUniformLocation(this->mHandle, uniformArrName);
+                    if (uniformArrLocation < 0) {
+                        // invalid array index reached
+                        break;
+                    }
+                    this->mUniforms[std::string(uniformArrName)] = uniformArrLocation;
+                }
+            }
+            this->mUniforms[name] = uniformLocation;
+        }
+    }
+    glad_glUseProgram(0);
+}
+
 Shader::Shader()
 {
     this->mHandle = glad_glCreateProgram();
@@ -132,29 +208,62 @@ Shader::~Shader()
 
 void Shader::Load(const std::string& vertex, const std::string& fragment)
 {
+    // determine if vertex is inline source code or a file path
+    std::ifstream file(vertex.c_str());
+    bool isVertexFile = file.good();
+    file.close();
+    // determine if fragment is inline source code or a file path
+    file = std::ifstream(fragment.c_str());
+    bool isFragmentFile = file.good();
+    file.close();
+    std::string vertexSource = isVertexFile ? ReadFile(vertex) : vertex;
+    std::string fragmentSource = isFragmentFile ? ReadFile(fragment) : fragment;
+    // compile and link
+    unsigned int vertexObjectHandle = this->CompileVertex(vertexSource);
+    unsigned int fragmentObjectHandle = this->CompileFragment(fragmentSource);
+    bool compiled = this->LinkShaders(vertexObjectHandle, fragmentObjectHandle);
+    if (compiled) {
+        this->PopulateAttributes();
+        this->PopulateUniforms();
+    }
 }
 
 void Shader::Bind()
 {
+    glad_glUseProgram(this->mHandle);
 }
 
 void Shader::Unbind()
 {
+    glad_glUseProgram(0);
 }
 
-unsigned int Shader::GetAttribute(const std::string& name)
+unsigned int Shader::GetAttribute(const std::string& name, bool& exists)
 {
-    return 0;
+    auto iterator = this->mAttributes.find(name);
+    if (iterator == this->mAttributes.end()) {
+        // no attribute with the provided name exists
+        exists = false;
+        return 0;
+    }
+    exists = true;
+    return iterator->second; // iterator contains key, value pairs
 }
 
-unsigned int Shader::GetUniform(const std::string& name)
+unsigned int Shader::GetUniform(const std::string& name, bool& exists)
 {
-    return 0;
+    auto iterator = this->mUniforms.find(name);
+    if (iterator == this->mUniforms.end()) {
+        exists = false;
+        return 0;
+    }
+    exists = true;
+    return iterator->second; // iterator contains key, value pairs
 }
 
 unsigned int Shader::GetHandle()
 {
-    return 0;
+    return this->mHandle;
 }
 
 }

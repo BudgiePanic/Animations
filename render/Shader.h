@@ -64,6 +64,15 @@ private:
 	/// <param name="fragment">the handle of the fragment object</param>
 	/// <returns>Whether the linking process succeeded</returns>
 	bool LinkShaders(unsigned int vertex, unsigned int fragment);
+	/// <summary>
+	/// Ask OpenGL to get attribute indices for the input attributes for this shader program.
+	/// The attribute index is used to specify which attribute data should be sent to.
+	/// </summary>
+	void PopulateAttributes();
+	/// <summary>
+	/// Get the indices of the uniforms used in this shader program.
+	/// </summary>
+	void PopulateUniforms();
 
 public:
 	/// <summary>
@@ -100,14 +109,16 @@ public:
 	/// Get a shader attribute, if it exists, from the shader program.
 	/// </summary>
 	/// <param name="name"></param>
+	/// <param name="exists">Where to write the query result</param>
 	/// <returns></returns>
-	unsigned int GetAttribute(const std::string& name);
+	unsigned int GetAttribute(const std::string& name, bool& exists);
 	/// <summary>
 	/// Get a shader uniform from the shader program, if it exists.
 	/// </summary>
 	/// <param name="name"></param>
+	/// <param name="exists">Where to write the query result</param>
 	/// <returns></returns>
-	unsigned int GetUniform(const std::string& name);
+	unsigned int GetUniform(const std::string& name, bool& exists);
 	/// <summary>
 	/// Get the OpenGL handle for this shader's object.
 	/// </summary>
