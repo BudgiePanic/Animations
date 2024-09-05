@@ -152,6 +152,7 @@
     <ClCompile Include="Mat2f.cpp" />
     <ClCompile Include="Mat3f.cpp" />
     <ClCompile Include="Mat4f.cpp" />
+    <ClCompile Include="render\Attribute.cpp" />
     <ClCompile Include="render\Draw.cpp" />
     <ClCompile Include="render\Shader.cpp" />
     <ClCompile Include="rotation\quaternion.cpp" />
