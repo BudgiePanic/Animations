@@ -169,7 +169,7 @@ void Shader::PopulateUniforms()
                 name.erase(name.begin() + position, name.end()); // chop off the array index part of the name[]
                 for (unsigned int index = 0;;index++) {
                     char uniformArrName[256]{}; // not sure why the author chose 256
-                    sprintf(uniformArrName, "%s[%d]", name.c_str(), index);
+                    sprintf_s(uniformArrName, "%s[%d]", name.c_str(), index);
                     int uniformArrLocation = glad_glGetUniformLocation(this->mHandle, uniformArrName);
                     if (uniformArrLocation < 0) {
                         // invalid array index reached
