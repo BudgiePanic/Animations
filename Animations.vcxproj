@@ -155,6 +155,7 @@
     <ClCompile Include="render\Attribute.cpp" />
     <ClCompile Include="render\Draw.cpp" />
     <ClCompile Include="render\Shader.cpp" />
+    <ClCompile Include="render\Uniform.cpp" />
     <ClCompile Include="rotation\quaternion.cpp" />
     <ClCompile Include="stb_image.cpp" />
     <ClCompile Include="transforms\srt.cpp" />

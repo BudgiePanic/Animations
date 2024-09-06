@@ -110,6 +110,9 @@
     <ClCompile Include="render\Attribute.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="render\Uniform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="LICENSE" />
