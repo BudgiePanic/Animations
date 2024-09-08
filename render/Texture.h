@@ -7,7 +7,7 @@ protected:
 	unsigned int mWidth;
 	unsigned int mHeight;
 	unsigned int mChannels;
-	unsigned int mFileHandle;
+	unsigned int mTextureHandle;
 private:
 	// Prevent aliasing of texture resources by hiding copy constructor and assignment operator
 	Texture(const Texture& other);
