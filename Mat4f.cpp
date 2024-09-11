@@ -264,9 +264,9 @@ mat4f frustum(float left, float right, float bottom, float top, float near, floa
         return mat4f();
     }
     return mat4f(
-        ((2.0f * near)/(right-1.0f)), 0, 0, 0,
+        ((2.0f * near)/(right-left)), 0, 0, 0,
         0,((2.0f*near)/(top-bottom)), 0, 0,
-        ((right+1.0f)/(right-1.0f)), ((top+bottom)/(top-bottom)), ((-(far+near))/(far-near)), -1,
+        ((right+left)/(right-left)), ((top+bottom)/(top-bottom)), ((-(far+near))/(far-near)), -1,
         0,0,((-2.0f*far*near)/(far-near)), 0
     );
 }
