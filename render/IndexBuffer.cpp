@@ -6,6 +6,7 @@ namespace render{
 IndexBuffer::IndexBuffer() {
 	// https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGenBuffers.xhtml 
 	glad_glGenBuffers(1, &this->mHandle); // write the handle of the buffer into 'this' handle
+	this->mCount = 0;
 }
 
 IndexBuffer::~IndexBuffer() {
