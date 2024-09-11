@@ -72,6 +72,9 @@
     <ClInclude Include="render\Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="demos\DrawQuad.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -119,10 +122,18 @@
     <ClCompile Include="render\Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="demos\DrawQuad.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="LICENSE" />
     <None Include="resource\shaders\static_vert.glsl" />
     <None Include="resource\shaders\frag_lit.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resource\assets\uv.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
