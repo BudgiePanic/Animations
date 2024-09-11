@@ -67,6 +67,12 @@ namespace render {
 		glad_glUniform1i(uniform, textureIndex);
 	}
 
+	void Texture::Unset(unsigned int textureIndex) {
+		glad_glActiveTexture(GL_TEXTURE0 + textureIndex);
+		glad_glBindTexture(GL_TEXTURE_2D, 0);
+		glad_glActiveTexture(GL_TEXTURE0);
+	}
+
 	unsigned int Texture::GetHandle() {
 		return this->mTextureHandle;
 	}
