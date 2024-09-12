@@ -11,7 +11,7 @@ namespace demos {
 
 	constexpr float oneDegAsRad = (2.0f * M_PI) / 360.0f;
 	const f3 up = f3(0, 1, 0);
-	const f3 cameraPosition = f3(0,0,5);
+	const f3 cameraPosition = f3(0,0,-5);
 	const f3 cameraLookingAt = f3();
 
 	void DrawQuad::Initialize() {
@@ -56,7 +56,7 @@ namespace demos {
 		this->indexBuffer->Set(indices);
 	}
 	void DrawQuad::Update(float deltaTime) {
-		this->rotationRadian += deltaTime * oneDegAsRad;
+		this->rotationRadian += deltaTime * oneDegAsRad * 10.0f;
 		while (this->rotationRadian > (2.0f * M_PI)) {
 			this->rotationRadian -= (2.0f * M_PI);
 		}
