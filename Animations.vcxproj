@@ -132,6 +132,7 @@
     <ClInclude Include="demos\DrawQuad.h" />
     <ClInclude Include="FloatHelp.h" />
     <ClInclude Include="glad.h" />
+    <ClInclude Include="io\gltfLoader.h" />
     <ClInclude Include="khrplatform.h" />
     <ClInclude Include="Mat2f.h" />
     <ClInclude Include="Mat3f.h" />
@@ -153,6 +154,7 @@
     <ClCompile Include="cgltf.cpp" />
     <ClCompile Include="demos\DrawQuad.cpp" />
     <ClCompile Include="glad.c" />
+    <ClCompile Include="io\gltfLoader.cpp" />
     <ClCompile Include="Mat2f.cpp" />
     <ClCompile Include="Mat3f.cpp" />
     <ClCompile Include="Mat4f.cpp" />
