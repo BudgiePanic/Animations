@@ -75,6 +75,9 @@
     <ClInclude Include="demos\DrawQuad.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="cgltf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -123,6 +126,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="demos\DrawQuad.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cgltf.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

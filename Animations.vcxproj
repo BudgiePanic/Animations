@@ -128,6 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="cgltf.h" />
     <ClInclude Include="demos\DrawQuad.h" />
     <ClInclude Include="FloatHelp.h" />
     <ClInclude Include="glad.h" />
@@ -149,6 +150,7 @@
     <ClInclude Include="Vector4.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="cgltf.cpp" />
     <ClCompile Include="demos\DrawQuad.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="Mat2f.cpp" />
