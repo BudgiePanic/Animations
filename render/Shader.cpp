@@ -149,7 +149,7 @@ void Shader::PopulateUniforms()
         int uniformNameLength;
         int uniformDataSize;
         // https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGetActiveUniform.xhtml
-        glad_glGetActiveAttrib(
+        glad_glGetActiveUniform(
             this->mHandle,
             (GLuint)i,
             maxNameSize,

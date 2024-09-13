@@ -5,7 +5,9 @@
 #include "glad.h"
 #include <windows.h>
 #include <iostream>
+#include <direct.h>
 #include "Application.h"
+#include "demos/DrawQuad.h"
 
 // Forward declare functions
 // window entry function
@@ -45,7 +47,7 @@ Application* gApplication = 0; // global_variable_pointer_application
 GLuint gVertexArrayObject = 0;
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine, int iCmdShow) {
-    gApplication = new Application();
+    gApplication = new demos::DrawQuad();
 	// the window
     WNDCLASSEX wndclass{};
     wndclass.cbSize = sizeof(WNDCLASSEX);
@@ -138,6 +140,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
     } else {
         std::cout << "WGL_EXT_swap_control not supported\n";
     }
+
+    // tell the user the working directory where the program will search for resources
+    char buffer[512]{};
+    char* foundWD = _getcwd(buffer, 512);
+    if (foundWD != NULL) {
+        std::cout << "working dir is " << buffer << "\n";
+    }
+
     // create and bind vertex array object
     glGenVertexArrays(1, &gVertexArrayObject);
     glBindVertexArray(gVertexArrayObject);

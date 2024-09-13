@@ -24,6 +24,7 @@ namespace render {
 	}
 
 	void Texture::Load(const char* filePath) {
+		glad_glBindTexture(GL_TEXTURE_2D, this->mTextureHandle);
 		int width, height, channels;
 		unsigned char* data = stbi_load(filePath, &width, &height, &channels, 4); // 4 >> RGBA
 		if (data == NULL) {
@@ -43,7 +44,6 @@ namespace render {
 			GL_UNSIGNED_BYTE,
 			data
 		);
-		stbi_image_free(data);
 		// https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGenerateMipmap.xhtml
 		glad_glGenerateMipmap(GL_TEXTURE_2D);
 		// https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexParameter.xhtml
@@ -52,6 +52,7 @@ namespace render {
 		glad_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR);
 		glad_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glad_glBindTexture(GL_TEXTURE_2D, 0);
+		stbi_image_free(data);
 		this->mChannels = channels;
 		this->mHeight = height;
 		this->mWidth = width;
@@ -65,6 +66,12 @@ namespace render {
 		// load the texture data into the uniform as a 'sampler type' 
 		// https://registry.khronos.org/OpenGL-Refpages/gl4/html/glUniform.xhtml#notes
 		glad_glUniform1i(uniform, textureIndex);
+	}
+
+	void Texture::Unset(unsigned int textureIndex) {
+		glad_glActiveTexture(GL_TEXTURE0 + textureIndex);
+		glad_glBindTexture(GL_TEXTURE_2D, 0);
+		glad_glActiveTexture(GL_TEXTURE0);
 	}
 
 	unsigned int Texture::GetHandle() {

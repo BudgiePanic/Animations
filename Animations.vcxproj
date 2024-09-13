@@ -128,8 +128,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="cgltf.h" />
+    <ClInclude Include="demos\DrawQuad.h" />
     <ClInclude Include="FloatHelp.h" />
     <ClInclude Include="glad.h" />
+    <ClInclude Include="io\gltfLoader.h" />
     <ClInclude Include="khrplatform.h" />
     <ClInclude Include="Mat2f.h" />
     <ClInclude Include="Mat3f.h" />
@@ -148,7 +151,10 @@
     <ClInclude Include="Vector4.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="cgltf.cpp" />
+    <ClCompile Include="demos\DrawQuad.cpp" />
     <ClCompile Include="glad.c" />
+    <ClCompile Include="io\gltfLoader.cpp" />
     <ClCompile Include="Mat2f.cpp" />
     <ClCompile Include="Mat3f.cpp" />
     <ClCompile Include="Mat4f.cpp" />
@@ -168,6 +174,9 @@
     <None Include="LICENSE" />
     <None Include="resource\shaders\frag_lit.glsl" />
     <None Include="resource\shaders\static_vert.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resource\assets\uv.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
