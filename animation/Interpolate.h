@@ -1,6 +1,6 @@
 #pragma once
 
-// animation relates data structures and functions
+// animation namespace: data structures and functions used for animation data
 namespace anim {
 	
 	enum class Interpolate {
