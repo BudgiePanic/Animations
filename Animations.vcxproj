@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="animation\Interpolate.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="cgltf.h" />
     <ClInclude Include="curves\curve.h" />
