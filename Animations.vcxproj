@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="cgltf.h" />
+    <ClInclude Include="curves\curve.h" />
     <ClInclude Include="demos\DrawQuad.h" />
     <ClInclude Include="FloatHelp.h" />
     <ClInclude Include="glad.h" />
