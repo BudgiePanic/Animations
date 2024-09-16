@@ -74,9 +74,9 @@ namespace anim {
 		/// <summary>
 		/// Converts a frame's data array into the concrete data type the frame represents.
 		/// </summary>
-		/// <param name="frameArrayValue"></param>
+		/// <param name="frameDataArray"></param>
 		/// <returns></returns>
-		T ToType(float* frameArrayValue);
+		T ToType(float* frameDataArray);
 	};
 
 	typedef Track<float, 1> TrackScalar;
