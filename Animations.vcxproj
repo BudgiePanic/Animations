@@ -130,6 +130,7 @@
     <ClInclude Include="animation\Frame.h" />
     <ClInclude Include="animation\Interpolate.h" />
     <ClInclude Include="animation\Track.h" />
+    <ClInclude Include="animation\TransformTrack.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="cgltf.h" />
     <ClInclude Include="curves\curve.h" />
