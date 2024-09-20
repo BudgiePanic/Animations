@@ -157,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="animation\Track.cpp" />
+    <ClCompile Include="animation\TransformTrack.cpp" />
     <ClCompile Include="cgltf.cpp" />
     <ClCompile Include="demos\DrawQuad.cpp" />
     <ClCompile Include="glad.c" />
