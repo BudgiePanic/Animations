@@ -20,8 +20,20 @@ namespace anim {
 		TrackScalar& GetScaleTrack();
 		TrackQuaternion& GetQuaternionTrack();
 		TrackVector& GetTranslationTrack();
+		/// <summary>
+		/// Result is only valid if hasValidTrack returns true
+		/// </summary>
+		/// <returns></returns>
 		float GetStartTime();
+		/// <summary>
+		/// Result is only valid if hasValidTrack returns true
+		/// </summary>
+		/// <returns></returns>
 		float GetEndTime();
+		/// <summary>
+		/// Checks if at least track stored within the SRTtrack has more than 1 keyframe
+		/// </summary>
+		/// <returns></returns>
 		bool hasValidTrack();
 		/// <summary>
 		/// 
@@ -31,7 +43,5 @@ namespace anim {
 		/// <param name="isTrackLooping"></param>
 		/// <returns></returns>
 		transforms::srt Sample(const transforms::srt& referencePose, float time, bool isTrackLooping);
-
 	};
-
 }
