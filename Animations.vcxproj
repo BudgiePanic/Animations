@@ -127,8 +127,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="animation\Frame.h" />
+    <ClInclude Include="animation\Interpolate.h" />
+    <ClInclude Include="animation\Track.h" />
+    <ClInclude Include="animation\TransformTrack.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="cgltf.h" />
+    <ClInclude Include="curves\curve.h" />
     <ClInclude Include="demos\DrawQuad.h" />
     <ClInclude Include="FloatHelp.h" />
     <ClInclude Include="glad.h" />
@@ -151,6 +156,8 @@
     <ClInclude Include="Vector4.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="animation\Track.cpp" />
+    <ClCompile Include="animation\TransformTrack.cpp" />
     <ClCompile Include="cgltf.cpp" />
     <ClCompile Include="demos\DrawQuad.cpp" />
     <ClCompile Include="glad.c" />
