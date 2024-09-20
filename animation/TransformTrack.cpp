@@ -61,4 +61,19 @@ bool SRTtrack::hasValidTrack() {
 	return result;
 }
 
+transforms::srt SRTtrack::Sample(const transforms::srt& referencePose, float time, bool isTrackLooping)
+{
+	transforms::srt result = referencePose; // make a copy of the reference pose
+	if (this->translation.Size() > 1) {
+		result.position = this->translation.Sample(time, isTrackLooping);
+	}
+	if (this->rotation.Size() > 1) {
+		result.rotation = this->rotation.Sample(time, isTrackLooping);
+	}
+	if (this->scale.Size() > 1) {
+		result.scale = this->scale.Sample(time, isTrackLooping);
+	}
+	return result;
+}
+
 }
