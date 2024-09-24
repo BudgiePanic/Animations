@@ -127,8 +127,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="animation\Clip.h" />
     <ClInclude Include="animation\Frame.h" />
     <ClInclude Include="animation\Interpolate.h" />
+    <ClInclude Include="animation\Pose.h" />
     <ClInclude Include="animation\Track.h" />
     <ClInclude Include="animation\TransformTrack.h" />
     <ClInclude Include="Application.h" />

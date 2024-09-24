@@ -96,6 +96,12 @@
     <ClInclude Include="animation\TransformTrack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="animation\Pose.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="animation\Clip.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
