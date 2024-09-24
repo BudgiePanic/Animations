@@ -2,6 +2,8 @@
 #include <iostream>
 #include "../transforms/srt.h"
 #include "../animation/Pose.h"
+#include "../animation/Track.h"
+#include "../animation/Interpolate.h"
 
 namespace io {
 
@@ -37,6 +39,42 @@ namespace helpers {
             result.SetParentIndex(i, parentBone);
         }
         return result;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="values"></param>
+    /// <param name="numbFloats">The number of component floats stored in the cgltf node</param>
+    /// <param name="accessor"></param>
+    void ExtractValuesFromNodes(std::vector<float>& values, unsigned int numbFloats, const cgltf_accessor& accessor) {
+        values.resize(accessor.count * numbFloats);
+        for (int i = 0; i < accessor.count; i++) {
+            cgltf_accessor_read_float(&accessor, i, &values[i * numbFloats], numbFloats);
+        }
+    }
+
+    template<typename T, int NodeSize>
+    void ExtractTrack(anim::Track<T, NodeSize>& result, const cgltf_animation_channel& channel) {
+        cgltf_animation_sampler& sampler = *channel.sampler;
+        bool isCubicInterpolation = false;
+        anim::Interpolate interp = anim::Interpolate::Constant;
+        if (sampler.interpolation == cgltf_interpolation_type_linear) { interp = anim::Interpolate::Linear; }
+        if (sampler.interpolation == cgltf_interpolation_type_cubic_spline) {
+            interp = anim::Interpolate::Cubic;
+            isCubicInterpolation = true;
+        }
+        result.SetInterpolationMethod(interp);
+        std::vector<float> frameTimes;
+        ExtractValuesFromNodes(frameTimes, 1, *sampler.input);
+        std::vector<float> values;
+        ExtractValuesFromNodes(values, NodeSize, *sampler.output);
+        unsigned int frameCount = sampler.input->count;
+        unsigned int frameComponentCount = values.size() / frameTimes.size();
+        result.Resize(frameComponentCount);
+        for () {
+            // TODO populate the result track with frame data
+        }
     }
 
 }
