@@ -1,6 +1,7 @@
 #pragma once
-
 #include "../cgltf.h"
+#include <vector>
+#include <string>
 
 namespace io {
 
@@ -16,5 +17,7 @@ cgltf_data* LoadGLTFFile(const char* path);
 /// </summary>
 /// <param name="dataHandle"></param>
 void FreeGLTFData(cgltf_data* dataHandle);
+
+std::vector<std::string> LoadBoneNames(cgltf_data* data);
 
 }
