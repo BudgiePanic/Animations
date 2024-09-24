@@ -36,7 +36,7 @@ namespace anim {
 		int ParentIndexOf(unsigned int boneIndex);
 		void SetParentIndex(unsigned int boneIndex, unsigned int parentIndex);
 		transforms::srt GetLocalTransform(unsigned int boneIndex);
-		void SetLocaTransform(unsigned int boneIndex, const transforms::srt& localTransform);
+		void SetLocalTransform(unsigned int boneIndex, const transforms::srt& localTransform);
 		transforms::srt GetWorldTransform(unsigned int boneIndex);
 		transforms::srt operator[](unsigned int boneIndex);
 		/// <summary>
