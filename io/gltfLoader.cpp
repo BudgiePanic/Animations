@@ -1,9 +1,11 @@
 #include "gltfLoader.h"
 #include <iostream>
+#include <string>
 #include "../transforms/srt.h"
 #include "../animation/Pose.h"
 #include "../animation/Track.h"
 #include "../animation/Interpolate.h"
+#include "../animation/Frame.h"
 
 namespace io {
 
@@ -66,14 +68,33 @@ namespace helpers {
         }
         result.SetInterpolationMethod(interp);
         std::vector<float> frameTimes;
-        ExtractValuesFromNodes(frameTimes, 1, *sampler.input);
+        constexpr unsigned int frameTimeTrackSize = 1;
+        ExtractValuesFromNodes(frameTimes, frameTimeTrackSize, *sampler.input);
         std::vector<float> values;
         ExtractValuesFromNodes(values, NodeSize, *sampler.output);
         unsigned int frameCount = sampler.input->count;
         unsigned int frameComponentCount = values.size() / frameTimes.size();
         result.Resize(frameComponentCount);
-        for () {
-            // TODO populate the result track with frame data
+        for (unsigned int i = 0; i < NodeSize; i++) {
+            // this function feels dangerous, curious to see if it works in the debugger
+            int index = i * frameComponentCount;
+            anim::Frame<NodeSize>& frame = result[i];
+            int offset = 0;
+            frame.timestamp = frameTimes[i];
+            for (int component = 0; component < NodeSize; component++) {
+                frame.in[component] = isCubicInterpolation ?
+                    values[index + offset] : 0.0f;
+                offset++;
+            }
+            for (int component = 0; component < NodeSize; component++) {
+                frame.value[component] = values[index + offset];
+                offset++;
+            }
+            for (int component = 0; component < NodeSize; component++) {
+                frame.out[component] = isCubicInterpolation ? 
+                   values[index + offset] : 0.0f;
+                index++;
+            }
         }
     }
 
@@ -107,9 +128,37 @@ void FreeGLTFData(cgltf_data* dataHandle) {
     cgltf_free(dataHandle);
 }
 
-std::vector<std::string> LoadBoneNames(cgltf_data* data)
-{
+std::vector<std::string> LoadBoneNames(cgltf_data* data) {
     return std::vector<std::string>();
+}
+
+std::vector<anim::Clip> LoadClips(cgltf_data* data) {
+    unsigned int clipCount = data->animations_count;
+    unsigned int nodeCount = data->nodes_count;
+    std::vector<anim::Clip> result;
+    result.resize(clipCount);
+    for (unsigned int i = 0; i < clipCount; i++) {
+        std::string clipName = data->animations[i].name;
+        result[i].SetClipName(clipName);
+        unsigned int nodeSize = data->animations[i].channels_count;
+        for (int j = 0; j < nodeSize; j++) {
+            cgltf_animation_channel& channel = data->animations[i].channels[j];
+            cgltf_node* node = channel.target_node; 
+            int nodeID = helpers::GetNodeIndex(node, data->nodes, nodeCount);
+            if (channel.target_path == cgltf_animation_path_type_translation) {
+                anim::TrackVector translation = result[i][nodeID].GetTranslationTrack();
+                helpers::ExtractTrack<f3, 3>(translation, channel);
+            } else if (channel.target_path == cgltf_animation_path_type_scale) {
+                anim::TrackScalar& scale = result[i][nodeID].GetScaleTrack();
+                helpers::ExtractTrack<float, 1>(scale, channel);
+            } else if (channel.target_path == cgltf_animation_path_type_rotation) {
+                anim::TrackQuaternion& rotation = result[i][nodeID].GetQuaternionTrack();
+                helpers::ExtractTrack<rotation::quaternion, 4>(rotation, channel);
+            }
+        }
+        result[i].CalculateClipDuration();
+    }
+    return result;
 }
 
 }
