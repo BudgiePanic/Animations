@@ -129,7 +129,18 @@ void FreeGLTFData(cgltf_data* dataHandle) {
 }
 
 std::vector<std::string> LoadBoneNames(cgltf_data* data) {
-    return std::vector<std::string>();
+    unsigned int numbBones = (unsigned int)data->nodes_count;
+    std::vector<std::string> result(numbBones, "Unset");
+    for (unsigned int i = 0; i < numbBones; i++) {
+        cgltf_node* node = &(data->nodes[i]);
+        if (node->name == NULL) {
+            result[i] = "No Name";
+        } else {
+            std::string boneName = node->name;
+            result[i] = boneName;
+        }
+    }
+    return result;
 }
 
 std::vector<anim::Clip> LoadClips(cgltf_data* data) {
