@@ -15,10 +15,14 @@ namespace helpers {
     transforms::srt GetLocalTransformFromNode(cgltf_node& node) {
         transforms::srt result;
         if (node.has_matrix) {
+            mat4f matrix(&node.matrix[0]);
+            result = transforms::toSRT(matrix);
         }
         if (node.has_rotation) {
+            result.position = f3(node.translation[0], node.translation[1], node.translation[2]);
         }
         if (node.has_scale) {
+
         }
         if (node.has_translation) {
         }
@@ -173,8 +177,8 @@ std::vector<anim::Clip> LoadClips(cgltf_data* data) {
                 anim::TrackVector translation = result[i][nodeID].GetTranslationTrack();
                 helpers::ExtractTrack<f3, 3>(translation, channel);
             } else if (channel.target_path == cgltf_animation_path_type_scale) {
-                anim::TrackScalar& scale = result[i][nodeID].GetScaleTrack();
-                helpers::ExtractTrack<float, 1>(scale, channel);
+                anim::TrackVector& scale = result[i][nodeID].GetScaleTrack();
+                helpers::ExtractTrack<f3, 3>(scale, channel);
             } else if (channel.target_path == cgltf_animation_path_type_rotation) {
                 anim::TrackQuaternion& rotation = result[i][nodeID].GetQuaternionTrack();
                 helpers::ExtractTrack<rotation::quaternion, 4>(rotation, channel);

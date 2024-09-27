@@ -10,14 +10,14 @@ namespace anim {
 		/// Can be either a bone ID or an object ID if the SRT track is being used to animate a non-skeletal entity
 		/// </summary>
 		unsigned int id;
-		TrackScalar scale;
+		TrackVector scale;
 		TrackQuaternion rotation;
 		TrackVector translation;
 	public:
 		SRTtrack();
 		unsigned int GetID();
 		void SetID(unsigned int id);
-		TrackScalar& GetScaleTrack();
+		TrackVector& GetScaleTrack();
 		TrackQuaternion& GetQuaternionTrack();
 		TrackVector& GetTranslationTrack();
 		/// <summary>
