@@ -25,7 +25,20 @@ namespace helpers {
         return result;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="node"></param>
+    /// <param name="nodeArray"></param>
+    /// <param name="numbNodes"></param>
+    /// <returns>If no node index can be found, -1 is returned</returns>
     int GetNodeIndex(cgltf_node* node, cgltf_node* nodeArray, int numbNodes) {
+        if (node == NULL) { return -1; }
+        for (int i = 0; i < numbNodes; i++) {
+            if (node == &nodeArray[i]) {
+                return (int)i;
+            }
+        }
         return -1;
     }
 
