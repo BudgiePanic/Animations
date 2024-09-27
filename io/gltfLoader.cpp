@@ -19,12 +19,15 @@ namespace helpers {
             result = transforms::toSRT(matrix);
         }
         if (node.has_rotation) {
-            result.position = f3(node.translation[0], node.translation[1], node.translation[2]);
+            result.rotation = rotation::quaternion(
+                node.rotation[0], node.rotation[1], node.rotation[3], node.rotation[4]
+            );
         }
         if (node.has_scale) {
-
+            result.scale = f3(node.scale[0], node.scale[1], node.scale[2]);
         }
         if (node.has_translation) {
+            result.position = f3(node.translation[0], node.translation[1], node.translation[2]);
         }
         return result;
     }
