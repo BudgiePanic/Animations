@@ -4,6 +4,9 @@
 #include "../Mat4f.h"
 
 namespace anim {
+	/// <summary>
+	/// A pose is a collection of bones plus bone parent hierarcy
+	/// </summary>
 	class Pose {
 	protected:
 		std::vector<transforms::srt> bones;
