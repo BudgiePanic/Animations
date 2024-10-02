@@ -158,6 +158,7 @@
     <ClInclude Include="Vector4.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="animation\Pose.cpp" />
     <ClCompile Include="animation\Track.cpp" />
     <ClCompile Include="animation\TransformTrack.cpp" />
     <ClCompile Include="cgltf.cpp" />
