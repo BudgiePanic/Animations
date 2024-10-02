@@ -18,7 +18,7 @@ namespace anim{
 		std::string clipName;
 		float startTime;
 		float endTime;
-		bool doesTrackLoop;
+		bool doesClipLoop;
 	protected:
 		/// <summary>
 		/// Converts timestamps outside the animation clip's valid range into valid time stamps.
