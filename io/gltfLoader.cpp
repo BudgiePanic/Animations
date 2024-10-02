@@ -20,7 +20,7 @@ namespace helpers {
         }
         if (node.has_rotation) {
             result.rotation = rotation::quaternion(
-                node.rotation[0], node.rotation[1], node.rotation[3], node.rotation[4]
+                node.rotation[0], node.rotation[1], node.rotation[2], node.rotation[3]
             );
         }
         if (node.has_scale) {
