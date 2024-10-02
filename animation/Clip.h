@@ -11,6 +11,9 @@ namespace anim{
 	/// </summary>
 	class Clip {
 	protected:
+		/// <summary>
+		/// Each entry in tracks describes the change of one bone over time.
+		/// </summary>
 		std::vector<SRTtrack> tracks;
 		std::string clipName;
 		float startTime;
@@ -50,11 +53,13 @@ namespace anim{
 		/// <returns></returns>
 		SRTtrack& operator[](unsigned int boneID);
 		/// <summary>
-		/// TODO document what this function does
+		/// Samples the animation clip and writes the resulting pose into pose.
+		/// Does nothing if the clip contains no valid animation data.
+		/// The provided sample time will be remapped to be in the clip's valid time range.
 		/// </summary>
-		/// <param name="pose"></param>
-		/// <param name="time"></param>
-		/// <returns></returns>
+		/// <param name="pose">The pose that the sample is written to</param>
+		/// <param name="time">The time at which the clip should be sampled</param>
+		/// <returns>The time that was actually used to sample the clip.</returns>
 		float Sample(Pose& pose, float time);
 		void CalculateClipDuration();
 		std::string& GetClipName();
