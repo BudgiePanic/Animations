@@ -14,6 +14,7 @@ namespace anim {
 		std::vector<int> boneParents;
 	public:
 		Pose();
+		Pose(unsigned int numbBones);
 		/// <summary>
 		/// Copy constructor.
 		/// </summary>
@@ -25,7 +26,6 @@ namespace anim {
 		/// <param name="pose"></param>
 		/// <returns></returns>
 		Pose& operator=(const Pose& pose);
-		Pose(unsigned int numbBones);
 		void Resize(unsigned int numbBones);
 		unsigned int Size();
 		/// <summary>
