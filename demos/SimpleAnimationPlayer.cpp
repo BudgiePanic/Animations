@@ -119,7 +119,7 @@ namespace demos {
 			if (pose.ParentIndexOf(bone) < 0) { continue; }
 			vertCount += 2; // need to draw a line from 'this' bone to parent bone
 		}
-		this->points.resize(vertCount);
+		this->points.clear(); // we have to clear the previous points since we're pushing back instead of overwriting
 		for (unsigned int bone = 0; bone < numbBones; bone++) {
 			int parentIndex = pose.ParentIndexOf(bone);
 			if (parentIndex < 0) { continue; }
