@@ -27,7 +27,7 @@ namespace anim {
 			memcpy(&this->boneParents[0], &pose.boneParents[0], sizeof(int) * this->boneParents.size());
 		}
 		if (this->bones.size() != 0) {
-			memcpy(&this->bones[0], &pose.bones[0], sizeof(int) * this->bones.size());
+			memcpy(&this->bones[0], &pose.bones[0], sizeof(transforms::srt) * this->bones.size());
 		}
 		return *this;
 	}
@@ -105,9 +105,4 @@ namespace anim {
 	bool Pose::operator!=(const Pose& other) {
 		return !(*this == other);
 	}
-
-
-
-
-
 }
