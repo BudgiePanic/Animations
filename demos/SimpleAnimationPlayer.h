@@ -1,11 +1,13 @@
 #pragma once
 
 #include <vector>
+#include <map>
 #include "../Application.h"
 #include "../animation/Pose.h"
 #include "../animation/Clip.h"
 #include "../render/Attribute.h"
 #include "../render/Shader.h"
+#include "../render/Draw.h"
 #include "../Vector3.h"
 #include "../Mat4f.h"
 
@@ -47,7 +49,8 @@ namespace demos {
 			/// <summary>
 			/// Extract bone positions from a pose and store the points in the points vector.
 			/// </summary>
-			void PointsFromPose();
+			/// <param name="pose"></param>
+			void PointsFromPose(anim::Pose& pose);
 			/// <summary>
 			/// Send the points attribute buffer data to the GPU
 			/// </summary>
@@ -59,6 +62,8 @@ namespace demos {
 			/// <param name="lineColor">The color of the line</param>
 			/// <param name="worldCameraProjection">A matrix that converts a skeleton from local space to: world space, camera space, and then NDC</param>
 			void Draw(LineDrawMode mode, const f3& lineColor, const mat4f worldCameraProjection);
+		protected:
+			std::map<LineDrawMode, render::DrawMode> drawModeConverter;
 		};
 		anim::Pose restPose;
 		/// <summary>
