@@ -39,9 +39,9 @@ namespace helpers {
     /// <param name="nodeArray"></param>
     /// <param name="numbNodes"></param>
     /// <returns>If no node index can be found, -1 is returned</returns>
-    int GetNodeIndex(cgltf_node* node, cgltf_node* nodeArray, int numbNodes) {
+    int GetNodeIndex(cgltf_node* node, cgltf_node* nodeArray, unsigned int numbNodes) {
         if (node == NULL) { return -1; }
-        for (int i = 0; i < numbNodes; i++) {
+        for (unsigned int i = 0; i < numbNodes; i++) {
             if (node == &nodeArray[i]) {
                 return (int)i;
             }
@@ -106,7 +106,7 @@ namespace helpers {
 }
 
 anim::Pose MakeRestPose(cgltf_data* data) {
-    unsigned int numbNodes = data->nodes_count;
+    unsigned int numbNodes = (unsigned int) data->nodes_count;
     anim::Pose result(numbNodes);
     for (unsigned int i = 0; i < numbNodes; i++) {
         cgltf_node* node = &(data->nodes[i]);
