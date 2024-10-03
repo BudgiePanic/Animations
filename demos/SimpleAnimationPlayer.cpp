@@ -7,8 +7,8 @@
 namespace demos {
 
 	void SimpleAnimationPlayer::Initialize() {
-		std::cout << "Looking for \'\\Assets\\Woman.gltf\' in working directory.\n";
-		cgltf_data* data = io::LoadGLTFFile("Assets/Woman.gltf");
+		std::cout << "Looking for \'\\resource\\assets\\Woman.gltf\' in working directory.\n";
+		cgltf_data* data = io::LoadGLTFFile("./resource/assets/Woman.gltf");
 		if (data == nullptr) {
 			std::cout << "couldn't load gltf data\n";
 		}
