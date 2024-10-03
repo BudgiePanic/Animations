@@ -81,7 +81,7 @@ namespace helpers {
         unsigned int frameCount = sampler.input->count;
         result.Resize(frameCount);
         unsigned int frameComponentCount = values.size() / frameTimes.size();
-        for (unsigned int i = 0; i < NodeSize; i++) {
+        for (unsigned int i = 0; i < frameCount; i++) {
             // this function feels dangerous, curious to see if it works in the debugger
             int index = i * frameComponentCount;
             anim::Frame<NodeSize>& frame = result[i];
@@ -90,7 +90,7 @@ namespace helpers {
             for (int component = 0; component < NodeSize; component++) {
                 frame.in[component] = isCubicInterpolation ?
                     values[index + offset] : 0.0f;
-                offset++;
+                if (isCubicInterpolation) { offset++; }
             }
             for (int component = 0; component < NodeSize; component++) {
                 frame.value[component] = values[index + offset];
@@ -99,7 +99,7 @@ namespace helpers {
             for (int component = 0; component < NodeSize; component++) {
                 frame.out[component] = isCubicInterpolation ? 
                    values[index + offset] : 0.0f;
-                index++;
+                if (isCubicInterpolation) { offset++; }
             }
         }
     }
@@ -169,7 +169,8 @@ std::vector<anim::Clip> LoadClips(cgltf_data* data) {
     for (unsigned int i = 0; i < clipCount; i++) {
         std::string clipName = data->animations[i].name;
         result[i].SetClipName(clipName);
-        unsigned int nodeSize = (unsigned int) data->animations[i].channels_count;
+        // Each animated bone typically has 3 animation channels, one for position, one for rotation, one for scale. Not all bones are animated.
+        unsigned int nodeSize = (unsigned int) data->animations[i].channels_count;  
         for (unsigned int j = 0; j < nodeSize; j++) {
             cgltf_animation_channel& channel = data->animations[i].channels[j];
             cgltf_node* node = channel.target_node; 
