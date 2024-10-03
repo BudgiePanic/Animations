@@ -29,7 +29,7 @@ namespace demos {
 
 		unsigned int numbClips = this->clips.size();
 		for (unsigned int clip = 0; clip < numbClips; clip++) {
-			if (this->clips[clip].GetClipName() == "walking") {
+			if (this->clips[clip].GetClipName() == "Walking") {
 				activeClip = clip;
 				break;
 			}
