@@ -49,20 +49,6 @@ namespace helpers {
         return -1;
     }
 
-    anim::Pose MakeRestPose(cgltf_data* data) {
-        unsigned int numbNodes = data->nodes_count;
-        anim::Pose result;
-        result.Resize(numbNodes);
-        for (int i = 0; i < numbNodes; i++) {
-            cgltf_node* node = &(data->nodes[i]);
-            transforms::srt transform = GetLocalTransformFromNode(data->nodes[i]);
-            result.SetLocalTransform(i, transform);
-            int parentBone = GetNodeIndex(node->parent, data->nodes, numbNodes);
-            result.SetParentIndex(i, parentBone);
-        }
-        return result;
-    }
-
     /// <summary>
     /// 
     /// </summary>
@@ -117,7 +103,20 @@ namespace helpers {
             }
         }
     }
+}
 
+anim::Pose MakeRestPose(cgltf_data* data) {
+    unsigned int numbNodes = data->nodes_count;
+    anim::Pose result;
+    result.Resize(numbNodes);
+    for (int i = 0; i < numbNodes; i++) {
+        cgltf_node* node = &(data->nodes[i]);
+        transforms::srt transform = helpers::GetLocalTransformFromNode(data->nodes[i]);
+        result.SetLocalTransform(i, transform);
+        int parentBone = helpers::GetNodeIndex(node->parent, data->nodes, numbNodes);
+        result.SetParentIndex(i, parentBone);
+    }
+    return result;
 }
 
 cgltf_data* LoadGLTFFile(const char* path) {
