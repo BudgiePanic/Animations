@@ -52,7 +52,7 @@ namespace anim {
 		if (this->GetDuration() == 0.0f) { return 0.0f; }
 		time = this->ClipTime(time);
 		unsigned int numbTracks = this->tracks.size();
-		for (int track = 0; track < numbTracks; track++) {
+		for (unsigned int track = 0; track < numbTracks; track++) {
 			unsigned int boneIndex = tracks[track].GetID();
 			transforms::srt localTransform = pose.GetLocalTransform(boneIndex);
 			transforms::srt animatedTransform = tracks[track].Sample(localTransform, time, this->doesClipLoop);

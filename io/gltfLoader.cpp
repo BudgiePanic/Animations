@@ -57,7 +57,7 @@ namespace helpers {
     /// <param name="accessor"></param>
     void ExtractValuesFromNodes(std::vector<float>& values, unsigned int numbFloats, const cgltf_accessor& accessor) {
         values.resize(accessor.count * numbFloats);
-        for (int i = 0; i < accessor.count; i++) {
+        for (unsigned int i = 0; i < (unsigned int) accessor.count; i++) {
             cgltf_accessor_read_float(&accessor, i, &values[i * numbFloats], numbFloats);
         }
     }
@@ -107,9 +107,8 @@ namespace helpers {
 
 anim::Pose MakeRestPose(cgltf_data* data) {
     unsigned int numbNodes = data->nodes_count;
-    anim::Pose result;
-    result.Resize(numbNodes);
-    for (int i = 0; i < numbNodes; i++) {
+    anim::Pose result(numbNodes);
+    for (unsigned int i = 0; i < numbNodes; i++) {
         cgltf_node* node = &(data->nodes[i]);
         transforms::srt transform = helpers::GetLocalTransformFromNode(data->nodes[i]);
         result.SetLocalTransform(i, transform);
@@ -171,7 +170,7 @@ std::vector<anim::Clip> LoadClips(cgltf_data* data) {
         std::string clipName = data->animations[i].name;
         result[i].SetClipName(clipName);
         unsigned int nodeSize = data->animations[i].channels_count;
-        for (int j = 0; j < nodeSize; j++) {
+        for (unsigned int j = 0; j < nodeSize; j++) {
             cgltf_animation_channel& channel = data->animations[i].channels[j];
             cgltf_node* node = channel.target_node; 
             int nodeID = helpers::GetNodeIndex(node, data->nodes, nodeCount);

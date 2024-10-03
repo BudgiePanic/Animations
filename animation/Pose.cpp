@@ -89,7 +89,7 @@ namespace anim {
 		if (this->bones.size() != other.bones.size()) { return false; }
 		if (this->boneParents.size() != other.boneParents.size()) { return false; }
 		unsigned int numbBones = this->Size();
-		for (int i = 0; i < numbBones; i++) {
+		for (unsigned int i = 0; i < numbBones; i++) {
 			transforms::srt ours = this->bones[i];
 			transforms::srt theirs = other.bones[i];
 			if (ours.position != theirs.position ||
