@@ -7,6 +7,10 @@
 namespace demos {
 
 	void SimpleAnimationPlayer::Initialize() {
+		/*
+		   The animation file can be found at:
+		   https://quaternius.com/index.html
+		*/
 		std::cout << "Looking for \'\\resource\\assets\\Woman.gltf\' in working directory.\n";
 		cgltf_data* data = io::LoadGLTFFile("./resource/assets/Woman.gltf");
 		if (data == nullptr) {

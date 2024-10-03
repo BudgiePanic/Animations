@@ -64,6 +64,7 @@ namespace helpers {
 
     template<typename T, int NodeSize>
     void ExtractTrack(anim::Track<T, NodeSize>& result, const cgltf_animation_channel& channel) {
+        /* https://github.com/KhronosGroup/glTF-Tutorials/blob/main/gltfTutorial/gltfTutorial_007_Animations.md */
         cgltf_animation_sampler& sampler = *channel.sampler;
         bool isCubicInterpolation = false;
         anim::Interpolate interp = anim::Interpolate::Constant;
