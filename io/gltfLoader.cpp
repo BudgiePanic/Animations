@@ -79,8 +79,8 @@ namespace helpers {
         std::vector<float> values;
         ExtractValuesFromNodes(values, NodeSize, *sampler.output);
         unsigned int frameCount = sampler.input->count;
+        result.Resize(frameCount);
         unsigned int frameComponentCount = values.size() / frameTimes.size();
-        result.Resize(frameComponentCount);
         for (unsigned int i = 0; i < NodeSize; i++) {
             // this function feels dangerous, curious to see if it works in the debugger
             int index = i * frameComponentCount;
@@ -169,7 +169,7 @@ std::vector<anim::Clip> LoadClips(cgltf_data* data) {
     for (unsigned int i = 0; i < clipCount; i++) {
         std::string clipName = data->animations[i].name;
         result[i].SetClipName(clipName);
-        unsigned int nodeSize = data->animations[i].channels_count;
+        unsigned int nodeSize = (unsigned int) data->animations[i].channels_count;
         for (unsigned int j = 0; j < nodeSize; j++) {
             cgltf_animation_channel& channel = data->animations[i].channels[j];
             cgltf_node* node = channel.target_node; 
@@ -181,7 +181,7 @@ std::vector<anim::Clip> LoadClips(cgltf_data* data) {
                 anim::TrackVector& scale = result[i][nodeID].GetScaleTrack();
                 helpers::ExtractTrack<f3, 3>(scale, channel);
             } else if (channel.target_path == cgltf_animation_path_type_rotation) {
-                anim::TrackQuaternion& rotation = result[i][nodeID].GetQuaternionTrack();
+                anim::TrackQuaternion& rotation = result[i][nodeID].GetQuaternionTrack(); // [clip index][bone index]
                 helpers::ExtractTrack<rotation::quaternion, 4>(rotation, channel);
             }
         }
