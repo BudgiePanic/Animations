@@ -167,6 +167,9 @@
     <ClCompile Include="animation\Pose.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="animation\Clip.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="LICENSE" />
