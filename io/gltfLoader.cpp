@@ -33,7 +33,7 @@ namespace helpers {
     }
 
     /// <summary>
-    /// 
+    /// TODO
     /// </summary>
     /// <param name="node"></param>
     /// <param name="nodeArray"></param>
@@ -50,7 +50,7 @@ namespace helpers {
     }
 
     /// <summary>
-    /// 
+    /// TODO
     /// </summary>
     /// <param name="values"></param>
     /// <param name="numbFloats">The number of component floats stored in the cgltf node</param>
@@ -62,6 +62,13 @@ namespace helpers {
         }
     }
 
+    /// <summary>
+    /// TODO
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="NodeSize"></typeparam>
+    /// <param name="result"></param>
+    /// <param name="channel"></param>
     template<typename T, int NodeSize>
     void ExtractTrack(anim::Track<T, NodeSize>& result, const cgltf_animation_channel& channel) {
         /* https://github.com/KhronosGroup/glTF-Tutorials/blob/main/gltfTutorial/gltfTutorial_007_Animations.md */

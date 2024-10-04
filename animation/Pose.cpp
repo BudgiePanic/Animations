@@ -12,6 +12,11 @@ namespace anim {
 		*this = pose;
 	}
 
+	/// <summary>
+	/// Create a deep copy of a pose when assigning
+	/// </summary>
+	/// <param name="pose"></param>
+	/// <returns></returns>
 	Pose& Pose::operator=(const Pose& pose)
 	{
 		if (&pose == this) {

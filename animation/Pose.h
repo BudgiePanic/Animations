@@ -5,7 +5,7 @@
 
 namespace anim {
 	/// <summary>
-	/// A pose is a collection of bones plus bone parent hierarcy
+	/// A pose is a collection of bones plus bone parent hierarchy
 	/// </summary>
 	class Pose {
 	protected:

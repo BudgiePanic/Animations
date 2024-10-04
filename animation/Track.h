@@ -7,6 +7,11 @@
 
 namespace anim {
 
+	/// <summary>
+	/// A track contains animation key frames of one aspect (scale, rotation, translation, etc.) for one bone.
+	/// </summary>
+	/// <typeparam name="T">The type of data in the key frame</typeparam>
+	/// <typeparam name="FrameDimension">The number of float components in a key frame</typeparam>
 	template<typename T, int FrameDimension>
 	class Track {
 	protected:

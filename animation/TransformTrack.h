@@ -4,6 +4,9 @@
 
 namespace anim {
 
+	/// <summary>
+	/// The SRT track stores the scale, rotation, translation keyframes for one bone for one animation
+	/// </summary>
 	class SRTtrack {
 	protected:
 		/// <summary>
@@ -36,7 +39,7 @@ namespace anim {
 		/// <returns></returns>
 		bool hasValidTrack();
 		/// <summary>
-		/// 
+		/// Samples the scale, rotation, and translation tracks that are nested within this SRT track.
 		/// </summary>
 		/// <param name="referencePose">The reference pose is used if a sub-track cannot be sampled at the given sample time</param>
 		/// <param name="time">The time the track is sampled</param>
