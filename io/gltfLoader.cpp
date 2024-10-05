@@ -33,7 +33,7 @@ namespace helpers {
     }
 
     /// <summary>
-    /// TODO
+    /// All node in the scenes are stored in an array. A node contains: a mesh, animation data, camera, light, etc.
     /// </summary>
     /// <param name="node"></param>
     /// <param name="nodeArray"></param>
@@ -50,7 +50,7 @@ namespace helpers {
     }
 
     /// <summary>
-    /// TODO
+    /// Uses an accessor to access values from a buffer. Writes the buffer values into a vector.
     /// </summary>
     /// <param name="values"></param>
     /// <param name="numbFloats">The number of component floats stored in the cgltf node</param>
@@ -63,7 +63,8 @@ namespace helpers {
     }
 
     /// <summary>
-    /// TODO
+    /// Gets the channel's sampler and extracts the raw animation input and output data. These raw values are converted into 
+    /// frames which are then stored in the track. Generates frames for one aspect (i.e. rotation, scale, position, for one bone) 
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="NodeSize"></typeparam>
