@@ -46,7 +46,14 @@ namespace demos {
 		this->clips.clear();
 	}
 
+	float timeTotal = 0.0f;
+
 	void SimpleAnimationPlayer::Update(float deltaTime) {
+		timeTotal += deltaTime;
+		if (timeTotal > 5.0f) {
+			activeClip = (activeClip + 1) % this->clips.size();
+			timeTotal = 0.0f;
+		}
 		this->timePlayback = this->clips[activeClip].Sample(this->pose, timePlayback + deltaTime);
 		this->poseDrawer->PointsFromPose(this->pose);
 	}
