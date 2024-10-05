@@ -59,6 +59,7 @@ namespace render {
 	}
 
 	void Texture::Set(unsigned int uniform, unsigned int textureIndex) {
+		/* https://www.khronos.org/opengl/wiki/Texture */
 		// https://registry.khronos.org/OpenGL-Refpages/gl4/html/glActiveTexture.xhtml 
 		glad_glActiveTexture(GL_TEXTURE0 + textureIndex);
 		// https://registry.khronos.org/OpenGL-Refpages/gl4/html/glBindTexture.xhtml

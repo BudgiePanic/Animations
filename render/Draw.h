@@ -18,20 +18,20 @@ enum class DrawMode {
 */
 
 /// <summary>
-/// TODO
+/// Binds to the provided index buffer then issues a draw call to the GPU.
 /// </summary>
 /// <param name="indexBuffer"></param>
 /// <param name="mode"></param>
 void Draw(IndexBuffer& indexBuffer, DrawMode mode);
 /// <summary>
-/// TODO
+/// Issues a draw call to the GPU for a provided number of vertices in the currently bound array.
 /// </summary>
 /// <param name="vertexCount"></param>
 /// <param name="mode"></param>
 void Draw(unsigned int vertexCount, DrawMode mode);
 
 /// <summary>
-/// TODO
+/// Binds to the provided index buffer then issues an instanced draw elements call.
 /// </summary>
 /// <param name="indexBuffer"></param>
 /// <param name="mode"></param>
@@ -39,7 +39,7 @@ void Draw(unsigned int vertexCount, DrawMode mode);
 void DrawInstanced(IndexBuffer& indexBuffer, DrawMode mode, unsigned int instanceCount);
 
 /// <summary>
-/// TODO
+/// Issues an instanced array draw call.
 /// </summary>
 /// <param name="vertexCount"></param>
 /// <param name="mode"></param>

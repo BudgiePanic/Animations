@@ -4,20 +4,23 @@
 
 namespace anim {
 
+	/// <summary>
+	/// The SRT track stores the scale, rotation, translation keyframes for one bone for one animation
+	/// </summary>
 	class SRTtrack {
 	protected:
 		/// <summary>
 		/// Can be either a bone ID or an object ID if the SRT track is being used to animate a non-skeletal entity
 		/// </summary>
 		unsigned int id;
-		TrackScalar scale;
+		TrackVector scale;
 		TrackQuaternion rotation;
 		TrackVector translation;
 	public:
 		SRTtrack();
 		unsigned int GetID();
 		void SetID(unsigned int id);
-		TrackScalar& GetScaleTrack();
+		TrackVector& GetScaleTrack();
 		TrackQuaternion& GetQuaternionTrack();
 		TrackVector& GetTranslationTrack();
 		/// <summary>
@@ -36,7 +39,7 @@ namespace anim {
 		/// <returns></returns>
 		bool hasValidTrack();
 		/// <summary>
-		/// 
+		/// Samples the scale, rotation, and translation tracks that are nested within this SRT track.
 		/// </summary>
 		/// <param name="referencePose">The reference pose is used if a sub-track cannot be sampled at the given sample time</param>
 		/// <param name="time">The time the track is sampled</param>

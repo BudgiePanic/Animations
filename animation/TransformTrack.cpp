@@ -11,7 +11,7 @@ unsigned int SRTtrack::GetID() { return this->id; }
 
 void SRTtrack::SetID(unsigned int id) { this->id = id; }
 
-TrackScalar& SRTtrack::GetScaleTrack() { return this->scale; }
+TrackVector& SRTtrack::GetScaleTrack() { return this->scale; }
 
 TrackQuaternion& SRTtrack::GetQuaternionTrack() { return this->rotation; }
 

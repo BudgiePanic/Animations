@@ -1,6 +1,9 @@
 #pragma once
-
 #include "../cgltf.h"
+#include <vector>
+#include <string>
+#include "../animation/Clip.h"
+#include "../animation/Pose.h"
 
 namespace io {
 
@@ -16,5 +19,11 @@ cgltf_data* LoadGLTFFile(const char* path);
 /// </summary>
 /// <param name="dataHandle"></param>
 void FreeGLTFData(cgltf_data* dataHandle);
+
+std::vector<std::string> LoadBoneNames(cgltf_data* data);
+
+std::vector<anim::Clip> LoadClips(cgltf_data* data);
+
+anim::Pose MakeRestPose(cgltf_data* data);
 
 }

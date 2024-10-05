@@ -8,6 +8,7 @@
 #include <direct.h>
 #include "Application.h"
 #include "demos/DrawQuad.h"
+#include "demos/SimpleAnimationPlayer.h"
 
 // Forward declare functions
 // window entry function
@@ -47,7 +48,7 @@ Application* gApplication = 0; // global_variable_pointer_application
 GLuint gVertexArrayObject = 0;
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine, int iCmdShow) {
-    gApplication = new demos::DrawQuad();
+    gApplication = new demos::SimpleAnimationPlayer();
 	// the window
     WNDCLASSEX wndclass{};
     wndclass.cbSize = sizeof(WNDCLASSEX);
