@@ -49,12 +49,12 @@ public:
 	/// <param name="data"></param>
 	void Set(std::vector<t>& data);
 	/// <summary>
-	/// TODO
+	/// Binds to the buffer then associates the buffer with the provided vertex attribute array slot.
 	/// </summary>
 	/// <param name="slot"></param>
 	void BindTo(unsigned int slot);
 	/// <summary>
-	/// TODO
+	/// Undoes the operations of the Bind function.
 	/// </summary>
 	/// <param name="slot"></param>
 	void UnBindFrom(unsigned int slot);
