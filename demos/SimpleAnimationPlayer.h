@@ -56,7 +56,7 @@ namespace demos {
 			/// </summary>
 			void UpdateBuffers();
 			/// <summary>
-			/// 
+			/// Issues a draw call to the GPU. Uses the attribute to supply vertex data to the shader.
 			/// </summary>
 			/// <param name="mode">GPU draw mode</param>
 			/// <param name="lineColor">The color of the line</param>
