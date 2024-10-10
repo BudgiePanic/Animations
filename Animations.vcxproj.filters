@@ -105,6 +105,12 @@
     <ClInclude Include="demos\SimpleAnimationPlayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="animation\Armature.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="render\Mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">

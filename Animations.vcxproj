@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="animation\Armature.h" />
     <ClInclude Include="animation\Clip.h" />
     <ClInclude Include="animation\Frame.h" />
     <ClInclude Include="animation\Interpolate.h" />
@@ -148,6 +149,7 @@
     <ClInclude Include="render\Attribute.h" />
     <ClInclude Include="render\Draw.h" />
     <ClInclude Include="render\IndexBuffer.h" />
+    <ClInclude Include="render\Mesh.h" />
     <ClInclude Include="render\Shader.h" />
     <ClInclude Include="render\Texture.h" />
     <ClInclude Include="render\Uniform.h" />
