@@ -26,4 +26,6 @@ std::vector<anim::Clip> LoadClips(cgltf_data* data);
 
 anim::Pose MakeRestPose(cgltf_data* data);
 
+anim::Pose MakeBindPose(cgltf_data* data);
+
 }
