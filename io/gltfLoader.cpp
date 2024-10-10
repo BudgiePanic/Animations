@@ -112,6 +112,19 @@ namespace helpers {
             }
         }
     }
+    /// <summary>
+    /// Writes mesh attribute data from the gltf file into the mesh object (i.e. positions, normals, bone indexes)
+    /// </summary>
+    /// <param name="mesh"></param>
+    /// <param name="attribute"></param>
+    /// <param name="skin"></param>
+    /// <param name="nodeArray"></param>
+    /// <param name="numbNodes"></param>
+    void MeshFromAttribute(render::Mesh& mesh, 
+        cgltf_attribute*& attribute, cgltf_skin* skin, cgltf_node* nodeArray, unsigned int numbNodes) {
+        /*TODO*/ 
+    }
+
 }
 
 anim::Pose MakeRestPose(cgltf_data* data) {

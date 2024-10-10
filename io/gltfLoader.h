@@ -5,6 +5,7 @@
 #include "../animation/Clip.h"
 #include "../animation/Pose.h"
 #include "../animation/Armature.h"
+#include "../render/Mesh.h"
 
 namespace io {
 
@@ -30,5 +31,7 @@ anim::Pose MakeRestPose(cgltf_data* data);
 anim::Pose MakeBindPose(cgltf_data* data);
 
 anim::Armature MakeArmature(cgltf_data* data);
+
+std::vector<render::Mesh> LoadMeshes(cgltf_data* data);
 
 }
