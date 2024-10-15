@@ -140,6 +140,47 @@ anim::Pose MakeRestPose(cgltf_data* data) {
     return result;
 }
 
+anim::Pose MakeBindPose(cgltf_data* data) {
+    anim::Pose rest = MakeRestPose(data);
+    unsigned int numbBones = rest.Size();
+    std::vector<transforms::srt> worldSpaceBind(numbBones);
+    for (unsigned int i = 0; i < numbBones; i++) {
+        // default values in case a bone is missing in the gltf file
+        worldSpaceBind[i] = rest.GetWorldTransform(i); 
+    }
+    unsigned int numbSkins = data->skins_count;
+    for (unsigned int i = 0; i < numbSkins; i++) {
+        cgltf_skin* skin = &(data->skins[i]);
+        // stores the inverse bind bose matrices for each bone in a contigous vector
+        std::vector<float> values; 
+        helpers::ExtractValuesFromNodes(values, (4*4), *skin->inverse_bind_matrices);
+        unsigned int skinNumbBones = skin->joints_count;
+        for (unsigned int j = 0; j < skinNumbBones; j++) {
+            float* inverseBindBone = &(values[j * (4*4)]);
+            mat4f inverseBindMatrix = mat4f(inverseBindBone);
+            // finds the bind pose matrix by inverting the inverse bind pose
+            mat4f bindMatrix = inverse(inverseBindMatrix);
+            transforms::srt bindBone = transforms::toSRT(bindMatrix);
+            cgltf_node* boneNode = skin->joints[j];
+            int boneIndex = helpers::GetNodeIndex(boneNode, data->nodes, numbBones);
+            assert(boneIndex > 0);
+            worldSpaceBind[boneIndex] = bindBone;
+        }
+    }
+    // convert the world space bind pose bones to be relative to their parents
+    anim::Pose bindPose = rest;
+    for (unsigned int i = 0; i < numbBones; i++) {
+        transforms::srt bone = worldSpaceBind[i];
+        int parentIndex = bindPose.ParentIndexOf(i);
+        if (parentIndex >= 0) {
+            transforms::srt parent = worldSpaceBind[parentIndex];
+            bone = transforms::combine(transforms::inverse(parent), bone);
+        }
+        bindPose.SetLocalTransform(i, bone);
+    }
+    return bindPose;
+}
+
 cgltf_data* LoadGLTFFile(const char* path) {
     cgltf_options options{};
     cgltf_data* data = nullptr;
