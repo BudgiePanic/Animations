@@ -181,6 +181,14 @@ anim::Pose MakeBindPose(cgltf_data* data) {
     return bindPose;
 }
 
+anim::Armature MakeArmature(cgltf_data* data) {
+    return anim::Armature(
+        MakeRestPose(data),
+        MakeBindPose(data),
+        LoadBoneNames(data)
+    );
+}
+
 cgltf_data* LoadGLTFFile(const char* path) {
     cgltf_options options{};
     cgltf_data* data = nullptr;
