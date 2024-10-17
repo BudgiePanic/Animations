@@ -161,6 +161,7 @@
     <ClInclude Include="Vector4.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="animation\Armature.cpp" />
     <ClCompile Include="animation\Clip.cpp" />
     <ClCompile Include="animation\Pose.cpp" />
     <ClCompile Include="animation\Track.cpp" />
@@ -176,6 +177,7 @@
     <ClCompile Include="render\Attribute.cpp" />
     <ClCompile Include="render\Draw.cpp" />
     <ClCompile Include="render\IndexBuffer.cpp" />
+    <ClCompile Include="render\Mesh.cpp" />
     <ClCompile Include="render\Shader.cpp" />
     <ClCompile Include="render\Texture.cpp" />
     <ClCompile Include="render\Uniform.cpp" />
