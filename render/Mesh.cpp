@@ -60,52 +60,27 @@ void Mesh::Skin(anim::Armature& skeleton, anim::Pose& animatedPose) {
 	if (vertCount == 0) { return; } // no 'skin' to apply
 	this->skinnedPositions.resize(vertCount);
 	this->skinnedNormals.resize(vertCount);
-	anim::Pose& bindPose = skeleton.GetBindPose();
+	// write the animated pose bone's into the mat4f vector
+	animatedPose.ToMatrixPalette(this->posedBones);
+	std::vector<mat4f> invBindPose = skeleton.GetInverseBindPose();
 	// skinning every vertex
 	for (int i = 0; i < vertCount; i++) {
 		// bones that influence this vertex
-		i4& bones = this->boneIndices[i]; 
-		// skin the vertex to the first bone
-		transforms::srt skinningTransform0 = transforms::combine(
-			animatedPose[bones.x], 
-			transforms::inverse(bindPose[bones.x])
-		);
-		f3 skinnedVert0 = transforms::applyPoint(skinningTransform0, this->positions[i]);
-		f3 skinnedNorm0 = transforms::applyVector(skinningTransform0, this->normals[i]);
-		// skin the vertex to the second bone
-		transforms::srt skinningTransform1 = transforms::combine(
-			animatedPose[bones.y],
-			transforms::inverse(bindPose[bones.y])
-		);
-		f3 skinnedVert1 = transforms::applyPoint(skinningTransform1, this->positions[i]);
-		f3 skinnedNorm1 = transforms::applyVector(skinningTransform1, this->normals[i]);
-		// skin the vertex to the third bone
-		transforms::srt skinningTransform2 = transforms::combine(
-			animatedPose[bones.z],
-			transforms::inverse(bindPose[bones.z])
-		);
-		f3 skinnedVert2 = transforms::applyPoint(skinningTransform2, this->positions[i]);
-		f3 skinnedNorm2 = transforms::applyVector(skinningTransform2, this->normals[i]);
-		// skin the vertex to the fourth bone
-		transforms::srt skinningTransform3 = transforms::combine(
-			animatedPose[bones.w],
-			transforms::inverse(bindPose[bones.w])
-		);
-		f3 skinnedVert3 = transforms::applyPoint(skinningTransform3, this->positions[i]);
-		f3 skinnedNorm3 = transforms::applyVector(skinningTransform3, this->normals[i]);
-		// combine skinned verts and normals into a final skinned vertex and normal
+		i4& bones = this->boneIndices[i];
 		// how much each bone affects this vertex (if a bone has no influence, its weight will be zero)
-		f4& weights = this->boneWeights[i]; 
-		this->skinnedPositions[i] = 
-			skinnedVert0 * weights.x + 
-			skinnedVert1 * weights.y +
-			skinnedVert2 * weights.z +
-			skinnedVert3 * weights.w;
-		this->skinnedNormals[i] = 
-			skinnedNorm0 * weights.x +
-			skinnedNorm1 * weights.y +
-			skinnedNorm2 * weights.z +
-			skinnedNorm3 * weights.w;
+		f4& weights = this->boneWeights[i];
+		// matrix that skins to the first bone
+		mat4f skinningTransform0 = (this->posedBones[bones.x] * invBindPose[bones.x]) * weights.x;
+		// matrix that skins to the second bone
+		mat4f skinningTransform1 = (this->posedBones[bones.y] * invBindPose[bones.y]) * weights.y;
+		// matrix that skins to the third bone
+		mat4f skinningTransform2 = (this->posedBones[bones.z] * invBindPose[bones.z]) * weights.z;
+		// matrix that skins to the fourth bone
+		mat4f skinningTransform3 = (this->posedBones[bones.w] * invBindPose[bones.w]) * weights.w;
+		// combined matrix that skins to all of the bones
+		mat4f skinningTransform = skinningTransform0 + skinningTransform1 + skinningTransform2 + skinningTransform3;
+		this->skinnedPositions[i] = multiplyPoint(skinningTransform, this->positions[i]);
+		this->skinnedNormals[i] = multiplyVector(skinningTransform, this->normals[i]);
 	}
 	// tell the GPU about the work we've done
 	this->positionAttribute->Set(this->skinnedPositions);
