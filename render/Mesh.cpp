@@ -106,10 +106,10 @@ void Mesh::Skin(anim::Armature& skeleton, anim::Pose& animatedPose) {
 			skinnedNorm1 * weights.y +
 			skinnedNorm2 * weights.z +
 			skinnedNorm3 * weights.w;
-		// tell the GPU about the work we've done
-		this->positionAttribute->Set(this->skinnedPositions);
-		this->normalAttribute->Set(this->skinnedNormals);
 	}
+	// tell the GPU about the work we've done
+	this->positionAttribute->Set(this->skinnedPositions);
+	this->normalAttribute->Set(this->skinnedNormals);
 }
 
 void Mesh::SyncOpenGL() {
