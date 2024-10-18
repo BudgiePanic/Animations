@@ -69,13 +69,10 @@ void Mesh::Skin(anim::Armature& skeleton, anim::Pose& animatedPose) {
 		i4& bones = this->boneIndices[i];
 		// how much each bone affects this vertex (if a bone has no influence, its weight will be zero)
 		f4& weights = this->boneWeights[i];
-		// matrix that skins to the first bone
+		// create the skinning matrix
 		mat4f skinningTransform0 = (this->posedBones[bones.x] * invBindPose[bones.x]) * weights.x;
-		// matrix that skins to the second bone
 		mat4f skinningTransform1 = (this->posedBones[bones.y] * invBindPose[bones.y]) * weights.y;
-		// matrix that skins to the third bone
 		mat4f skinningTransform2 = (this->posedBones[bones.z] * invBindPose[bones.z]) * weights.z;
-		// matrix that skins to the fourth bone
 		mat4f skinningTransform3 = (this->posedBones[bones.w] * invBindPose[bones.w]) * weights.w;
 		// combined matrix that skins to all of the bones
 		mat4f skinningTransform = skinningTransform0 + skinningTransform1 + skinningTransform2 + skinningTransform3;
