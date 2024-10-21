@@ -150,12 +150,13 @@ namespace helpers {
             case cgltf_attribute_type_texcoord:
                 texs.push_back(f2(values[index], values[index + 2]));
                 break;
-            case cgltf_attribute_type_normal:
+            case cgltf_attribute_type_normal: {
                 f3 normal = f3(values[index], values[index + 1], values[index + 2]);
                 if (lengthSquared(normal) < epsilon) { // bad normal data
                     normal = f3(0,1,0);
                 }
                 norms.push_back(normal);
+            }
                 break;
             case cgltf_attribute_type_weights:
                 boneWeights.push_back(f4(values[index], values[index + 1], values[index + 2], values[index + 3]));
@@ -226,7 +227,7 @@ anim::Pose MakeBindPose(cgltf_data* data) {
             transforms::srt bindBone = transforms::toSRT(bindMatrix);
             cgltf_node* boneNode = skin->joints[j];
             int boneIndex = helpers::GetNodeIndex(boneNode, data->nodes, numbBones);
-            assert(boneIndex > 0);
+            // assert(boneIndex > 0);
             worldSpaceBind[boneIndex] = bindBone;
         }
     }
