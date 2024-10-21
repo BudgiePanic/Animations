@@ -252,6 +252,39 @@ anim::Armature MakeArmature(cgltf_data* data) {
     );
 }
 
+std::vector<render::Mesh> LoadMeshes(cgltf_data* data) {
+    // check all nodes, skip nodes that do not possess a mesh and skin
+    std::vector<render::Mesh> result;
+    cgltf_node* nodes = data->nodes;
+    unsigned int numbNodes = data->nodes_count;
+    for (int i = 0; i < numbNodes; i++) {
+        cgltf_node* node = &nodes[i];
+        if (node->mesh == 0 || node->skin == 0) { continue; }
+        cgltf_size primCount = node->mesh->primitives_count; // basically an unsigned int
+        for (int j = 0; j < primCount; j++) {
+            result.push_back(render::Mesh());
+            render::Mesh& mesh = result.back();
+            cgltf_primitive* primative = &node->mesh->primitives[j];
+            unsigned int attributeCount = primative->attributes_count;
+            for (unsigned int k = 0; k < attributeCount; k++) {
+                // extracting verts, norms, textCoords, and more attributes for the mesh
+                cgltf_attribute* attribute = &primative->attributes[k];
+                helpers::MeshFromAttribute(mesh, *attribute, node->skin, nodes, numbNodes);
+            }
+            if (primative->indices != 0) {
+                unsigned int indicesCount = primative->indices->count;
+                auto& indices = mesh.GetVertexIndices();
+                indices.resize(indicesCount);
+                for (unsigned int k = 0; k < indicesCount; k++) {
+                    indices[k] = cgltf_accessor_read_index(primative->indices, k);
+                }
+            }
+            mesh.SyncOpenGL();
+        }
+    }
+    return result;
+}
+
 cgltf_data* LoadGLTFFile(const char* path) {
     cgltf_options options{};
     cgltf_data* data = nullptr;
