@@ -6,6 +6,7 @@
 #include "../animation/Track.h"
 #include "../animation/Interpolate.h"
 #include "../animation/Frame.h"
+#include "../FloatHelp.h"
 
 namespace io {
 
@@ -120,9 +121,71 @@ namespace helpers {
     /// <param name="skin"></param>
     /// <param name="nodeArray"></param>
     /// <param name="numbNodes"></param>
-    void MeshFromAttribute(render::Mesh& mesh, 
-        cgltf_attribute*& attribute, cgltf_skin* skin, cgltf_node* nodeArray, unsigned int numbNodes) {
-        /*TODO*/ 
+    void MeshFromAttribute(render::Mesh& mesh,
+        cgltf_attribute& attribute, cgltf_skin* skin, cgltf_node* nodeArray, unsigned int numbNodes) {
+        cgltf_accessor& accessor = *attribute.data;
+        unsigned int numbComponents = 0;
+        if (accessor.type == cgltf_type_vec2) {
+            numbComponents = 2;
+        } else if (accessor.type == cgltf_type_vec3) {
+            numbComponents = 3;
+        } else if (accessor.type == cgltf_type_vec4) {
+            numbComponents = 4;
+        }
+        std::vector<float> values;
+        ExtractValuesFromNodes(values, numbComponents, accessor);
+        auto& verts = mesh.GetPositions();
+        auto& norms = mesh.GetNormals();
+        auto& texs = mesh.GetTextureCoords();
+        auto& bones = mesh.GetBoneIndices();
+        auto& boneWeights = mesh.GetBoneWeights();
+        unsigned int numbAccessors = accessor.count;
+        cgltf_attribute_type type = attribute.type;
+        for (unsigned int i = 0; i < numbAccessors; i++) {
+            int index = i * numbComponents;
+            switch (type) {
+            case cgltf_attribute_type_position:
+                verts.push_back(f3(values[index], values[index + 1], values[index + 2]));
+                break;
+            case cgltf_attribute_type_texcoord:
+                texs.push_back(f2(values[index], values[index + 2]));
+                break;
+            case cgltf_attribute_type_normal:
+                f3 normal = f3(values[index], values[index + 1], values[index + 2]);
+                if (lengthSquared(normal) < epsilon) { // bad normal data
+                    normal = f3(0,1,0);
+                }
+                norms.push_back(normal);
+                break;
+            case cgltf_attribute_type_weights:
+                boneWeights.push_back(f4(values[index], values[index + 1], values[index + 2], values[index + 3]));
+                break;
+            case cgltf_attribute_type_joints:
+                int a = (int) (values[index] + 0.5f); 
+                int b = (int) (values[index + 1] + 0.5f);
+                int c = (int) (values[index + 2] + 0.5f);
+                int d = (int) (values[index + 3] + 0.5f);
+                // joint indices are relative to the joint array 
+                // need to convert to be joints in the armature hierarchy
+                i4 joints(a,b,c,d);
+                auto node = skin->joints[joints.x];
+                joints.x = GetNodeIndex(node, nodeArray, numbNodes);
+                node = skin->joints[joints.y];
+                joints.y = GetNodeIndex(node, nodeArray, numbNodes);
+                node = skin->joints[joints.z];
+                joints.z = GetNodeIndex(node, nodeArray, numbNodes);
+                node = skin->joints[joints.w];
+                joints.w = GetNodeIndex(node, nodeArray, numbNodes);
+                // check for invalid values
+                // technically we could modify our skinning algorithm to ignore negative joints but whatever, the CPU is fast
+                joints.x = (joints.x < 0) ? 0 : joints.x;
+                joints.y = (joints.y < 0) ? 0 : joints.y;
+                joints.z = (joints.z < 0) ? 0 : joints.z;
+                joints.w = (joints.w < 0) ? 0 : joints.w;
+                bones.push_back(joints);
+                break;
+            }
+        }
     }
 
 }
