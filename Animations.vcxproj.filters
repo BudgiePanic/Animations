@@ -193,6 +193,7 @@
     <None Include="LICENSE" />
     <None Include="resource\shaders\static_vert.glsl" />
     <None Include="resource\shaders\frag_lit.glsl" />
+    <None Include="resource\shaders\skinned_vert.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\assets\uv.png">
