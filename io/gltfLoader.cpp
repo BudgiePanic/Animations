@@ -258,11 +258,11 @@ std::vector<render::Mesh> LoadMeshes(cgltf_data* data) {
     std::vector<render::Mesh> result;
     cgltf_node* nodes = data->nodes;
     unsigned int numbNodes = data->nodes_count;
-    for (int i = 0; i < numbNodes; i++) {
+    for (unsigned int i = 0; i < numbNodes; i++) {
         cgltf_node* node = &nodes[i];
         if (node->mesh == 0 || node->skin == 0) { continue; }
         cgltf_size primCount = node->mesh->primitives_count; // basically an unsigned int
-        for (int j = 0; j < primCount; j++) {
+        for (unsigned int j = 0; j < primCount; j++) {
             result.push_back(render::Mesh());
             render::Mesh& mesh = result.back();
             cgltf_primitive* primative = &node->mesh->primitives[j];
