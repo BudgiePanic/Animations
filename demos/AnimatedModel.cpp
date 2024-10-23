@@ -63,6 +63,8 @@ namespace demos {
 		this->gpuMeshes.clear();
 	}
 
+	float elapsedTime = 0.0f;
+
 	void AnimatedModel::Update(float deltaTime) {
 		// update the animated pose by sampling the animations
 		AnimationData& cpuSide = this->cpuAnimation;
@@ -80,6 +82,12 @@ namespace demos {
 		}
 		// write the T posed GPU meshes to vector as preperation for rendering/GPU skinning
 		this->gpuAnimation.currentPose.ToMatrixPalette(this->gpuAnimation.bonesAsMatrices);
+		elapsedTime += deltaTime;
+		if (elapsedTime > 5.0f) {
+			elapsedTime = 0.0f;
+			cpuSide.currentClip = (cpuSide.currentClip + 1) % this->clips.size();
+			gpuSide.currentClip = cpuSide.currentClip;
+		}
 	}
 
 	void AnimatedModel::Render(float aspectRatio) {
