@@ -148,7 +148,7 @@ namespace helpers {
                 verts.push_back(f3(values[index], values[index + 1], values[index + 2]));
                 break;
             case cgltf_attribute_type_texcoord:
-                texs.push_back(f2(values[index], values[index + 2]));
+                texs.push_back(f2(values[index], values[index + 1]));
                 break;
             case cgltf_attribute_type_normal: {
                 f3 normal = f3(values[index], values[index + 1], values[index + 2]);
