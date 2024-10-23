@@ -137,6 +137,7 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="cgltf.h" />
     <ClInclude Include="curves\curve.h" />
+    <ClInclude Include="demos\AnimatedModel.h" />
     <ClInclude Include="demos\DrawQuad.h" />
     <ClInclude Include="demos\SimpleAnimationPlayer.h" />
     <ClInclude Include="FloatHelp.h" />
@@ -167,6 +168,7 @@
     <ClCompile Include="animation\Track.cpp" />
     <ClCompile Include="animation\TransformTrack.cpp" />
     <ClCompile Include="cgltf.cpp" />
+    <ClCompile Include="demos\AnimatedModel.cpp" />
     <ClCompile Include="demos\DrawQuad.cpp" />
     <ClCompile Include="demos\SimpleAnimationPlayer.cpp" />
     <ClCompile Include="glad.c" />
