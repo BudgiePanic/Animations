@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="animation\Armature.h" />
     <ClInclude Include="animation\Clip.h" />
     <ClInclude Include="animation\Frame.h" />
     <ClInclude Include="animation\Interpolate.h" />
@@ -136,6 +137,7 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="cgltf.h" />
     <ClInclude Include="curves\curve.h" />
+    <ClInclude Include="demos\AnimatedModel.h" />
     <ClInclude Include="demos\DrawQuad.h" />
     <ClInclude Include="demos\SimpleAnimationPlayer.h" />
     <ClInclude Include="FloatHelp.h" />
@@ -148,6 +150,7 @@
     <ClInclude Include="render\Attribute.h" />
     <ClInclude Include="render\Draw.h" />
     <ClInclude Include="render\IndexBuffer.h" />
+    <ClInclude Include="render\Mesh.h" />
     <ClInclude Include="render\Shader.h" />
     <ClInclude Include="render\Texture.h" />
     <ClInclude Include="render\Uniform.h" />
@@ -159,11 +162,13 @@
     <ClInclude Include="Vector4.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="animation\Armature.cpp" />
     <ClCompile Include="animation\Clip.cpp" />
     <ClCompile Include="animation\Pose.cpp" />
     <ClCompile Include="animation\Track.cpp" />
     <ClCompile Include="animation\TransformTrack.cpp" />
     <ClCompile Include="cgltf.cpp" />
+    <ClCompile Include="demos\AnimatedModel.cpp" />
     <ClCompile Include="demos\DrawQuad.cpp" />
     <ClCompile Include="demos\SimpleAnimationPlayer.cpp" />
     <ClCompile Include="glad.c" />
@@ -174,6 +179,7 @@
     <ClCompile Include="render\Attribute.cpp" />
     <ClCompile Include="render\Draw.cpp" />
     <ClCompile Include="render\IndexBuffer.cpp" />
+    <ClCompile Include="render\Mesh.cpp" />
     <ClCompile Include="render\Shader.cpp" />
     <ClCompile Include="render\Texture.cpp" />
     <ClCompile Include="render\Uniform.cpp" />
@@ -186,6 +192,7 @@
   <ItemGroup>
     <None Include="LICENSE" />
     <None Include="resource\shaders\frag_lit.glsl" />
+    <None Include="resource\shaders\skinned_vert.glsl" />
     <None Include="resource\shaders\static_vert.glsl" />
   </ItemGroup>
   <ItemGroup>

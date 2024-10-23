@@ -73,7 +73,7 @@ namespace transforms {
         mat4f rotationScaleSkew(
             transform.v[0], transform.v[1], transform.v[2], 0.0f,
             transform.v[4], transform.v[5], transform.v[6], 0.0f,
-            transform.v[7], transform.v[8], transform.v[9], 0.0f,
+            transform.v[8], transform.v[9], transform.v[10], 0.0f,
             0.0f, 0.0f, 0.0f, 1.0f
         );
         mat4f rotationInverse = rotation::toMatrix(inverse(result.rotation));
