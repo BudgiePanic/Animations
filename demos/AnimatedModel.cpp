@@ -30,7 +30,7 @@ namespace demos {
 			"./resource/shaders/skinned_vert.glsl",
 			"./resource/shaders/frag_lit.glsl"
 		);
-		this->texture = new render::Texture("./resources/assets/Woman.png");
+		this->texture = new render::Texture("./resource/assets/Woman.png");
 
 		unsigned int numbClips = this->clips.size();
 		unsigned int clipToPlay = 0;
