@@ -84,6 +84,10 @@ void Mesh::Skin(anim::Armature& skeleton, anim::Pose& animatedPose) {
 	this->normalAttribute->Set(this->skinnedNormals);
 }
 
+void Mesh::Skin(std::vector<mat4f>& posedBones) {
+
+}
+
 void Mesh::SyncOpenGL() {
 	if (this->boneIndices.size() > 0) {
 		this->boneIndexAttribute->Set(this->boneIndices);
