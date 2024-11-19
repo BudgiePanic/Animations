@@ -27,7 +27,7 @@ namespace demos {
 			"./resource/shaders/frag_lit.glsl"
 		);
 		this->gpuShader = new render::Shader(
-			"./resource/shaders/skinned_vert.glsl",
+			"./resource/shaders/skinned_vert_simple.glsl",
 			"./resource/shaders/frag_lit.glsl"
 		);
 		this->texture = new render::Texture("./resource/assets/Woman.png");
@@ -84,10 +84,14 @@ namespace demos {
 				cpuSide.bonesAsMatrices[k] = cpuSide.bonesAsMatrices[k] * inverseBindPose[k]; // write the skinning transform into the bone buffer instead
 			}
 			this->cpuMeshes[i].Skin(cpuSide.bonesAsMatrices);
-			/* this->cpuMeshes[i].Skin(this->skeleton, this->cpuAnimation.currentPose); // mutates the cpu meshes internal data structures */
+			/* this->cpuMeshes[i].Skin(this->skeleton, this->cpuAnimation.currentPose); // mutates the cpu meshes internal data structures | the old skinning method */
 		}
-		// write the T posed GPU meshes to vector as preperation for rendering/GPU skinning
+		// prepare the skinning transforms for rendering/GPU skinning
 		this->gpuAnimation.currentPose.ToMatrixPalette(this->gpuAnimation.bonesAsMatrices);
+		std::vector<mat4f>& inverseBindPose = this->skeleton.GetInverseBindPose();
+		for (int k = 0; k < gpuSide.bonesAsMatrices.size(); k++) {
+			gpuSide.bonesAsMatrices[k] = gpuSide.bonesAsMatrices[k] * inverseBindPose[k];
+		}
 		elapsedTime += deltaTime;
 		if (elapsedTime > 5.0f) {
 			elapsedTime = 0.0f;
@@ -133,8 +137,7 @@ namespace demos {
 		render::Uniform<mat4f>::Set(this->gpuShader->GetUniform("view_transform", wasUniformFound), view);
 		render::Uniform<mat4f>::Set(this->gpuShader->GetUniform("projection", wasUniformFound), projection);
 		render::Uniform<f3>::Set(this->gpuShader->GetUniform("sky_light_direction", wasUniformFound), f3(1, 1, 1));
-		render::Uniform<mat4f>::Set(this->gpuShader->GetUniform("posedBones", wasUniformFound), this->gpuAnimation.bonesAsMatrices);
-		render::Uniform<mat4f>::Set(this->gpuShader->GetUniform("inverseBindPose", wasUniformFound), this->skeleton.GetInverseBindPose());
+		render::Uniform<mat4f>::Set(this->gpuShader->GetUniform("animatedBones", wasUniformFound), this->gpuAnimation.bonesAsMatrices);
 
 		for (unsigned int i = 0, numbMeshes = (unsigned int)this->gpuMeshes.size(); i < numbMeshes; i++) {
 			// upload per vertex data to GPU
