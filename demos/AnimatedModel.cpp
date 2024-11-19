@@ -78,7 +78,13 @@ namespace demos {
 
 		// perform CPU skinning
 		for (unsigned int i = 0, numbMeshes = (unsigned int)this->cpuMeshes.size(); i < numbMeshes; i++) {
-			this->cpuMeshes[i].Skin(this->skeleton, this->cpuAnimation.currentPose); // mutates the cpu meshes internal data structures
+			cpuSide.currentPose.ToMatrixPalette(cpuSide.bonesAsMatrices); // overwrite bonesAsMatrix vector with current animated pose
+			std::vector<mat4f>& inverseBindPose = this->skeleton.GetInverseBindPose();
+			for (int k = 0; k < cpuSide.bonesAsMatrices.size(); k++) {
+				cpuSide.bonesAsMatrices[k] = cpuSide.bonesAsMatrices[k] * inverseBindPose[k]; // write the skinning transform into the bone buffer instead
+			}
+			this->cpuMeshes[i].Skin(cpuSide.bonesAsMatrices);
+			/* this->cpuMeshes[i].Skin(this->skeleton, this->cpuAnimation.currentPose); // mutates the cpu meshes internal data structures */
 		}
 		// write the T posed GPU meshes to vector as preperation for rendering/GPU skinning
 		this->gpuAnimation.currentPose.ToMatrixPalette(this->gpuAnimation.bonesAsMatrices);

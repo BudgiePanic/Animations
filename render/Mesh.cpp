@@ -85,7 +85,35 @@ void Mesh::Skin(anim::Armature& skeleton, anim::Pose& animatedPose) {
 }
 
 void Mesh::Skin(std::vector<mat4f>& posedBones) {
-
+	unsigned int numbVerts = this->positions.size();
+	if (numbVerts == 0) { return; } // nothing to skin
+	this->skinnedPositions.resize(numbVerts);
+	this->skinnedNormals.resize(numbVerts);
+	// skin every vertex
+	for (unsigned int i = 0; i < numbVerts; i++) {
+		i4& bones = this->boneIndices[i]; // which bones affect this vertex
+		f4& weights = this->boneWeights[i]; // how much the bones affect the vertex. Invalid bones will have a weight of zero
+		f3& vertex = this->positions[i];
+		f3 posedVertX = multiplyPoint(posedBones[bones.x], vertex);
+		f3 posedVertY = multiplyPoint(posedBones[bones.y], vertex);
+		f3 posedVertZ = multiplyPoint(posedBones[bones.z], vertex);
+		f3 posedVertW = multiplyPoint(posedBones[bones.w], vertex);
+		this->skinnedPositions[i] = (posedVertX * weights.x) +
+									(posedVertY * weights.y) +
+									(posedVertZ * weights.z) +
+									(posedVertW * weights.w);
+		f3& normal = this->normals[i];
+		f3 posedNormX = multiplyVector(posedBones[bones.x], normal);
+		f3 posedNormY = multiplyVector(posedBones[bones.y], normal);
+		f3 posedNormZ = multiplyVector(posedBones[bones.z], normal);
+		f3 posedNormW = multiplyVector(posedBones[bones.w], normal);
+		this->skinnedNormals[i] = (posedNormX * weights.x) +
+								  (posedNormY * weights.y) +
+								  (posedNormZ * weights.z) +
+								  (posedNormW * weights.w);
+	}
+	this->positionAttribute->Set(this->skinnedPositions);
+	this->normalAttribute->Set(this->skinnedNormals);
 }
 
 void Mesh::SyncOpenGL() {
