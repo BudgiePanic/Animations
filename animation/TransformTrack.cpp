@@ -1,23 +1,37 @@
 #include "TransformTrack.h"
 #include <limits>
+#define dev_machine_fps 144.0f
 
 namespace anim{
 
-SRTtrack::SRTtrack() {
+template ISRTtrack<TrackVector, TrackQuaternion>;
+template ISRTtrack<QuickTrackVector, QuickTrackQuaternion>;
+
+ISRTtrack<TrackVector, TrackQuaternion>::ISRTtrack() {
 	this->id = 0;
 }
 
-unsigned int SRTtrack::GetID() { return this->id; }
+ISRTtrack<QuickTrackVector, QuickTrackQuaternion>::ISRTtrack() : scale(dev_machine_fps), translation(dev_machine_fps), rotation(dev_machine_fps) {
+	this->id = 0;
+}
 
-void SRTtrack::SetID(unsigned int id) { this->id = id; }
+template<typename VECTORTRACKTYPE, typename QUATERNIONTRACKTYPE>
+unsigned int ISRTtrack<VECTORTRACKTYPE, QUATERNIONTRACKTYPE>::GetID() { return this->id; }
 
-TrackVector& SRTtrack::GetScaleTrack() { return this->scale; }
+template<typename VECTORTRACKTYPE, typename QUATERNIONTRACKTYPE>
+void ISRTtrack<VECTORTRACKTYPE, QUATERNIONTRACKTYPE>::SetID(unsigned int id) { this->id = id; }
 
-TrackQuaternion& SRTtrack::GetQuaternionTrack() { return this->rotation; }
+template<typename VECTORTRACKTYPE, typename QUATERNIONTRACKTYPE>
+VECTORTRACKTYPE& ISRTtrack<VECTORTRACKTYPE, QUATERNIONTRACKTYPE>::GetScaleTrack() { return this->scale; }
 
-TrackVector& SRTtrack::GetTranslationTrack() { return this->translation; }
+template<typename VECTORTRACKTYPE, typename QUATERNIONTRACKTYPE>
+QUATERNIONTRACKTYPE& ISRTtrack<VECTORTRACKTYPE, QUATERNIONTRACKTYPE>::GetQuaternionTrack() { return this->rotation; }
 
-float SRTtrack::GetStartTime() {
+template<typename VECTORTRACKTYPE, typename QUATERNIONTRACKTYPE>
+VECTORTRACKTYPE& ISRTtrack<VECTORTRACKTYPE, QUATERNIONTRACKTYPE>::GetTranslationTrack() { return this->translation; }
+
+template<typename VECTORTRACKTYPE, typename QUATERNIONTRACKTYPE>
+float ISRTtrack<VECTORTRACKTYPE, QUATERNIONTRACKTYPE>::GetStartTime() {
 	static_assert(std::numeric_limits<float>::is_iec559, "No IEEE 754 :(");
 	float scaleStart = std::numeric_limits<float>::infinity();
 	float rotationStart = scaleStart;
@@ -35,7 +49,8 @@ float SRTtrack::GetStartTime() {
 	return translationStart < scaleRotationSmallest ? translationStart : scaleRotationSmallest;
 }
 
-float SRTtrack::GetEndTime() {
+template<typename VECTORTRACKTYPE, typename QUATERNIONTRACKTYPE>
+float ISRTtrack<VECTORTRACKTYPE, QUATERNIONTRACKTYPE>::GetEndTime() {
 	static_assert(std::numeric_limits<float>::is_iec559, "No IEEE 754 :(");
 	float scaleEnd = -1.0f * std::numeric_limits<float>::infinity();
 	float rotationEnd = scaleEnd;
@@ -53,7 +68,8 @@ float SRTtrack::GetEndTime() {
 	return translationEnd > scaleRotationLargest ? translationEnd : scaleRotationLargest;
 }
 
-bool SRTtrack::hasValidTrack() {
+template<typename VECTORTRACKTYPE, typename QUATERNIONTRACKTYPE>
+bool ISRTtrack<VECTORTRACKTYPE, QUATERNIONTRACKTYPE>::hasValidTrack() {
 	bool result = false; 
 	result |= this->rotation.Size() > 1;
 	result |= this->scale.Size() > 1;
@@ -61,7 +77,8 @@ bool SRTtrack::hasValidTrack() {
 	return result;
 }
 
-transforms::srt SRTtrack::Sample(const transforms::srt& referencePose, float time, bool isTrackLooping)
+template<typename VECTORTRACKTYPE, typename QUATERNIONTRACKTYPE>
+transforms::srt ISRTtrack<VECTORTRACKTYPE, QUATERNIONTRACKTYPE>::Sample(const transforms::srt& referencePose, float time, bool isTrackLooping)
 {
 	transforms::srt result = referencePose; // make a copy of the reference pose
 	if (this->translation.Size() > 1) {
@@ -74,6 +91,15 @@ transforms::srt SRTtrack::Sample(const transforms::srt& referencePose, float tim
 		result.scale = this->scale.Sample(time, isTrackLooping);
 	}
 	return result;
+}
+
+QuickSRTtrack ToQuickSRTtrack(SRTtrack& slowTrack) {
+	QuickSRTtrack answer;
+	answer.SetID(slowTrack.GetID());
+	answer.GetTranslationTrack() = ToQuickTrack<f3, 3>(slowTrack.GetTranslationTrack());
+	answer.GetQuaternionTrack() = ToQuickTrack<rotation::quaternion, 4>(slowTrack.GetQuaternionTrack());
+	answer.GetScaleTrack() = ToQuickTrack<f3, 3>(slowTrack.GetScaleTrack());
+	return answer;
 }
 
 }
