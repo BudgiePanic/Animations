@@ -1,4 +1,5 @@
 #include "QuickTrack.h"
+#define dev_machine_fps 144.0f // need a better way to get the current sample rate from the application at runtime
 
 namespace anim {
 	
@@ -73,6 +74,23 @@ namespace anim {
 			expectedFramesPerSecond = 1.0f;
 		}
 		this->expectedFramesPerSecond = expectedFramesPerSecond;
+	}
+
+	template QuickTrack<float, 1> ToQuickTrack(Track<float, 1>& track);
+	template QuickTrack<f3, 3> ToQuickTrack(Track<f3, 3>& track);
+	template QuickTrack<rotation::quaternion, 4> ToQuickTrack(Track<rotation::quaternion, 4>& track);
+
+	template<typename T, int FrameDimension>
+	QuickTrack<T, FrameDimension> ToQuickTrack(Track<T, FrameDimension>& slowTrack) {
+		QuickTrack<T, FrameDimension> answer(dev_machine_fps);
+		answer.SetInterpolationMethod(slowTrack.GetInterpolationMethod());
+		unsigned int trackSize = slowTrack.Size();
+		answer.Resize(trackSize);
+		for (unsigned int i = 0; i < trackSize; i++) {
+			answer[i] = slowTrack[i];
+		}
+		answer.RecalculateFrameIndexCache(); // o7
+		return answer;
 	}
 
 }

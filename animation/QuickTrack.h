@@ -23,4 +23,14 @@ namespace anim {
 	typedef QuickTrack<f3, 3> QuickTrackVector;
 	typedef QuickTrack<rotation::quaternion, 4> QuickTrackQuaternion;
 
+	/// <summary>
+	/// Converts a track using the original track implementation into a quick track for faster sampling.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <typeparam name="FrameDimension"></typeparam>
+	/// <param name="slowTrack"></param>
+	/// <returns></returns>
+	template<typename T, int FrameDimension>
+	QuickTrack<T, FrameDimension> ToQuickTrack(Track<T, FrameDimension>& slowTrack);
+
 }
