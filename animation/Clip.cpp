@@ -2,7 +2,11 @@
 
 namespace anim {
 
-	float Clip::ClipTime(float time) {
+	template IClip<SRTtrack>;
+	template IClip<QuickSRTtrack>;
+
+	template<typename TRACKIMPLTYPE>
+	float IClip<TRACKIMPLTYPE>::ClipTime(float time) {
 		if (this->doesClipLoop) {
 			float clipDuration = endTime - startTime;
 			if (clipDuration <= 0.0f) { return 0.0f; } // invalid clip data
@@ -16,38 +20,44 @@ namespace anim {
 		return time;
 	}
 
-	Clip::Clip() {
+	template<typename TRACKIMPLTYPE>
+	IClip<TRACKIMPLTYPE>::IClip() {
 		this->clipName = "Unnamed animation clip";
 		this->startTime = 0.0f;
 		this->endTime = 0.0f;
 		this->doesClipLoop = true;
 	}
 
-	unsigned int Clip::Size() {
+	template<typename TRACKIMPLTYPE>
+	unsigned int IClip<TRACKIMPLTYPE>::Size() {
 		return (unsigned int) this->tracks.size();
 	}
 
-	unsigned int Clip::GetTrackBoneIDAtIndex(unsigned int index) {
+	template<typename TRACKIMPLTYPE>
+	unsigned int IClip<TRACKIMPLTYPE>::GetTrackBoneIDAtIndex(unsigned int index) {
 		return this->tracks[index].GetID();
 	}
 
-	void Clip::SetTrackBoneID(unsigned int trackIndex, unsigned int boneID)	{
+	template<typename TRACKIMPLTYPE>
+	void IClip<TRACKIMPLTYPE>::SetTrackBoneID(unsigned int trackIndex, unsigned int boneID)	{
 		this->tracks[trackIndex].SetID(boneID);
 	}
 
-	SRTtrack& Clip::operator[](unsigned int boneID)	{
+	template<typename TRACKIMPLTYPE>
+	TRACKIMPLTYPE& IClip<TRACKIMPLTYPE>::operator[](unsigned int boneID)	{
 		int numbTracks = tracks.size();
 		for (int track = 0; track < numbTracks; track++) {
 			if (tracks[track].GetID() == boneID) {
 				return tracks[track];
 			}
 		}
-		tracks.push_back(SRTtrack());
+		tracks.push_back(TRACKIMPLTYPE());
 		tracks.back().SetID(boneID);
 		return tracks.back();
 	}
 
-	float Clip::Sample(Pose& pose, float time)
+	template<typename TRACKTYPEIMPL>
+	float IClip<TRACKTYPEIMPL>::Sample(Pose& pose, float time)
 	{
 		if (this->GetDuration() == 0.0f) { return 0.0f; }
 		time = this->ClipTime(time);
@@ -61,7 +71,8 @@ namespace anim {
 		return time;
 	}
 
-	void Clip::CalculateClipDuration() {
+	template<typename TRACKTYPEIMPL>
+	void IClip<TRACKTYPEIMPL>::CalculateClipDuration() {
 		this->startTime = 0.0f;
 		this->endTime = 0.0f;
 		bool foundStartTime = false;
@@ -83,32 +94,52 @@ namespace anim {
 		}
 	}
 
-	std::string& Clip::GetClipName() {
+	template<typename TRACKTYPEIMPL>
+	std::string& IClip<TRACKTYPEIMPL>::GetClipName() {
 		return this->clipName;
 	}
 
-	void Clip::SetClipName(std::string& name) {
+	template<typename TRACKTYPEIMPL>
+	void IClip<TRACKTYPEIMPL>::SetClipName(std::string& name) {
 		this->clipName = name;
 	}
 
-	float Clip::GetDuration() {
+	template<typename TRACKTYPEIMPL>
+	float IClip<TRACKTYPEIMPL>::GetDuration() {
 		return this->endTime - this->startTime;
 	}
 
-	float Clip::GetStartTime() {
+	template<typename TRACKTYPEIMPL>
+	float IClip<TRACKTYPEIMPL>::GetStartTime() {
 		return this->startTime;
 	}
 
-	float Clip::GetEndTime() {
+	template<typename TRACKTYPEIMPL>
+	float IClip<TRACKTYPEIMPL>::GetEndTime() {
 		return this->endTime;
 	}
 
-	bool Clip::DoesClipLoop() {
+	template<typename TRACKTYPEIMPL>
+	bool IClip<TRACKTYPEIMPL>::DoesClipLoop() {
 		return this->doesClipLoop;
 	}
 
-	void Clip::SetClipLooping(bool doesClipLoop) {
+	template<typename TRACKTYPEIMPL>
+	void IClip<TRACKTYPEIMPL>::SetClipLooping(bool doesClipLoop) {
 		this->doesClipLoop = doesClipLoop;
+	}
+
+	QuickClip ToQuickClip(Clip& slowClip) {
+		QuickClip answer;
+		answer.SetClipName(slowClip.GetClipName());
+		answer.SetClipLooping(slowClip.DoesClipLoop());
+		unsigned int numbBones = slowClip.Size();
+		for (unsigned int i = 0; i < numbBones; i++) {
+			unsigned int bone = slowClip.GetTrackBoneIDAtIndex(i);
+			answer[bone] = ToQuickSRTtrack(slowClip[bone]);
+		}
+		answer.CalculateClipDuration();
+		return answer;
 	}
 
 }
