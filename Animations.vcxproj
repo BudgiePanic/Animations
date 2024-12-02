@@ -131,6 +131,7 @@
     <ClInclude Include="animation\Clip.h" />
     <ClInclude Include="animation\Frame.h" />
     <ClInclude Include="animation\Interpolate.h" />
+    <ClInclude Include="animation\Rearrangement.h" />
     <ClInclude Include="animation\Pose.h" />
     <ClInclude Include="animation\QuickTrack.h" />
     <ClInclude Include="animation\Track.h" />
@@ -167,6 +168,7 @@
     <ClCompile Include="animation\Clip.cpp" />
     <ClCompile Include="animation\Pose.cpp" />
     <ClCompile Include="animation\QuickTrack.cpp" />
+    <ClCompile Include="animation\Rearrangement.cpp" />
     <ClCompile Include="animation\Track.cpp" />
     <ClCompile Include="animation\TransformTrack.cpp" />
     <ClCompile Include="cgltf.cpp" />
