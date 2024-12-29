@@ -19,10 +19,10 @@ std::map<int, int> RearrangeArmature(Armature& armature) {
         int parentBoneIdx = restPose.ParentIndexOf(i);
         if (parentBoneIdx >= 0) {
             std::vector<int>& parentBonesChildren = boneHierarchy[parentBoneIdx];
-            parentBonesChildren.push_back(i);
+            parentBonesChildren.push_back((int)i);
         } else {
             // root bone
-            idk.push_back(i);
+            idk.push_back((int)i);
         }
     }
     std::map<int, int> toNewBoneOrder; // forward (original bone idx -> new bone idx)
@@ -63,15 +63,34 @@ std::map<int, int> RearrangeArmature(Armature& armature) {
 }
 
 void RearrangeMesh(render::Mesh& mesh, std::map<int, int>& boneRemapping) {
-
+    std::vector<i4>& boneIndices = mesh.GetBoneIndices(); // which bones affect each vertex
+    unsigned int numbBoneInfluences = (unsigned int)boneIndices.size();
+    for (unsigned int i = 0; i < numbBoneInfluences; i++) {
+        boneIndices[i].x = boneRemapping[boneIndices[i].x];
+        boneIndices[i].y = boneRemapping[boneIndices[i].y];
+        boneIndices[i].z = boneRemapping[boneIndices[i].z];
+        boneIndices[i].w = boneRemapping[boneIndices[i].w];
+    }
+    mesh.SyncOpenGL();
 }
 
 void RearrangeClip(Clip& clip, std::map<int, int>& boneRemapping) {
-
+    unsigned int numbClips = clip.Size();
+    for (unsigned int i = 0; i < numbClips; i++) {
+        int bone = (int)clip.GetTrackBoneIDAtIndex(i);
+        unsigned int mappedBone = (unsigned int)boneRemapping[bone];
+        clip.SetTrackBoneID(i, mappedBone);
+    }
 }
 
 void RearrangeQuickClip(QuickClip& clip, std::map<int, int>& boneRemapping) {
-
+    // this should work
+    unsigned int numbClips = clip.Size();
+    for (unsigned int i = 0; i < numbClips; i++) {
+        int bone = (int)clip.GetTrackBoneIDAtIndex(i);
+        unsigned int mappedBone = (unsigned int)boneRemapping[bone];
+        clip.SetTrackBoneID(i, mappedBone);
+    }
 }
 
 }
