@@ -76,6 +76,12 @@ namespace render {
 		/// <param name="animatedPose"></param>
 		void Skin(anim::Armature& skeleton, anim::Pose& animatedPose);
 		/// <summary>
+		/// Perform CPU side mesh skinning with precalculated skinning transforms
+		/// Updates the meshes internal datastructures that store skinned vertices and normals
+		/// </summary>
+		/// <param name="posedBones">The result of each bone: [animatedPose[bone] * invBindPose[bone]]</param>
+		void Skin(std::vector<mat4f>& posedBones);
+		/// <summary>
 		/// Synchronises the data on the GPU with the data stored in this mesh.
 		/// Should be called after skinning is completed.
 		/// </summary>

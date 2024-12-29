@@ -9,12 +9,14 @@ namespace anim{
 	/// <summary>
 	/// Animation Clip stores a collection of animation tracks.
 	/// </summary>
-	class Clip {
+	/// <typeparam name="TRACKIMPLTYPE">The track type that underlies the clip implementation</typeparam>
+	template<typename TRACKIMPLTYPE>
+	class IClip {
 	protected:
 		/// <summary>
 		/// Each entry in tracks describes the change of one bone over time.
 		/// </summary>
-		std::vector<SRTtrack> tracks;
+		std::vector<TRACKIMPLTYPE> tracks;
 		std::string clipName;
 		float startTime;
 		float endTime;
@@ -27,7 +29,7 @@ namespace anim{
 		/// <returns></returns>
 		float ClipTime(float time);
 	public:
-		Clip();
+		IClip();
 		/// <summary>
 		/// Get the number of bones this animation clip is supposed to work with
 		/// </summary>
@@ -51,7 +53,7 @@ namespace anim{
 		/// </summary>
 		/// <param name="boneID"></param>
 		/// <returns></returns>
-		SRTtrack& operator[](unsigned int boneID);
+		TRACKIMPLTYPE& operator[](unsigned int boneID);
 		/// <summary>
 		/// Samples the animation clip and writes the resulting pose into pose.
 		/// Does nothing if the clip contains no valid animation data.
@@ -70,4 +72,16 @@ namespace anim{
 		bool DoesClipLoop();
 		void SetClipLooping(bool doesClipLoop);
 	};
+
+	typedef IClip<SRTtrack> Clip; // The classic animation clip type, intenral animation tracks use linear search when sampling
+	typedef IClip<QuickSRTtrack> QuickClip; // A clip that uses cached, constant cost search tracks
+
+	/// <summary>
+	/// Convert a normal Clip to a quick clip, that uses constant lookup when sampling.
+	/// Expensive function, call during program initialization.
+	/// </summary>
+	/// <param name="slowClip"></param>
+	/// <returns></returns>
+	QuickClip ToQuickClip(Clip& slowClip);
+
 }

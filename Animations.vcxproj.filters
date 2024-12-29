@@ -114,6 +114,9 @@
     <ClInclude Include="demos\AnimatedModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="animation\QuickTrack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -194,12 +197,16 @@
     <ClCompile Include="demos\AnimatedModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="animation\QuickTrack.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="LICENSE" />
     <None Include="resource\shaders\static_vert.glsl" />
     <None Include="resource\shaders\frag_lit.glsl" />
     <None Include="resource\shaders\skinned_vert.glsl" />
+    <None Include="resource\shaders\skinned_vert_simple.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\assets\uv.png">

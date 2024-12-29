@@ -68,7 +68,7 @@ namespace anim {
 		/// <param name="time"></param>
 		/// <param name="isTrackLooping"></param>
 		/// <returns></returns>
-		int FrameIndexAt(float time, bool isTrackLooping);
+		virtual int FrameIndexAt(float time, bool isTrackLooping);
 		/// <summary>
 		/// Converts timestamps outside the track's valid range into valid time stamps.
 		/// </summary>

@@ -1,28 +1,33 @@
 #pragma once
 #include "Track.h"
 #include "../transforms/srt.h"
+#include "QuickTrack.h"
 
 namespace anim {
 
 	/// <summary>
-	/// The SRT track stores the scale, rotation, translation keyframes for one bone for one animation
+	/// The ISRT track stores the scale, rotation, translation keyframes for one bone for one animation.
+	/// It is templated to have both a legacy track and quick track implementation
 	/// </summary>
-	class SRTtrack {
+	/// <typeparam name="VECTORTRACKTYPE">the implementation type of the vector tracks (quick or legacy)</typeparam>
+	/// <typeparam name="QUATERNIONTRACKTYPE">the implementation type of the quaterion track (quick or legacy)</typeparam>
+	template<typename VECTORTRACKTYPE, typename QUATERNIONTRACKTYPE>
+	class ISRTtrack {
 	protected:
 		/// <summary>
 		/// Can be either a bone ID or an object ID if the SRT track is being used to animate a non-skeletal entity
 		/// </summary>
 		unsigned int id;
-		TrackVector scale;
-		TrackQuaternion rotation;
-		TrackVector translation;
+		VECTORTRACKTYPE scale;
+		QUATERNIONTRACKTYPE rotation;
+		VECTORTRACKTYPE translation;
 	public:
-		SRTtrack();
+		ISRTtrack();
 		unsigned int GetID();
 		void SetID(unsigned int id);
-		TrackVector& GetScaleTrack();
-		TrackQuaternion& GetQuaternionTrack();
-		TrackVector& GetTranslationTrack();
+		VECTORTRACKTYPE& GetScaleTrack();
+		QUATERNIONTRACKTYPE& GetQuaternionTrack();
+		VECTORTRACKTYPE& GetTranslationTrack();
 		/// <summary>
 		/// Result is only valid if hasValidTrack returns true
 		/// </summary>
@@ -47,4 +52,21 @@ namespace anim {
 		/// <returns></returns>
 		transforms::srt Sample(const transforms::srt& referencePose, float time, bool isTrackLooping);
 	};
+
+	/// <summary>
+	/// The legacy srt track type, that uses slow sampling tracks
+	/// </summary>
+	typedef ISRTtrack<TrackVector, TrackQuaternion> SRTtrack;
+
+	/// <summary>
+	/// SRT track that uses a track implementation with a faster sampling algorithm
+	/// </summary>
+	typedef ISRTtrack<QuickTrackVector, QuickTrackQuaternion> QuickSRTtrack;
+
+	/// <summary>
+	/// Copes slowTrack data into a QuickSRTtrack. Expensive, call during program initialization.
+	/// </summary>
+	/// <param name="slowTrack"></param>
+	/// <returns></returns>
+	QuickSRTtrack ToQuickSRTtrack(SRTtrack& slowTrack);
 }

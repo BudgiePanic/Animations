@@ -83,8 +83,19 @@ namespace anim {
 		if (outputArray.size() != numbBones) {
 			outputArray.resize(numbBones);
 		}
-		// naive implementation, not currently using caching
-		for (unsigned int bone = 0; bone < numbBones; bone++) {
+		// try to use the optimized caching method, which relies on parent bones being at a lower index than child bones
+		unsigned int bone = 0;
+		for (; bone < numbBones; bone++) {
+			int parentOfBone = this->boneParents[bone];
+			if (parentOfBone > bone) { break; } // can't use the optimized method anymore, bones aren't in ascending order
+			mat4f boneAsMatrix = transforms::toMatrix(this->bones[bone]); // local bone space
+			if (parentOfBone >= 0) {
+				boneAsMatrix = outputArray[parentOfBone] * boneAsMatrix; // converted to model space
+			}
+			outputArray[bone] = boneAsMatrix;
+		}
+		// revert to naive implementation if the bones are not stored in ascending order
+		for (; bone < numbBones; bone++) {
 			transforms::srt transform = this->GetWorldTransform(bone);
 			outputArray[bone] = transforms::toMatrix(transform);
 		}

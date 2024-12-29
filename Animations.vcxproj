@@ -131,7 +131,9 @@
     <ClInclude Include="animation\Clip.h" />
     <ClInclude Include="animation\Frame.h" />
     <ClInclude Include="animation\Interpolate.h" />
+    <ClInclude Include="animation\Rearrangement.h" />
     <ClInclude Include="animation\Pose.h" />
+    <ClInclude Include="animation\QuickTrack.h" />
     <ClInclude Include="animation\Track.h" />
     <ClInclude Include="animation\TransformTrack.h" />
     <ClInclude Include="Application.h" />
@@ -165,6 +167,8 @@
     <ClCompile Include="animation\Armature.cpp" />
     <ClCompile Include="animation\Clip.cpp" />
     <ClCompile Include="animation\Pose.cpp" />
+    <ClCompile Include="animation\QuickTrack.cpp" />
+    <ClCompile Include="animation\Rearrangement.cpp" />
     <ClCompile Include="animation\Track.cpp" />
     <ClCompile Include="animation\TransformTrack.cpp" />
     <ClCompile Include="cgltf.cpp" />
@@ -193,6 +197,7 @@
     <None Include="LICENSE" />
     <None Include="resource\shaders\frag_lit.glsl" />
     <None Include="resource\shaders\skinned_vert.glsl" />
+    <None Include="resource\shaders\skinned_vert_simple.glsl" />
     <None Include="resource\shaders\static_vert.glsl" />
   </ItemGroup>
   <ItemGroup>
