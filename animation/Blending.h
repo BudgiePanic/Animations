@@ -25,7 +25,7 @@ namespace anim {
 	/// <param name="a">the base pose</param>
 	/// <param name="b">the pose that is blended onto the base pose</param>
 	/// <param name="t">percentage amount of pose 'b' to include. i.e. 0 implies all pose 'a', no pose 'b'</param>
-	/// <param name="rootBone">The starting bone of pose B which is blended into pose 'a'. i.e. left arm to only apply blend to an arm</param>
+	/// <param name="rootBone">-ve to blend entire pose. The starting bone of pose B which is blended into pose 'a'. i.e. left arm to only apply blend to an arm</param>
 	void Blend(Pose& poseOut, Pose& a, Pose& b, float t, int rootBone);
 
 	/// <summary>
