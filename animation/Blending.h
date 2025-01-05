@@ -1,5 +1,11 @@
 #pragma once
 #include "Pose.h"
+#include "Armature.h"
+#include "Clip.h"
+
+/// <summary>
+/// Functions for blending between animations (poses)
+/// </summary>
 
 namespace anim {
 
@@ -22,5 +28,21 @@ namespace anim {
 	/// <param name="rootBone">The starting bone of pose B which is blended into pose 'a'. i.e. left arm to only apply blend to an arm</param>
 	void Blend(Pose& poseOut, Pose& a, Pose& b, float t, int rootBone);
 
+	/// <summary>
+	/// Samples the clip at time zero into a new pose.
+	/// </summary>
+	/// <param name="armature"></param>
+	/// <param name="clip"></param>
+	/// <returns>A pose used as a reference when adding two poses together in the AddToPose function.</returns>
+	Pose MakePoseForAdding(Armature& armature, Clip& clip);
 
+	/// <summary>
+	/// Add's one pose to another. i.e. adding a lean left animation onto a walk animation. 
+	/// </summary>
+	/// <param name="out">Where the resulting added pose should be written to</param>
+	/// <param name="in">The pose that will be added to</param>
+	/// <param name="poseToAdd">The pose to add onto the 'in' pose</param>
+	/// <param name="baseAddPose">TODO</param>
+	/// <param name="rootBone">The starting bone of poseToAdd which is added onto the 'in' Pose. i.e. left arm to only add from the left arm downwards</param>
+	void AddToPose(Pose& out, Pose& in, Pose& poseToAdd, Pose& baseAddPose, int rootBone);
 }
