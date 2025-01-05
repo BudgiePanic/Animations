@@ -43,6 +43,6 @@ namespace anim {
 	/// <param name="in">The pose that will be added to</param>
 	/// <param name="poseToAdd">The pose to add onto the 'in' pose</param>
 	/// <param name="baseAddPose">TODO</param>
-	/// <param name="rootBone">The starting bone of poseToAdd which is added onto the 'in' Pose. i.e. left arm to only add from the left arm downwards</param>
+	/// <param name="rootBone">The starting bone of poseToAdd which is added onto the 'in' Pose. i.e. left arm to only add from the left arm downwards. -ve to add entire pose.</param>
 	void AddToPose(Pose& out, Pose& in, Pose& poseToAdd, Pose& baseAddPose, int rootBone);
 }
