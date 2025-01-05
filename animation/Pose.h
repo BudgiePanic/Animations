@@ -65,8 +65,8 @@ namespace anim {
 	/// Combine two poses together. Assumes the bone hierarchy in each pose is the same.
 	/// </summary>
 	/// <param name="poseOut">Where the resulting blended pose should be written to</param>
-	/// <param name="a">first pose to combine</param>
-	/// <param name="b">second pose to combine</param>
+	/// <param name="a">the base pose</param>
+	/// <param name="b">the pose that is blended onto the base pose</param>
 	/// <param name="t">percentage amount of pose 'b' to include. i.e. 0 implies all pose 'a', no pose 'b'</param>
 	/// <param name="rootBone">The starting bone of pose B which is blended into pose 'a'. i.e. left arm to only apply blend to an arm</param>
 	void Blend(Pose& poseOut, Pose& a, Pose& b, float t, int rootBone);
