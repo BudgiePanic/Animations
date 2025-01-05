@@ -128,7 +128,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="animation\Armature.h" />
+    <ClInclude Include="animation\Blending.h" />
     <ClInclude Include="animation\Clip.h" />
+    <ClInclude Include="animation\CrossFadeController.h" />
+    <ClInclude Include="animation\CrossFadeTarget.h" />
     <ClInclude Include="animation\Frame.h" />
     <ClInclude Include="animation\Interpolate.h" />
     <ClInclude Include="animation\Rearrangement.h" />
@@ -165,6 +168,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="animation\Armature.cpp" />
+    <ClCompile Include="animation\Blending.cpp" />
     <ClCompile Include="animation\Clip.cpp" />
     <ClCompile Include="animation\Pose.cpp" />
     <ClCompile Include="animation\QuickTrack.cpp" />
