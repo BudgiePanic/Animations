@@ -121,4 +121,14 @@ namespace anim {
 	bool Pose::operator!=(const Pose& other) {
 		return !(*this == other);
 	}
+
+	bool IsBoneChildOf(Pose& pose, unsigned int parentBone, unsigned int boneToCheck) {
+		if (parentBone == boneToCheck) { return true; }
+		int parent = pose.ParentIndexOf(boneToCheck);
+		while (parent >= 0) {
+			if (parent == parentBone) { return true; }
+			parent = pose.ParentIndexOf(parent);
+		}
+		return false;
+	}
 }
