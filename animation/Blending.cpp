@@ -23,4 +23,30 @@ namespace anim {
 			);
 		}
 	}
+
+	Pose MakePoseForAdding(Armature& armature, Clip& clip) {
+		Pose copy = armature.GetRestPose();
+		clip.Sample(copy, clip.GetStartTime());
+		return copy;
+	}
+
+	void AddToPose(Pose& out, Pose& in, Pose& poseToAdd, Pose& baseAddPose, int rootBone) {
+		// how to add pose:
+		// (add pose delta) = add pose - add pose base
+		// resulting pose = input pose + (add pose delta)
+		unsigned int numbBones = poseToAdd.Size();
+		for (int bone = 0; bone < (int)numbBones; bone++) {
+			if (rootBone < 0 || IsBoneChildOf(poseToAdd, rootBone, bone)) {
+				transforms::srt input = in.GetLocalTransform(bone);
+				transforms::srt add = poseToAdd.GetLocalTransform(bone);
+				transforms::srt addBase = baseAddPose.GetLocalTransform(bone);
+				transforms::srt result(
+					input.position + (add.position - addBase.position),
+					normalized(input.rotation * (inverse(addBase.rotation) * add.rotation)),
+					input.scale + (add.scale - addBase.scale)
+				);
+				out.SetLocalTransform(bone, result);
+			}
+		}
+	}
 }
