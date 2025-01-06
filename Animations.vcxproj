@@ -144,6 +144,7 @@
     <ClInclude Include="curves\curve.h" />
     <ClInclude Include="demos\AnimatedModel.h" />
     <ClInclude Include="demos\AnimationBlending.h" />
+    <ClInclude Include="demos\CrossFadedAnimations.h" />
     <ClInclude Include="demos\DrawQuad.h" />
     <ClInclude Include="demos\SimpleAnimationPlayer.h" />
     <ClInclude Include="FloatHelp.h" />
@@ -180,6 +181,7 @@
     <ClCompile Include="cgltf.cpp" />
     <ClCompile Include="demos\AnimatedModel.cpp" />
     <ClCompile Include="demos\AnimationBlending.cpp" />
+    <ClCompile Include="demos\CrossFadedAnimations.cpp" />
     <ClCompile Include="demos\DrawQuad.cpp" />
     <ClCompile Include="demos\SimpleAnimationPlayer.cpp" />
     <ClCompile Include="glad.c" />
