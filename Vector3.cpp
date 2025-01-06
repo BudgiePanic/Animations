@@ -167,7 +167,7 @@ inline f3 lerp(const f3& start, const f3& end, const float t)
     return f3(
         start.x + (end.x - start.x) * t,
         start.y + (end.y - start.y) * t,
-        start.z + (end.z - start.y) * t
+        start.z + (end.z - start.z) * t
     );
 }
 
