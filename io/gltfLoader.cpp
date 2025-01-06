@@ -344,7 +344,7 @@ std::vector<anim::Clip> LoadClips(cgltf_data* data) {
             cgltf_node* node = channel.target_node; 
             int nodeID = helpers::GetNodeIndex(node, data->nodes, nodeCount);
             if (channel.target_path == cgltf_animation_path_type_translation) {
-                anim::TrackVector translation = result[i][nodeID].GetTranslationTrack();
+                anim::TrackVector& translation = result[i][nodeID].GetTranslationTrack();
                 helpers::ExtractTrack<f3, 3>(translation, channel);
             } else if (channel.target_path == cgltf_animation_path_type_scale) {
                 anim::TrackVector& scale = result[i][nodeID].GetScaleTrack();

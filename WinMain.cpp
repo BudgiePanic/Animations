@@ -10,6 +10,9 @@
 #include "demos/DrawQuad.h"
 #include "demos/SimpleAnimationPlayer.h"
 #include "demos/AnimatedModel.h"
+#include "demos/AnimationBlending.h"
+#include "demos/CrossFadedAnimations.h"
+#include "demos/AnimationAdding.h"
 
 // Forward declare functions
 // window entry function
@@ -49,7 +52,7 @@ Application* gApplication = 0; // global_variable_pointer_application
 GLuint gVertexArrayObject = 0;
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine, int iCmdShow) {
-    gApplication = new demos::AnimatedModel();
+    gApplication = new demos::AnimationAdding();
 	// the window
     WNDCLASSEX wndclass{};
     wndclass.cbSize = sizeof(WNDCLASSEX);
