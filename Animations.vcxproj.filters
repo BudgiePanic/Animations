@@ -129,6 +129,9 @@
     <ClInclude Include="animation\Blending.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="demos\AnimationBlending.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -216,6 +219,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="animation\Blending.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="animation\CrossFadeController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="demos\AnimationBlending.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

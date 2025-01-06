@@ -143,6 +143,7 @@
     <ClInclude Include="cgltf.h" />
     <ClInclude Include="curves\curve.h" />
     <ClInclude Include="demos\AnimatedModel.h" />
+    <ClInclude Include="demos\AnimationBlending.h" />
     <ClInclude Include="demos\DrawQuad.h" />
     <ClInclude Include="demos\SimpleAnimationPlayer.h" />
     <ClInclude Include="FloatHelp.h" />
@@ -170,6 +171,7 @@
     <ClCompile Include="animation\Armature.cpp" />
     <ClCompile Include="animation\Blending.cpp" />
     <ClCompile Include="animation\Clip.cpp" />
+    <ClCompile Include="animation\CrossFadeController.cpp" />
     <ClCompile Include="animation\Pose.cpp" />
     <ClCompile Include="animation\QuickTrack.cpp" />
     <ClCompile Include="animation\Rearrangement.cpp" />
@@ -177,6 +179,7 @@
     <ClCompile Include="animation\TransformTrack.cpp" />
     <ClCompile Include="cgltf.cpp" />
     <ClCompile Include="demos\AnimatedModel.cpp" />
+    <ClCompile Include="demos\AnimationBlending.cpp" />
     <ClCompile Include="demos\DrawQuad.cpp" />
     <ClCompile Include="demos\SimpleAnimationPlayer.cpp" />
     <ClCompile Include="glad.c" />
