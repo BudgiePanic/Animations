@@ -1,4 +1,5 @@
 #include "Pose.h"
+#include <cassert>
 
 namespace anim {
 
@@ -55,6 +56,7 @@ namespace anim {
 	}
 
 	transforms::srt Pose::GetLocalTransform(unsigned int boneIndex) {
+		assert(boneIndex < this->bones.size());
 		return this->bones[boneIndex];
 	}
 
