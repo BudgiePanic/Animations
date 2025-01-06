@@ -143,6 +143,7 @@
     <ClInclude Include="cgltf.h" />
     <ClInclude Include="curves\curve.h" />
     <ClInclude Include="demos\AnimatedModel.h" />
+    <ClInclude Include="demos\AnimationAdding.h" />
     <ClInclude Include="demos\AnimationBlending.h" />
     <ClInclude Include="demos\CrossFadedAnimations.h" />
     <ClInclude Include="demos\DrawQuad.h" />
@@ -180,6 +181,7 @@
     <ClCompile Include="animation\TransformTrack.cpp" />
     <ClCompile Include="cgltf.cpp" />
     <ClCompile Include="demos\AnimatedModel.cpp" />
+    <ClCompile Include="demos\AnimationAdding.cpp" />
     <ClCompile Include="demos\AnimationBlending.cpp" />
     <ClCompile Include="demos\CrossFadedAnimations.cpp" />
     <ClCompile Include="demos\DrawQuad.cpp" />
