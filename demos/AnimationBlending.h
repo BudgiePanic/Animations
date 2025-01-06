@@ -14,7 +14,9 @@ namespace demos {
 		float time;
 		anim::Pose pose;
 	};
-
+	/// <summary>
+	/// Demo that blends between walking and running animation 
+	/// </summary>
 	class AnimationBlending : public Application {
 	protected:
 		render::Shader* shader;
