@@ -16,7 +16,7 @@ namespace anim {
 		float duration;
 		float elapsed;
 		CrossFadeTarget() : clip(NULL), time(0.0f), duration(0.0f), elapsed(0.0f) {}
-		CrossFadeTarget(Clip* target, Pose& pose, float dur) : clip(target), time(target->GetStartTime()), duration(dur), elapsed(0.0f) {}
+		CrossFadeTarget(Clip* target, Pose& pose, float dur) : clip(target), time(target->GetStartTime()), pose(pose), duration(dur), elapsed(0.0f) {}
 	};
 
 }
