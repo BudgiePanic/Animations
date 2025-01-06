@@ -65,7 +65,7 @@ namespace demos {
 
 		this->blendTime += deltaTime;
 
-		if (blendTime >= 2.0f) {
+		if (blendTime >= 5.0f) {
 			blendTime = 0.0f;
 			this->blendInvert = !this->blendInvert;
 			this->pose = this->armature.GetRestPose();
