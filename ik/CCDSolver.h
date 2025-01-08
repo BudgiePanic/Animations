@@ -20,7 +20,7 @@ namespace ik {
 		/// So boneChain[n] is a child of boneChain[n-1] and so on until boneChain[0].
 		/// Each bone in boneChain is stored in local bone space. 
 		/// The chain's end effector is stored at boneChain[size()-1].
-		/// The solver needs 2 of more bones to work correctly.
+		/// The solver needs 2 or more bones to work correctly.
 		/// The chain is modified in place during solving. 
 		/// </summary>
 		std::vector<transforms::srt> localBoneChain;
