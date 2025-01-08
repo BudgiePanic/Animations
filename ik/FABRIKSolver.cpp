@@ -18,7 +18,19 @@ namespace ik {
 	}
 
 	void FABRIKSolver::Forward(const f3& target) {
-
+		int numbBones =  (int) this->ChainSize();
+		int effectorIndex = numbBones - 1;
+		if (numbBones > 1) {
+			/* The solver needs 2 or more bones to work properly. One bone is not a bone chain */
+			// move the end effector to the target positon
+			this->bonePosChain[effectorIndex] = target;
+		} 
+		// move the rest of the bones along with the end effector, maintain their distances
+		for (int boneIndex = effectorIndex - 1; boneIndex >= 0; boneIndex--) {
+			f3 toChild = normalized(this->bonePosChain[boneIndex] - this->bonePosChain[boneIndex + 1]);
+			f3 offset = toChild * this->boneLengths[boneIndex + 1];
+			this->bonePosChain[boneIndex] = this->bonePosChain[boneIndex + 1] + offset;
+		}
 	}
 
 	void FABRIKSolver::Backward(const f3& rootBone) {
