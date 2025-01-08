@@ -3,7 +3,18 @@
 namespace ik {
 
 	void FABRIKSolver::ToChainPosition() {
-
+		unsigned int numbBones = this->ChainSize();
+		for (unsigned int boneIndex = 0; boneIndex < numbBones; boneIndex++) {
+			transforms::srt bone = this->GetBone(boneIndex);
+			this->bonePosChain[boneIndex] = bone.position;
+			if (boneIndex > 0) {
+				f3 previous = this->bonePosChain[boneIndex - 1];
+				this->boneLengths[boneIndex] = length(bone.position - previous);
+			}
+		}
+		if (numbBones > 0) {
+			this->boneLengths[0] = 0.0f;
+		}
 	}
 
 	void FABRIKSolver::Forward(const f3& target) {
@@ -11,6 +22,10 @@ namespace ik {
 	}
 
 	void FABRIKSolver::Backward(const f3& rootBone) {
+
+	}
+
+	void FABRIKSolver::ChainPositionToLocalBone() {
 
 	}
 
