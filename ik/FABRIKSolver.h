@@ -61,6 +61,11 @@ namespace ik {
 		/// <param name="rootBone"></param>
 		void Backward(const f3& rootBone);
 
+		/// <summary>
+		/// Converts the model space bone position chain back into local bone space SRT chain.
+		/// </summary>
+		void ChainPositionToLocalBone();
+
 	public:
 		// boiler plate
 
