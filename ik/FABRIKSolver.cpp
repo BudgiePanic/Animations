@@ -26,7 +26,30 @@ namespace ik {
 	}
 
 	void FABRIKSolver::ChainPositionToLocalBone() {
+		unsigned int numbBones = this->ChainSize();
+		if (numbBones < 1) { return; }
+		for (unsigned int boneIndex = 0; boneIndex < numbBones - 1; boneIndex++) {
+			// skip last bone because modifying the end effector's rotation has no effect on reaching the goal
+			transforms::srt bone = GetBone(boneIndex);
+			transforms::srt childBone = GetBone(boneIndex + 1);
+			
+			f3 position = bone.position;
+			rotation::quaternion rotation = bone.rotation;
 
+			// vector pointing from current bone to child bone
+			f3 toChild = childBone.position - position;
+			// convert vector to local bone space
+			toChild = rotation::inverse(rotation) * toChild;
+			// vector that points from child bone to current position in local model space
+			f3 toDesiredPosition = this->bonePosChain[boneIndex + 1] - position;
+			// converted to local bone space
+			toDesiredPosition = rotation::inverse(rotation) * toDesiredPosition;
+			// we want the vector pointing to the child bone to be the same as the vector pointing to the desired position
+			// so we create a rotation that will achieve this
+			rotation::quaternion difference = rotation::fromTo(toChild, toDesiredPosition);
+			// add this rotation to the bone
+			this->localBoneChain[boneIndex].rotation = difference * this->localBoneChain[boneIndex].rotation;
+		}
 	}
 
 	FABRIKSolver::FABRIKSolver() {
