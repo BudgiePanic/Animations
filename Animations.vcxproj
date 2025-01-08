@@ -150,6 +150,8 @@
     <ClInclude Include="demos\SimpleAnimationPlayer.h" />
     <ClInclude Include="FloatHelp.h" />
     <ClInclude Include="glad.h" />
+    <ClInclude Include="ik\CCDSolver.h" />
+    <ClInclude Include="ik\FABRIKSolver.h" />
     <ClInclude Include="io\gltfLoader.h" />
     <ClInclude Include="khrplatform.h" />
     <ClInclude Include="Mat2f.h" />
@@ -187,6 +189,8 @@
     <ClCompile Include="demos\DrawQuad.cpp" />
     <ClCompile Include="demos\SimpleAnimationPlayer.cpp" />
     <ClCompile Include="glad.c" />
+    <ClCompile Include="ik\CCDSolver.cpp" />
+    <ClCompile Include="ik\FABRIKSolver.cpp" />
     <ClCompile Include="io\gltfLoader.cpp" />
     <ClCompile Include="Mat2f.cpp" />
     <ClCompile Include="Mat3f.cpp" />

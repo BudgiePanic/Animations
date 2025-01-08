@@ -138,6 +138,12 @@
     <ClInclude Include="demos\AnimationAdding.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ik\CCDSolver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ik\FABRIKSolver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -237,6 +243,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="demos\AnimationAdding.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ik\CCDSolver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ik\FABRIKSolver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
