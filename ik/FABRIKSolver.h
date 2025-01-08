@@ -50,13 +50,13 @@ namespace ik {
 		void ToChainPosition();
 
 		/// <summary>
-		/// 
+		/// TODO
 		/// </summary>
 		/// <param name="target"></param>
 		void Forward(const f3& target);
 
 		/// <summary>
-		/// 
+		/// TODO
 		/// </summary>
 		/// <param name="rootBone"></param>
 		void Backward(const f3& rootBone);
