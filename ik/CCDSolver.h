@@ -14,6 +14,7 @@ namespace ik {
 	/// </summary>
 	class CCDSolver {
 	protected:
+		
 		/// <summary>
 		/// The inverse kinematic bone chain is stored in hierarchical order.
 		/// So boneChain[n] is a child of boneChain[n-1] and so on until boneChain[0].
@@ -23,16 +24,19 @@ namespace ik {
 		/// The chain is modified in place during solving. 
 		/// </summary>
 		std::vector<transforms::srt> localBoneChain;
+		
 		/// <summary>
 		/// The maximum number of iteration steps before the solver gives up.
 		/// </summary>
 		unsigned int iterMaxSteps;
+		
 		/// <summary>
 		/// If the end effector of the localBoneChain gets within this threshold distance of the target
 		/// the solver will accept the current solution and return early.
 		/// </summary>
 		float solveThreshold;
 	public:
+		
 		/// <summary>
 		/// Create a CCD solver with default iteration and threshold values
 		/// </summary>
