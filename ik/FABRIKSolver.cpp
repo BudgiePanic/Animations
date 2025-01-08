@@ -116,7 +116,29 @@ namespace ik {
 	}
 
 	bool FABRIKSolver::SolveChain(const transforms::srt& target) {
-		return false;
+		unsigned int numbBones = this->ChainSize();
+		if (numbBones < 2) { return false; /* not enough bones to run the algorithm */ }
+
+		unsigned int effectorIndex = numbBones - 1;
+		float threshSq = this->solveThreshold * this->solveThreshold;
+
+		this->ToChainPosition();
+		f3 targetPos = target.position;
+		f3 rootBonePos = this->bonePosChain[0];
+
+		for (unsigned int iter = 0; iter < this->iterMaxSteps; iter++) {
+			f3 currEffectorPos = this->bonePosChain[effectorIndex];
+			if (lengthSquared(targetPos - currEffectorPos) < threshSq) {
+				this->ChainPositionToLocalBone();
+				return true;
+			}
+			this->Forward(targetPos);
+			this->Backward(rootBonePos);
+		}
+
+		this->ChainPositionToLocalBone();
+		f3 effectorPos = this->GetBone(effectorIndex).position;
+		return lengthSquared(targetPos - effectorPos) < threshSq;
 	}
 
 }
