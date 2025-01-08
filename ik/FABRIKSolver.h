@@ -49,17 +49,33 @@ namespace ik {
 		/// </summary>
 		void ToChainPosition();
 
+		/*
+			The book author claims that the backward step is when the end effector is moved (backward from end effector)
+			and the forward step is when the root bone is moved back to its original position.
+			This is wrong. 
+			I checked the Aristidou and Lasenby's original FABRIK paper (DOI: https://doi.org/10.1016/j.gmod.2011.05.003)
+			And they clearly state in ALGORITHM 1 section that the Forward step comes first, and involves moving the end
+			effector to the target position; and the backward step is done after, moving the root bone back into position.
+
+			I'm going to use Aristidou and Lasenby's convention on the function naming. The Psuedocode of the FABRIK algorithm
+			can also be seen in the paper.
+		*/
+
 		/// <summary>
-		/// TODO
+		/// Moves the end effector to the position of the target, then calculates the bone chain as if it had
+		/// been moved along with the end effector.
 		/// </summary>
-		/// <param name="target"></param>
+		/// <param name="target">The target position the end effector is trying to touch</param>
 		void Forward(const f3& target);
 
 		/// <summary>
-		/// TODO
+		/// Moves the root bone of the chain back to its original position. Calculates the rest of the bone chain
+		/// as if they had been moved back with the root bone. 
+		/// If a solution exists, the end effector will still be at the target position after moving the bone chain backwards.
 		/// </summary>
-		/// <param name="rootBone"></param>
+		/// <param name="rootBone">The original position of the root bone</param>
 		void Backward(const f3& rootBone);
+
 
 		/// <summary>
 		/// Converts the model space bone position chain back into local bone space SRT chain.
