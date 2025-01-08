@@ -34,7 +34,16 @@ namespace ik {
 	}
 
 	void FABRIKSolver::Backward(const f3& rootBone) {
-
+		unsigned int numbBones = this->ChainSize();
+		if (numbBones > 0) {
+			this->bonePosChain[0] = rootBone;
+		}
+		for (unsigned int boneIndex = 1; boneIndex < numbBones; boneIndex++) {
+			f3 toParent = normalized(this->bonePosChain[boneIndex] - this->bonePosChain[boneIndex - 1]);
+			f3 offset = toParent * this->boneLengths[boneIndex];
+			this->bonePosChain[boneIndex] = this->bonePosChain[boneIndex - 1] + offset;
+		}
+		// If a solution was found, the end effector will still be touching the target when this function completes :)
 	}
 
 	void FABRIKSolver::ChainPositionToLocalBone() {
