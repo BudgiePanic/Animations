@@ -10,6 +10,7 @@ namespace ik {
 
 	/// <summary>
 	/// Cyclic Coordinate Descent Iterative Inverse Kinematic Solver
+	/// Can solve single linear bone chains.
 	/// </summary>
 	class CCDSolver {
 	protected:
