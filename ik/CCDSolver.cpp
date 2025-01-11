@@ -78,6 +78,7 @@ namespace ik {
 
 				transforms::srt& bone = this->localBoneChain[boneIndex];
 				bone.rotation = newBoneRotationLocal * bone.rotation;
+				// CONSTRAINT LOGIC APPLIED AFTER ITERATION
 				// update effector model space position after each bone movement
 				effectorPos = this->GetBoneAt(effectorIndex).position;
 				if (lengthSquared(targetPos - effectorPos) < threshSq) { return true; }

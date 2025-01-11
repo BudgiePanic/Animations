@@ -73,6 +73,38 @@ namespace ik {
 		}
 	}
 
+	void FABRIKSolver::BallSocketConstraint(unsigned int boneIndex, float limitRadians) {
+		// NOTE the book author states that if boneIndex == 0, 'parentRotation' should be 'offset.rotation'
+		// such a member field does not exist... Even doing a recursive search through every file in the book's sample
+		// code repository gives zero results. So we'll just assume this constraint cannot apply to the root bone.
+		if (boneIndex == 0) { return; }
+		const f3 forward(0.0f, 0.0f, 1.0f);
+		
+		rotation::quaternion parentRotation = this->GetBone(boneIndex - 1).rotation;
+		f3 parentDirection = parentRotation * forward;
+		
+		rotation::quaternion rotation = this->GetBone(boneIndex).rotation;
+		f3 direction = rotation * forward;
+
+		float angle = ::angle(parentDirection, direction);
+
+		if (angle > limitRadians) {
+			f3 correction = ::cross(parentDirection, direction);
+			rotation::quaternion rotationModelSpace = parentRotation * rotation::angleAxis(limitRadians, correction);
+			this->localBoneChain[boneIndex].rotation = rotationModelSpace * rotation::inverse(parentRotation);
+		}
+	}
+
+	void FABRIKSolver::HingeSocketConstraint(unsigned int boneIndex, f3 constraintAxis) {
+		if (boneIndex == 0) { return; }
+		transforms::srt bone = this->GetBone(boneIndex);
+		transforms::srt parentBone = this->GetBone(boneIndex - 1);
+		f3 hinge = bone.rotation * constraintAxis;
+		f3 desiredHinge = parentBone.rotation * constraintAxis;
+		this->localBoneChain[boneIndex].rotation = 
+			this->localBoneChain[boneIndex].rotation * rotation::fromTo(hinge, desiredHinge);
+	}
+
 	FABRIKSolver::FABRIKSolver() {
 		constexpr unsigned int defaultIterCount = 15;
 		constexpr float defaultThreshold = 0.0001f;
@@ -134,6 +166,12 @@ namespace ik {
 			}
 			this->Forward(targetPos);
 			this->Backward(rootBonePos);
+			// CONSTRAINTS APPLIED AFTER ITERATION 
+			// Convert model space bone chain back to local bone space before applying constraints
+			// this->ChainPositionToLocalBone();
+			// CONSTRAINT HERE
+			// Change the local space chain back to model space
+			// this->ToChainPosition();
 		}
 
 		this->ChainPositionToLocalBone();

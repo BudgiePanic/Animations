@@ -82,6 +82,24 @@ namespace ik {
 		/// </summary>
 		void ChainPositionToLocalBone();
 
+		// NOTE: As far as I can tell, the constraint code is not used by the book author anywhere.
+		// We will include it anyway for FABRIK solver for the sake of completeness. The book author's constraint code also 
+		// refers member fields that don't exist in the IK solver classes, not sure what's going on with that.
+
+		/// <summary>
+		/// Apply a ball and socket rotation constraint to a bone in the IK chain
+		/// </summary>
+		/// <param name="bone"></param>
+		/// <param name="limitRadians"></param>
+		void BallSocketConstraint(unsigned int boneIndex, float limitRadians);
+
+		/// <summary>
+		 /// Force a bone to only rotate about one axis
+		/// </summary>
+		/// <param name="bone"></param>
+		/// <param name="constraintAxis"></param>
+		void HingeSocketConstraint(unsigned int boneIndex, f3 constraintAxis);
+
 	public:
 		// boiler plate
 
