@@ -147,6 +147,7 @@
     <ClInclude Include="demos\AnimationBlending.h" />
     <ClInclude Include="demos\CrossFadedAnimations.h" />
     <ClInclude Include="demos\DrawQuad.h" />
+    <ClInclude Include="demos\InverseKinematicsDemo.h" />
     <ClInclude Include="demos\SimpleAnimationPlayer.h" />
     <ClInclude Include="FloatHelp.h" />
     <ClInclude Include="glad.h" />
@@ -187,6 +188,7 @@
     <ClCompile Include="demos\AnimationBlending.cpp" />
     <ClCompile Include="demos\CrossFadedAnimations.cpp" />
     <ClCompile Include="demos\DrawQuad.cpp" />
+    <ClCompile Include="demos\InverseKinematicsDemo.cpp" />
     <ClCompile Include="demos\SimpleAnimationPlayer.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="ik\CCDSolver.cpp" />
