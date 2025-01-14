@@ -10,21 +10,24 @@ namespace demos {
 	}
 
 	void InverseKinematicsDemo::Initialize() {
-		this->ccdSolver.ResizeChain(6);
-		this->ccdSolver[0] = transforms::srt();
-		this->ccdSolver[1] = transforms::srt();
-		this->ccdSolver[2] = transforms::srt();
-		this->ccdSolver[3] = transforms::srt();
-		this->ccdSolver[4] = transforms::srt();
-		this->ccdSolver[5] = transforms::srt();
+		const float halfPi = 1.570796327f;
+		const f3 scale(1,1,1);
+		const f3 boneSegment(0.0f, 0.0f, 0.5f);
+		this->ccdSolver.ResizeChain(6); 
+		this->ccdSolver[0] = transforms::srt(f3(0.0f, 0.0f, 1.0f), rotation::angleAxis(halfPi, f3(1,0,0)), scale);
+		this->ccdSolver[1] = transforms::srt(f3(0.0f, 0.0f, 1.5f), rotation::quaternion(), scale);
+		this->ccdSolver[2] = transforms::srt(boneSegment, rotation::quaternion(), scale);
+		this->ccdSolver[3] = transforms::srt(boneSegment, rotation::angleAxis(halfPi, f3(0, 1, 0)), scale);
+		this->ccdSolver[4] = transforms::srt(boneSegment, rotation::quaternion(), scale);
+		this->ccdSolver[5] = transforms::srt(boneSegment, rotation::quaternion(), scale);
 
 		this->fabrikSolver.ResizeChain(6);
-		this->fabrikSolver.SetLocalBone(0, transforms::srt());
-		this->fabrikSolver.SetLocalBone(1, transforms::srt());
-		this->fabrikSolver.SetLocalBone(2, transforms::srt());
-		this->fabrikSolver.SetLocalBone(3, transforms::srt());
-		this->fabrikSolver.SetLocalBone(4, transforms::srt());
-		this->fabrikSolver.SetLocalBone(5, transforms::srt());
+		this->fabrikSolver.SetLocalBone(0, transforms::srt(f3(0.0f, 0.0f, 1.0f), rotation::angleAxis(halfPi, f3(1, 0, 0)), scale));
+		this->fabrikSolver.SetLocalBone(1, transforms::srt(f3(0.0f, 0.0f, 1.5f), rotation::quaternion(), scale));
+		this->fabrikSolver.SetLocalBone(2, transforms::srt(boneSegment, rotation::quaternion(), scale));
+		this->fabrikSolver.SetLocalBone(3, transforms::srt(boneSegment, rotation::angleAxis(halfPi, f3(0, 1, 0)), scale));
+		this->fabrikSolver.SetLocalBone(4, transforms::srt(boneSegment, rotation::quaternion(), scale));
+		this->fabrikSolver.SetLocalBone(5, transforms::srt(boneSegment, rotation::quaternion(), scale));
 
 		this->goal.position = f3(1, -2, 0);
 
