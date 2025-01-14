@@ -96,7 +96,7 @@ namespace demos {
 		LineDrawer& drawer = *(this->goalDrawer);
 		// the indication of the goal position will be a vertical line
 		drawer[0] = goal.position;
-		drawer[1] = goal.position + f3(0.0f, 0.5f, 0.0f); 
+		drawer[1] = goal.position + f3(0.0f, 0.5f, 0.0f);
 		
 		this->ccdDrawer->UpdateBuffers();
 		this->fabrikDrawer->UpdateBuffers();
