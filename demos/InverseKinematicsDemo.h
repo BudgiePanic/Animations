@@ -34,10 +34,12 @@ namespace demos {
 		/// Basically the same as SimpleAnimationPlayer's Skeleton but with functions to 
 		/// load the bone chain information from IK solvers.
 		/// </summary>
-		class LineDrawer : SimpleAnimationPlayer::SkeletonDrawer {
+		class LineDrawer : public SimpleAnimationPlayer::SkeletonDrawer {
 		public:
 			void FromIKSolver(ik::CCDSolver& solver);
 			void FromIKSolver(ik::FABRIKSolver& solver);
+			LineDrawer(unsigned int size);
+			LineDrawer();
 		};
 
 		LineDrawer* ccdDrawer;
@@ -56,7 +58,7 @@ namespace demos {
 		/// </summary>
 		float pitch, yaw, distance;
 
-		void SetFrame(anim::SRTtrack& track, int frameIndex, float frameTime, const f3& frameData);
+		void SetFrame(anim::TrackVector& track, int frameIndex, float frameTime, const f3& frameData);
 	public:
 		void Initialize();
 		void ShutDown();
