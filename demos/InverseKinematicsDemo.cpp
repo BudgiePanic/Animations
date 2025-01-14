@@ -61,6 +61,18 @@ namespace demos {
 		delete this->goalDrawer;
 	}
 
+	void InverseKinematicsDemo::Update(float deltaTime) {
+		this->time += deltaTime;
+		if (this->time > this->goalPath.GetEndTime()) {
+			// run it back
+			this->time -= this->goalPath.GetEndTime();
+		}
+		this->goal = this->goalPath.Sample(this->goal, time, true);
+		
+		this->ccdSolver.SolveChain(this->goal);
+		this->fabrikSolver.SolveChain(this->goal);
+	}
+
 	void InverseKinematicsDemo::Render(float aspectRatio) {
 		f3 cameraPosition(
 			this->distance * cosf(this->yaw) * sinf(this->pitch),
@@ -78,15 +90,17 @@ namespace demos {
 
 		this->ccdDrawer->FromIKSolver(this->ccdSolver);
 		this->fabrikDrawer->FromIKSolver(this->fabrikSolver);
+		LineDrawer& drawer = *(this->goalDrawer);
+		// the indication of the goal position will be a vertical line
+		drawer[0] = goal.position;
+		drawer[1] = goal.position + f3(0.0f, 0.5f, 0.0f); 
+		
 		this->ccdDrawer->UpdateBuffers();
 		this->fabrikDrawer->UpdateBuffers();
+		drawer.UpdateBuffers();
+
 		this->ccdDrawer->Draw(SimpleAnimationPlayer::SkeletonDrawer::LineDrawMode::Lines, red, modelViewProj);
 		this->fabrikDrawer->Draw(SimpleAnimationPlayer::SkeletonDrawer::LineDrawMode::Lines, blue, modelViewProj);
-
-		LineDrawer& drawer = *(this->goalDrawer);
-		drawer[0] = goal.position;
-		drawer[1] = goal.position + f3(0.0f, 0.5f, 0.0f);
-		drawer.UpdateBuffers();
 		drawer.Draw(SimpleAnimationPlayer::SkeletonDrawer::LineDrawMode::Lines, green, modelViewProj);
 	}
 
