@@ -13,6 +13,7 @@ namespace demos {
 	/// Demonstrates both the FABRIK and CCD solvers by moving a bone chain to chase a moving target
 	/// </summary>
 	class InverseKinematicsDemo : public Application {
+	friend class WalkingDemo;
 	protected:
 		/// <summary>
 		/// The location that that IK solvers are trying make the end effector reach.
