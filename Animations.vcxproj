@@ -149,6 +149,7 @@
     <ClInclude Include="demos\DrawQuad.h" />
     <ClInclude Include="demos\InverseKinematicsDemo.h" />
     <ClInclude Include="demos\SimpleAnimationPlayer.h" />
+    <ClInclude Include="demos\WalkingDemo.h" />
     <ClInclude Include="FloatHelp.h" />
     <ClInclude Include="glad.h" />
     <ClInclude Include="ik\CCDSolver.h" />
@@ -190,6 +191,7 @@
     <ClCompile Include="demos\DrawQuad.cpp" />
     <ClCompile Include="demos\InverseKinematicsDemo.cpp" />
     <ClCompile Include="demos\SimpleAnimationPlayer.cpp" />
+    <ClCompile Include="demos\WalkingDemo.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="ik\CCDSolver.cpp" />
     <ClCompile Include="ik\FABRIKSolver.cpp" />
