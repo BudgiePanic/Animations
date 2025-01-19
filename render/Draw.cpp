@@ -68,5 +68,13 @@ namespace render {
 		);
 	}
 
+	void SetDepthBuffer(bool state)	{
+		if (state) {
+			glad_glEnable(GL_DEPTH_TEST);
+		} else {
+			glad_glDisable(GL_DEPTH_TEST);
+		}
+	}
+
 }
 
