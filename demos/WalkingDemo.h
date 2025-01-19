@@ -157,10 +157,8 @@ namespace demos {
 		float groundOffset;
 
 		RenderOptions options;
-		/// <summary>
-		/// The amount of time it takes for the actor to walk their predefined route.
-		/// </summary>
-		float pathDuration;
+		
+		float playbackSpeed;
 
 		IKLeg* leftLeg;
 		IKLeg* rightLeg;
