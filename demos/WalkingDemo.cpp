@@ -319,8 +319,6 @@ namespace demos {
 
 	void WalkingDemo::Update(float deltaTime) {
 		deltaTime *= playbackSpeed;
-		unsigned int numbTriangles = this->floorTriangles.size();
-
 		this->actorTime += deltaTime * 0.03f;
 		while (this->actorTime > 6.0f) { this->actorTime -= 6.0f; }
 
@@ -340,6 +338,7 @@ namespace demos {
 		actorTransform.rotation = rotation::nlerp(actorTransform.rotation, facing, deltaTime * 10.0f);
 		f3 forward = actorTransform.rotation * f3(0,0,1); // world is +z forward
 
+		unsigned int numbTriangles = this->floorTriangles.size();
 		Ray ray(f3(actorTransform.position.x, 11, actorTransform.position.x));
 		f3 hitOut;
 		for (unsigned int t = 0; t < numbTriangles; t++) {
