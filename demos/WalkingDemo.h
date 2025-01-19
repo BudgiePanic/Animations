@@ -128,7 +128,7 @@ namespace demos {
 		render::Texture* floorTexture;
 		std::vector<render::Mesh> floorMeshes;
 		std::vector<Triangle> floorTriangles;
-		render::Shader floorShader;
+		render::Shader* floorShader;
 
 		/// <summary>
 		/// The predefined path that the actor walks around the floor
@@ -143,8 +143,8 @@ namespace demos {
 		std::vector<render::Mesh> actorMeshes;
 		anim::Pose pose;
 		std::vector<mat4f> bonesAsMatrices;
-		render::Texture actorTexture;
-		render::Shader actorShader;
+		render::Texture* actorTexture;
+		render::Shader* actorShader;
 		anim::Armature armature;
 		std::vector<anim::Clip> clips;
 		unsigned int clipIndex;
