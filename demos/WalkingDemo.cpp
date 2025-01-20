@@ -341,7 +341,7 @@ namespace demos {
 		f3 forward = actorTransform.rotation * f3(0,0,1); // world is +z forward
 
 		unsigned int numbTriangles = this->floorTriangles.size();
-		Ray ray(f3(actorTransform.position.x, 11, actorTransform.position.x));
+		Ray ray(f3(actorTransform.position.x, 11, actorTransform.position.z));
 		f3 hitOut;
 		for (unsigned int t = 0; t < numbTriangles; t++) {
 			if (Intersect(ray, this->floorTriangles[t], hitOut)) {
