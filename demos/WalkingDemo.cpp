@@ -321,7 +321,7 @@ namespace demos {
 
 	void WalkingDemo::Update(float deltaTime) {
 		deltaTime *= playbackSpeed;
-		this->actorTime += deltaTime * 0.03f;
+		this->actorTime += deltaTime * 0.3f;
 		while (this->actorTime > 6.0f) { this->actorTime -= 6.0f; }
 
 		// update actor position
