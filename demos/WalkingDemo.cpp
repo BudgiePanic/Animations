@@ -174,25 +174,25 @@ namespace demos {
 		this->actorPathTrack.SetInterpolationMethod(anim::Interpolate::Linear);
 		
 		constexpr int x = 0, y = 1, z = 2;
-		auto& frame = this->actorPathTrack[0];
-		frame.timestamp = 0.0f;
-		frame.value[x] = 0; frame.value[y] = 0; frame.value[z] = 1;
+		anim::FrameVector* frame = &this->actorPathTrack[0];
+		frame->timestamp = 0.0f;
+		frame->value[x] = 0; frame->value[y] = 0; frame->value[z] = 1;
 
-		frame = this->actorPathTrack[1];
-		frame.timestamp = 1.0f;
-		frame.value[x] = 0; frame.value[y] = 0; frame.value[z] = 10;
+		frame = &this->actorPathTrack[1];
+		frame->timestamp = 1.0f;
+		frame->value[x] = 0; frame->value[y] = 0; frame->value[z] = 10;
 
-		frame = this->actorPathTrack[2];
-		frame.timestamp = 3.0f;
-		frame.value[x] = 22; frame.value[y] = 0; frame.value[z] = 10;
+		frame = &this->actorPathTrack[2];
+		frame->timestamp = 3.0f;
+		frame->value[x] = 22; frame->value[y] = 0; frame->value[z] = 10;
 
-		frame = this->actorPathTrack[3];
-		frame.timestamp = 4.0f;
-		frame.value[x] = 22; frame.value[y] = 0; frame.value[z] = 2;
+		frame = &this->actorPathTrack[3];
+		frame->timestamp = 4.0f;
+		frame->value[x] = 22; frame->value[y] = 0; frame->value[z] = 2;
 
-		frame = this->actorPathTrack[4];
-		frame.timestamp = 6.0f;
-		frame.value[x] = 0; frame.value[y] = 0; frame.value[z] = 1;
+		frame = &this->actorPathTrack[4];
+		frame->timestamp = 6.0f;
+		frame->value[x] = 0; frame->value[y] = 0; frame->value[z] = 1;
 		
 		// load woman mesh and skeleton
 		std::cout << "Looking for \'\\resource\\assets\\Woman.gltf\' in working directory.\n";
@@ -240,29 +240,31 @@ namespace demos {
 		this->rightLeg->SetAnkleGroundOffset(0.2f);
 		
 		// manually construct the data track that describes the actor's foot height over the duration of the walk cycle
-		auto& legTrack = rightLeg->GetLegHeightTrack();
-		legTrack.SetInterpolationMethod(anim::Interpolate::Cubic);
-		legTrack.Resize(4);
-		auto& frameLeg = legTrack[0];
-		frameLeg.timestamp = 0.0f; frame.value[0] = 1.0f;
-		frameLeg = legTrack[1];
-		frameLeg.timestamp = 0.3f; frame.value[0] = 0.0f;
-		frameLeg = legTrack[2];
-		frameLeg.timestamp = 0.7f; frame.value[0] = 0.0f;
-		frameLeg = legTrack[3];
-		frameLeg.timestamp = 1.0f; frame.value[0] = 1.0f;
+		auto& rightLegTrack = rightLeg->GetLegHeightTrack();
+		rightLegTrack.SetInterpolationMethod(anim::Interpolate::Cubic);
+		rightLegTrack.Resize(4); 
+		// https://stackoverflow.com/questions/9293674/can-we-reassign-the-reference-in-c We can't reseat a reference
+		// need to use pointers instead
+		anim::FrameScalar* frameLeg = &rightLegTrack[0];
+		frameLeg->timestamp = 0.0f; frameLeg->value[x] = 1.0f;
+		frameLeg = &rightLegTrack[1];
+		frameLeg->timestamp = 0.3f; frameLeg->value[x] = 0.0f;
+		frameLeg = &rightLegTrack[2];
+		frameLeg->timestamp = 0.7f; frameLeg->value[x] = 0.0f;
+		frameLeg = &rightLegTrack[3];
+		frameLeg->timestamp = 1.0f; frameLeg->value[x] = 1.0f;
 
-		legTrack = leftLeg->GetLegHeightTrack();
-		legTrack.SetInterpolationMethod(anim::Interpolate::Cubic);
-		legTrack.Resize(4);
-		frameLeg = legTrack[0];
-		frameLeg.timestamp = 0.0f; frame.value[0] = 0.0f;
-		frameLeg = legTrack[1];
-		frameLeg.timestamp = 0.4f; frame.value[0] = 1.0f;
-		frameLeg = legTrack[2];
-		frameLeg.timestamp = 0.6f; frame.value[0] = 1.0f;
-		frameLeg = legTrack[3];
-		frameLeg.timestamp = 1.0f; frame.value[0] = 0.0f;
+		auto& leftLegTrack = leftLeg->GetLegHeightTrack();
+		leftLegTrack.SetInterpolationMethod(anim::Interpolate::Cubic);
+		leftLegTrack.Resize(4);
+		frameLeg = &leftLegTrack[0];
+		frameLeg->timestamp = 0.0f; frameLeg->value[x] = 0.0f;
+		frameLeg = &leftLegTrack[1];
+		frameLeg->timestamp = 0.4f; frameLeg->value[x] = 1.0f;
+		frameLeg = &leftLegTrack[2];
+		frameLeg->timestamp = 0.6f; frameLeg->value[x] = 1.0f;
+		frameLeg = &leftLegTrack[3];
+		frameLeg->timestamp = 1.0f; frameLeg->value[x] = 0.0f;
 
 		this->pose = armature.GetRestPose();
 
