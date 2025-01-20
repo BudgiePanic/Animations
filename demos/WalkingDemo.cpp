@@ -8,7 +8,7 @@
 
 #define numbLegBones 3
 #define rayHeightAboveGeometry 10.0f
-#define walkSlowDown 0.03f
+#define walkSlowDown 0.3f
 #define walkPathDuration 6.0f
 #define speedUp 10.0f
 
