@@ -7,6 +7,10 @@
 #include "../animation/Blending.h"
 
 #define numbLegBones 3
+#define rayHeightAboveGeometry 10.0f
+#define walkSlowDown 0.03f
+#define walkPathDuration 6.0f
+#define speedUp 10.0f
 
 namespace demos {
 
@@ -191,7 +195,7 @@ namespace demos {
 		frame->value[x] = 22; frame->value[y] = 0; frame->value[z] = 2;
 
 		frame = &this->actorPathTrack[4];
-		frame->timestamp = 6.0f;
+		frame->timestamp = walkPathDuration;
 		frame->value[x] = 0; frame->value[y] = 0; frame->value[z] = 1;
 		
 		// load woman mesh and skeleton
@@ -290,7 +294,7 @@ namespace demos {
 		this->groundOffset = 0.15f;
 		this->toeLength = 0.3f;
 
-		Ray ray(f3(this->actorTransform.position.x, 10, this->actorTransform.position.z));
+		Ray ray(f3(this->actorTransform.position.x, rayHeightAboveGeometry, this->actorTransform.position.z));
 		f3 hitOut;
 		for (unsigned int i = 0, numbTriangles = this->floorTriangles.size(); i < numbTriangles; i++) {
 			if (Intersect(ray, this->floorTriangles[i], hitOut)) {
@@ -321,8 +325,8 @@ namespace demos {
 
 	void WalkingDemo::Update(float deltaTime) {
 		deltaTime *= playbackSpeed;
-		this->actorTime += deltaTime * 0.3f;
-		while (this->actorTime > 6.0f) { this->actorTime -= 6.0f; }
+		this->actorTime += deltaTime * walkSlowDown;
+		while (this->actorTime > walkPathDuration) { this->actorTime -= walkPathDuration; }
 
 		// update actor position
 		float lastY = this->actorTransform.position.y;
@@ -337,11 +341,11 @@ namespace demos {
 		if (dot(actorTransform.rotation, facing) < 0.0f) {
 			facing = facing * -1.0f;
 		}
-		actorTransform.rotation = rotation::nlerp(actorTransform.rotation, facing, deltaTime * 10.0f);
+		actorTransform.rotation = rotation::nlerp(actorTransform.rotation, facing, deltaTime * speedUp);
 		f3 forward = actorTransform.rotation * f3(0,0,1); // world is +z forward
 
 		unsigned int numbTriangles = this->floorTriangles.size();
-		Ray ray(f3(actorTransform.position.x, 11, actorTransform.position.z));
+		Ray ray(f3(actorTransform.position.x, rayHeightAboveGeometry, actorTransform.position.z));
 		f3 hitOut;
 		for (unsigned int t = 0; t < numbTriangles; t++) {
 			if (Intersect(ray, this->floorTriangles[t], hitOut)) {
@@ -388,7 +392,7 @@ namespace demos {
 		}
 		// move the model forwards a little bit
 		actorTransform.position.y = this->prevModelHeight;
-		actorTransform.position = lerp(actorTransform.position, ground, deltaTime * 10.0f);
+		actorTransform.position = lerp(actorTransform.position, ground, deltaTime * speedUp);
 		this->prevModelHeight = actorTransform.position.y;
 		// LERP the foot position between where the foot would be if it struck the floor vs no obsticle
 		// clamp the normalized time value (n variable prefix means the value is normalized)
