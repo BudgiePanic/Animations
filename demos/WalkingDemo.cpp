@@ -10,6 +10,7 @@
 #define rayHeightAboveGeometry 10.0f
 #define walkSlowDown 0.3f
 #define walkPathDuration 6.0f
+// speedUp helps ease the models position and rotation updates on corners to be smoother
 #define speedUp 10.0f
 
 namespace demos {
@@ -296,6 +297,7 @@ namespace demos {
 		this->groundOffset = 0.15f;
 		this->toeLength = 0.3f;
 
+		// set initial actor position to be on the course above (0,0,0)
 		Ray ray(f3(this->actorTransform.position.x, rayHeightAboveGeometry, this->actorTransform.position.z));
 		f3 hitOut;
 		for (unsigned int i = 0, numbTriangles = this->floorTriangles.size(); i < numbTriangles; i++) {
@@ -330,14 +332,14 @@ namespace demos {
 		this->actorTime += deltaTime * walkSlowDown;
 		while (this->actorTime > walkPathDuration) { this->actorTime -= walkPathDuration; }
 
-		// update actor position
+		// update actor position by sampling the walking path
 		float lastY = this->actorTransform.position.y;
 		f3 currentPosition = this->actorPathTrack.Sample(this->actorTime, true);
 		f3 nextPosition = this->actorPathTrack.Sample(this->actorTime + 0.1f, true);
 		currentPosition.y = lastY;
 		nextPosition.y = lastY;
 		this->actorTransform.position = currentPosition;
-
+		// update actor rotation
 		f3 modelForward = normalized(nextPosition - currentPosition);
 		rotation::quaternion facing = rotation::lookRotation(modelForward, f3(0,1,0));
 		if (dot(actorTransform.rotation, facing) < 0.0f) {
@@ -346,6 +348,7 @@ namespace demos {
 		actorTransform.rotation = rotation::nlerp(actorTransform.rotation, facing, deltaTime * speedUp);
 		f3 forward = actorTransform.rotation * f3(0,0,1); // world is +z forward
 
+		// update actor height by checking which track triangle we are above
 		unsigned int numbTriangles = this->floorTriangles.size();
 		Ray ray(f3(actorTransform.position.x, rayHeightAboveGeometry, actorTransform.position.z));
 		f3 hitOut;
@@ -361,7 +364,7 @@ namespace demos {
 		this->poseDrawer->PointsFromPose(this->pose);
 		float nTime = (this->playbackTime - this->clips[this->clipIndex].GetStartTime()) / this->clips[this->clipIndex].GetDuration();
 		
-		// now figuring out where the feet should be placed		
+		// figure out where the feet should be placed		
 		f3 leftAnklePos = transforms::combine(actorTransform, this->pose.GetWorldTransform(this->leftLeg->GetAnkle())).position;
 		f3 predictedLeftAnklePos = leftAnklePos;
 		Ray leftRay(leftAnklePos + f3(0,2,0));
@@ -396,7 +399,7 @@ namespace demos {
 		actorTransform.position.y = this->prevModelHeight;
 		actorTransform.position = lerp(actorTransform.position, ground, deltaTime * speedUp);
 		this->prevModelHeight = actorTransform.position.y;
-		// LERP the foot position between where the foot would be if it struck the floor vs no obsticle
+		// LERP the foot position between where the foot would be if it was clamped to the floor vs in the air, based on the leg walk cycle tracks
 		// clamp the normalized time value (n variable prefix means the value is normalized)
 		nTime = (nTime > 1.0f) ? 1.0f : (nTime < 0.0f) ? 0.0f : nTime;
 		float nLeftLegHeight = this->leftLeg->GetLegHeightTrack().Sample(nTime, true);
@@ -412,7 +415,8 @@ namespace demos {
 		anim::Blend(this->pose, this->pose, this->leftLeg->GetPose(), blendAmount, this->leftLeg->GetHip());
 		anim::Blend(this->pose, this->pose, this->rightLeg->GetPose(), blendAmount, this->rightLeg->GetHip());
 
-		// TODO adjust the toe rotation to lie flat with the floor
+		// adjust the toe rotation to lie flat with the floor
+
 
 		this->pose.ToMatrixPalette(this->bonesAsMatrices);
 	}
