@@ -288,6 +288,8 @@ namespace demos {
 		this->options.IKPose = true;
 		this->options.currentPose = true;
 		this->options.floor = true;
+		this->options.mesh = true;
+		this->options.depthTest = false;
 
 		// toggle to what the animation would look like without IK
 		this->demoOptions.useFootIK = true; 
