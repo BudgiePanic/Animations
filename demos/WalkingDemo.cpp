@@ -418,7 +418,71 @@ namespace demos {
 		anim::Blend(this->pose, this->pose, this->rightLeg->GetPose(), blendAmount, this->rightLeg->GetHip());
 
 		// adjust the toe rotation to lie flat with the floor
+		unsigned int leftAnkleIdx = this->leftLeg->GetAnkle();
+		transforms::srt leftAnkle = transforms::combine(this->actorTransform, this->pose.GetWorldTransform(leftAnkleIdx));
+		f3 leftToe = transforms::combine(this->actorTransform, this->pose.GetWorldTransform(this->leftLeg->GetToe())).position;
+		f3 leftToeTarget = leftToe;
+		f3 leftToePredicted = leftToe;
+		f3 origin = leftAnkle.position;
+		origin.y = leftToe.y;
+		Ray leftToeRay(origin + forward * toeLength + f3(0,1,0));
 
+		unsigned int rightAnkleIdx = this->rightLeg->GetAnkle();
+		transforms::srt rightAnkle = transforms::combine(this->actorTransform, this->pose.GetWorldTransform(rightAnkleIdx));
+		f3 rightToe = transforms::combine(this->actorTransform, this->pose.GetWorldTransform(this->rightLeg->GetToe())).position;
+		f3 rightToeTarget = rightToe;
+		f3 rightToePredicted = rightToe;
+		origin = rightAnkle.position;
+		origin.y = rightToe.y;
+		Ray rightToeRay(origin + forward * toeLength + f3(0, 1, 0));
+
+		// check if the toe is clipping into the floor
+		float ankleRayHeight = 1.1f;
+		for (unsigned int t = 0; t < numbTriangles; t++) {
+			if (Intersect(leftToeRay, this->floorTriangles[t], hitOut)) {
+				if (lengthSquared(hitOut - leftToeRay.origin) < (ankleRayHeight * ankleRayHeight)) {
+					leftToeTarget = hitOut;
+				}
+				leftToePredicted = hitOut;
+			}
+			if (Intersect(rightToeRay, this->floorTriangles[t], hitOut)) {
+				if (lengthSquared(hitOut - rightToeRay.origin) < (ankleRayHeight * ankleRayHeight)) {
+					rightToeTarget = hitOut;
+				}
+				rightToePredicted = hitOut;
+			}
+		}
+
+		// move the toe based on the walk cycle
+		leftToeTarget = lerp(leftToeTarget, leftToePredicted, nLeftLegHeight);
+		f3 toToe = leftToe - leftAnkle.position;
+		f3 toDesiredToe = leftToeTarget - leftAnkle.position;
+		bool leftToeNeedsAdjust = dot(toToe, toDesiredToe) > 0.0001f;
+		if (leftToeNeedsAdjust && this->demoOptions.useToeIk) {
+			rotation::quaternion ankleRotation = rotation::fromTo(toToe, toDesiredToe);
+			transforms::srt localAnkle = this->pose.GetLocalTransform(leftAnkleIdx);
+			
+			rotation::quaternion ankleRotationWorld = leftAnkle.rotation * ankleRotation;
+			rotation::quaternion ankleRotationLocal = ankleRotationWorld * rotation::inverse(leftAnkle.rotation);
+
+			localAnkle.rotation = ankleRotationLocal * localAnkle.rotation;
+			this->pose.SetLocalTransform(leftAnkleIdx, localAnkle);
+		}
+
+		rightToeTarget = lerp(rightToeTarget, rightToePredicted, nRightLegHeight);
+		toToe = rightToe - rightAnkle.position;
+		toDesiredToe = rightToeTarget - rightAnkle.position;
+		bool rightToeNeedsAdjust = dot(toToe, toDesiredToe) > 0.0001f;
+		if (rightToeNeedsAdjust && this->demoOptions.useToeIk) {
+			rotation::quaternion ankleRotation = rotation::fromTo(toToe, toDesiredToe);
+			transforms::srt localAnkle = this->pose.GetLocalTransform(rightAnkleIdx);
+
+			rotation::quaternion ankleRotationWorld = rightAnkle.rotation * ankleRotation;
+			rotation::quaternion ankleRotationLocal = ankleRotationWorld * rotation::inverse(rightAnkle.rotation);
+
+			localAnkle.rotation = ankleRotationLocal * localAnkle.rotation;
+			this->pose.SetLocalTransform(rightAnkleIdx, localAnkle);
+		}
 
 		this->pose.ToMatrixPalette(this->bonesAsMatrices);
 	}
