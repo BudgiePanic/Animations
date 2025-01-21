@@ -287,10 +287,12 @@ namespace demos {
 		this->options.IKPose = true;
 		this->options.currentPose = true;
 		this->options.floor = true;
-		this->options.mesh = false;
-		this->options.depthTest = true;
 
-		this->playbackSpeed = 1.0f;
+		// toggle to what the animation would look like without IK
+		this->demoOptions.useFootIK = true; 
+		// slow the demo down to closely inspect the effect of IK on foot placement
+		this->demoOptions.playBackSpeed = 1.0f;
+
 		this->groundOffset = 0.15f;
 		this->toeLength = 0.3f;
 
@@ -324,7 +326,7 @@ namespace demos {
 	}
 
 	void WalkingDemo::Update(float deltaTime) {
-		deltaTime *= playbackSpeed;
+		deltaTime *= demoOptions.playBackSpeed;
 		this->actorTime += deltaTime * walkSlowDown;
 		while (this->actorTime > walkPathDuration) { this->actorTime -= walkPathDuration; }
 
@@ -405,9 +407,10 @@ namespace demos {
 		// bones should be placed to achieve the desired foot placement
 		this->leftLeg->Sovle(this->actorTransform, this->pose, leftAnklePos);
 		this->rightLeg->Sovle(this->actorTransform, this->pose, rightAnklePos);
-		// replace the pose's leg configuration with the configuration from the IK solvers
-		anim::Blend(this->pose, this->pose, this->leftLeg->GetPose(), 1, this->leftLeg->GetHip());
-		anim::Blend(this->pose, this->pose, this->rightLeg->GetPose(), 1, this->rightLeg->GetHip());
+		// replace the pose's leg configuration with the configuration from the IK solvers via blending
+		float blendAmount = this->demoOptions.useFootIK ? 1.0f : 0.0f;
+		anim::Blend(this->pose, this->pose, this->leftLeg->GetPose(), blendAmount, this->leftLeg->GetHip());
+		anim::Blend(this->pose, this->pose, this->rightLeg->GetPose(), blendAmount, this->rightLeg->GetHip());
 
 		// TODO adjust the toe rotation to lie flat with the floor
 

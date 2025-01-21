@@ -73,6 +73,11 @@ namespace demos {
 			bool floor;
 		};
 
+		struct DemoOptions {
+			bool useFootIK;
+			float playBackSpeed;
+		};
+
 		/// <summary>
 		/// Inverse Kinematic leg stores all the information needed to position a leg with inverse kinematics
 		/// </summary>
@@ -157,8 +162,7 @@ namespace demos {
 		float groundOffset;
 
 		RenderOptions options;
-		
-		float playbackSpeed;
+		DemoOptions demoOptions;
 
 		IKLeg* leftLeg;
 		IKLeg* rightLeg;
