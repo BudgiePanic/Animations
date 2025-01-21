@@ -15,6 +15,8 @@ namespace demos {
 
 	class SimpleAnimationPlayer : public Application {
 	public:
+		friend class InverseKinematicsDemo; // we need to 'borrow' the skeleton drawer, too lazy to pull the class up.
+		friend class WalkingDemo;
 		void Initialize();
 		void ShutDown();
 		void Update(float deltaTime);

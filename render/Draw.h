@@ -46,4 +46,10 @@ void DrawInstanced(IndexBuffer& indexBuffer, DrawMode mode, unsigned int instanc
 /// <param name="numInstances"></param>
 void DrawInstanced(unsigned int vertexCount, DrawMode mode, unsigned int numInstances);
 
+/// <summary>
+/// Enable or disable the depth buffer
+/// </summary>
+/// <param name="state">pass true to enable the depth buffer, false to disable the depth buffer</param>
+void SetDepthBuffer(bool state);
+
 }
