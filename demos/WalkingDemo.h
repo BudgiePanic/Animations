@@ -75,6 +75,7 @@ namespace demos {
 
 		struct DemoOptions {
 			bool useFootIK;
+			bool useToeIk;
 			float playBackSpeed;
 		};
 

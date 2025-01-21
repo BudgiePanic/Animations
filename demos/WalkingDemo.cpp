@@ -292,7 +292,9 @@ namespace demos {
 		// toggle to what the animation would look like without IK
 		this->demoOptions.useFootIK = true; 
 		// slow the demo down to closely inspect the effect of IK on foot placement
-		this->demoOptions.playBackSpeed = 1.0f;
+		this->demoOptions.playBackSpeed = 1.0f * 0.5f;
+		// toggle rotating the foot to lie flat on the floor
+		this->demoOptions.useToeIk = true;
 
 		this->groundOffset = 0.15f;
 		this->toeLength = 0.3f;
