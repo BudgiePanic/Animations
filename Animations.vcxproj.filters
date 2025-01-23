@@ -150,6 +150,9 @@
     <ClInclude Include="demos\WalkingDemo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="transforms\DualQuaternion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -270,6 +273,7 @@
     <None Include="resource\shaders\frag_lit.glsl" />
     <None Include="resource\shaders\skinned_vert.glsl" />
     <None Include="resource\shaders\skinned_vert_simple.glsl" />
+    <None Include="resource\shaders\skinned_dual_quat_vert.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\assets\uv.png">
