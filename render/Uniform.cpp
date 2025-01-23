@@ -5,6 +5,7 @@
 #include "../rotation/quaternion.h"
 #include "../glad.h"
 #include "../Mat4f.h"
+#include "../transforms/DualQuaternion.h"
 
 /*#define UNIFORM_SET_IMPL_TYPE(gl_function, containerType, dataType) \
 template<> void Uniform<containerType>::Set( \
@@ -24,6 +25,7 @@ namespace render {
 	template Uniform<rotation::quaternion>;
 	template Uniform<f4>;
 	template Uniform<mat4f>;
+	template Uniform<transforms::DualQuaternion>;
 
 
 	template <typename T>
@@ -73,5 +75,10 @@ namespace render {
 	template<> void Uniform<mat4f>::Set(unsigned int slot, const mat4f* data, unsigned int arrayLength) {
 		constexpr bool shouldTransposeMatrix = false;
 		glad_glUniformMatrix4fv(slot, (GLsizei) arrayLength, shouldTransposeMatrix, (float*)&data[0]);
+	}
+
+	template<> void Uniform<transforms::DualQuaternion>::Set(unsigned int slot, const transforms::DualQuaternion* data, unsigned int arrayLength) {
+		constexpr bool shouldTransposeMatrix = false;
+		glad_glUniformMatrix2x4fv(slot, arrayLength, shouldTransposeMatrix, data[0].v);
 	}
 }

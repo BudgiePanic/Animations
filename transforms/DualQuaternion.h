@@ -27,4 +27,32 @@ namespace transforms {
 
 	DualQuaternion operator+(const DualQuaternion& left, const DualQuaternion& right);
 	DualQuaternion operator*(const DualQuaternion& dualQuat, float scale);
+	
+	/// <summary>
+	/// left to right application of multiplication 
+	/// </summary>
+	/// <param name="left"></param>
+	/// <param name="right"></param>
+	/// <returns></returns>
+	DualQuaternion operator*(const DualQuaternion& left, const DualQuaternion& right);
+
+	bool operator==(const DualQuaternion& left, const DualQuaternion& right);
+
+	bool operator!=(const DualQuaternion& left, const DualQuaternion& right);
+
+	float dot(const DualQuaternion& left, const DualQuaternion& right);
+
+	DualQuaternion conjugate(const DualQuaternion& dualQuat);
+
+	DualQuaternion normalized(const DualQuaternion& dualQuat);
+
+	void normalize(DualQuaternion& dualQuat);
+
+	DualQuaternion toDualQuaternion(const srt& transform);
+
+	srt toSRT(const DualQuaternion& dualQuat);
+
+	f3 applyPoint(const DualQuaternion& dualQuat, const f3& point);
+
+	f3 applyVector(const DualQuaternion& dualQuat, const f3& vector);
 }
