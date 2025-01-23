@@ -147,6 +147,7 @@
     <ClInclude Include="demos\AnimationBlending.h" />
     <ClInclude Include="demos\CrossFadedAnimations.h" />
     <ClInclude Include="demos\DrawQuad.h" />
+    <ClInclude Include="demos\DualQuaternionSkinning.h" />
     <ClInclude Include="demos\InverseKinematicsDemo.h" />
     <ClInclude Include="demos\SimpleAnimationPlayer.h" />
     <ClInclude Include="demos\WalkingDemo.h" />
