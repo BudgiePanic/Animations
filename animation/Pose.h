@@ -54,7 +54,7 @@ namespace anim {
 		/// Used for transferring data to the GPU.
 		/// </summary>
 		/// <param name="outputArray"></param>
-		void ToDualQuaternionPalette(std::vector<mat4f>& outputArray);
+		void ToDualQuaternionPalette(std::vector<transforms::DualQuaternion>& outputArray);
 		bool operator==(const Pose& other);
 		bool operator!=(const Pose& other);
 	};
