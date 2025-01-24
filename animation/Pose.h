@@ -42,6 +42,7 @@ namespace anim {
 		transforms::srt GetLocalTransform(unsigned int boneIndex);
 		void SetLocalTransform(unsigned int boneIndex, const transforms::srt& localTransform);
 		transforms::srt GetWorldTransform(unsigned int boneIndex);
+		transforms::DualQuaternion GetWorldDualQuaternion(unsigned int boneIndex);
 		transforms::srt operator[](unsigned int boneIndex);
 		/// <summary>
 		/// Converts each bone's world space SRT into a matrix 4 and writes matrix into the output array.
