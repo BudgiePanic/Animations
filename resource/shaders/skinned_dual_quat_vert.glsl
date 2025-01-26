@@ -65,7 +65,7 @@ mat2x4 combineDualQ(mat2x4 left, mat2x4 right) {
  * Taken from quaternion.cpp *operator
  */
 vec4 applyVector(mat2x4 dualQ, vec3 vector) {
-  vec4 real = qualQ[real_component]; // rotation data
+  vec4 real = dualQ[real_component]; // rotation data
   vec3 realVector = real.xyz;
   float realScalar = real.w;
 
@@ -84,7 +84,7 @@ vec4 applyPoint(mat2x4 dualQ, vec3 point) {
   vec4 real = dualQ[real_component];
   vec4 dual = dualQ[dual_component];
   vec4 conjugate = vec4(-real.xyz, real.w);
-  vec4 translation = qMul(conjugate, dual * 2.0).xyz;
+  vec3 translation = qMul(conjugate, dual * 2.0).xyz;
   vec3 v = applyVector(dualQ, point).xyz;
   return vec4(v + translation, 1);
 }
