@@ -38,6 +38,15 @@ namespace anim {
 		return this->inverseBindPose;
 	}
 
+	void Armature::GetInverseBindPose(std::vector<transforms::DualQuaternion>& outputArray) {
+		unsigned int numbBones = this->bindPose.Size();
+		outputArray.resize(numbBones);
+		for (unsigned int boneIndex = 0; boneIndex < numbBones; boneIndex++) {
+			transforms::DualQuaternion worldBone = this->bindPose.GetWorldDualQuaternion(boneIndex);
+			outputArray[boneIndex] = transforms::conjugate(worldBone);
+		}
+	}
+
 	std::vector<std::string>& Armature::GetBoneNames() {
 		return this->boneNames;
 	}

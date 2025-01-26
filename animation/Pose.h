@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "../transforms/DualQuaternion.h"
 #include "../transforms/srt.h"
 #include "../Mat4f.h"
 
@@ -41,6 +42,7 @@ namespace anim {
 		transforms::srt GetLocalTransform(unsigned int boneIndex);
 		void SetLocalTransform(unsigned int boneIndex, const transforms::srt& localTransform);
 		transforms::srt GetWorldTransform(unsigned int boneIndex);
+		transforms::DualQuaternion GetWorldDualQuaternion(unsigned int boneIndex);
 		transforms::srt operator[](unsigned int boneIndex);
 		/// <summary>
 		/// Converts each bone's world space SRT into a matrix 4 and writes matrix into the output array.
@@ -48,6 +50,12 @@ namespace anim {
 		/// </summary>
 		/// <param name="outputArray"></param>
 		void ToMatrixPalette(std::vector<mat4f>& outputArray);
+		/// <summary>
+		/// Converts each bone into a world space dual quaternion and writes the result into the output array.
+		/// Used for transferring data to the GPU.
+		/// </summary>
+		/// <param name="outputArray"></param>
+		void ToDualQuaternionPalette(std::vector<transforms::DualQuaternion>& outputArray);
 		bool operator==(const Pose& other);
 		bool operator!=(const Pose& other);
 	};

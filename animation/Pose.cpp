@@ -76,6 +76,19 @@ namespace anim {
 		return result;
 	}
 
+	transforms::DualQuaternion Pose::GetWorldDualQuaternion(unsigned int boneIndex) {
+		// start at local joint, and accumulate parent transforms until root is reached
+		transforms::DualQuaternion result = transforms::toDualQuaternion(this->GetLocalTransform(boneIndex));
+		int parentIndex = this->ParentIndexOf(boneIndex);
+		while (parentIndex >= 0) {
+			auto parent = transforms::toDualQuaternion(this->GetLocalTransform(parentIndex));
+			// note the left to right multiplication, in contrast to GetWorldTransform's right to left multiplication
+			result = result * parent;
+			parentIndex = this->ParentIndexOf(parentIndex);
+		}
+		return result;
+	}
+
 	transforms::srt Pose::operator[](unsigned int boneIndex) {
 		return GetWorldTransform(boneIndex);
 	}
@@ -100,6 +113,17 @@ namespace anim {
 		for (; bone < numbBones; bone++) {
 			transforms::srt transform = this->GetWorldTransform(bone);
 			outputArray[bone] = transforms::toMatrix(transform);
+		}
+	}
+
+	void Pose::ToDualQuaternionPalette(std::vector < transforms::DualQuaternion>& outputArray) {
+		unsigned int numbBones = this->Size();
+		if (outputArray.size() != numbBones) {
+			outputArray.resize(numbBones);
+		}
+		// naive implementation only
+		for (unsigned int boneIndex = 0; boneIndex < numbBones; boneIndex++) {
+			outputArray[boneIndex] = this->GetWorldDualQuaternion(boneIndex);
 		}
 	}
 

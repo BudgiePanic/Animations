@@ -36,6 +36,7 @@ namespace anim {
 		Pose& GetBindPose();
 		Pose& GetRestPose();
 		std::vector<mat4f>& GetInverseBindPose();
+		void GetInverseBindPose(std::vector<transforms::DualQuaternion>& outputArray);
 		std::vector<std::string>& GetBoneNames();
 		std::string& GetBoneName(unsigned int index);
 	};
