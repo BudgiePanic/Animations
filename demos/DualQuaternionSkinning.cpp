@@ -21,7 +21,6 @@ namespace demos {
 		this->clips = io::LoadClips(data);
 		io::FreeGLTFData(data);
 
-
 		std::cout << "Looking for \'\\resource\\shaders\\skinned_dual_quat_vert.glsl\' in working directory.\n";
 		std::cout << "Looking for \'\\resource\\shaders\\frag_lit.glsl\' in working directory.\n";
 		this->dualQShader = new render::Shader(
@@ -35,7 +34,6 @@ namespace demos {
 		);
 		std::cout << "Looking for \'\\resource\\assets\\dq.png\' in working directory.\n";
 		this->texture = new render::Texture("./resource/assets/dq.png");
-
 
 		this->pose = armature.GetRestPose();
 		
