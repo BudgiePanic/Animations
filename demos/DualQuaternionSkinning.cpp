@@ -11,7 +11,7 @@ namespace demos {
 		std::cout << "Looking for \'\\resource\\assets\\dq.gltf\' in working directory.\n";
 		// Note: loading in the Woman model, causes the skinning to break completely. 
 		// Happens with the book author's code too.
-		// Wonder where the issue is?
+		// Wonder where the issue is? I strongly suspect it was caused by the loss of scale data in the DQ skinning
 		cgltf_data* data = io::LoadGLTFFile("./resource/assets/dq.gltf");
 		if (data == nullptr) {
 			std::cout << "couldn't load gltf data\n";
