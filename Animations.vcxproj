@@ -191,6 +191,7 @@
     <ClCompile Include="demos\AnimationBlending.cpp" />
     <ClCompile Include="demos\CrossFadedAnimations.cpp" />
     <ClCompile Include="demos\DrawQuad.cpp" />
+    <ClCompile Include="demos\DualQuaternionSkinning.cpp" />
     <ClCompile Include="demos\InverseKinematicsDemo.cpp" />
     <ClCompile Include="demos\SimpleAnimationPlayer.cpp" />
     <ClCompile Include="demos\WalkingDemo.cpp" />
@@ -210,12 +211,14 @@
     <ClCompile Include="render\Uniform.cpp" />
     <ClCompile Include="rotation\quaternion.cpp" />
     <ClCompile Include="stb_image.cpp" />
+    <ClCompile Include="transforms\DualQuaternion.cpp" />
     <ClCompile Include="transforms\srt.cpp" />
     <ClCompile Include="Vector3.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LICENSE" />
+    <None Include="resource\assets\dq.gltf" />
     <None Include="resource\shaders\frag_lit.glsl" />
     <None Include="resource\shaders\skinned_dual_quat_vert.glsl" />
     <None Include="resource\shaders\skinned_vert.glsl" />
@@ -223,6 +226,7 @@
     <None Include="resource\shaders\static_vert.glsl" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="resource\assets\dq.png" />
     <Image Include="resource\assets\uv.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
