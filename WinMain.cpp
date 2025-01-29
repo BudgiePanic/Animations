@@ -26,18 +26,25 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, PSTR, int);
 // window event processing function
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
-#if _DEBUG
-// If debug build, connect to the console
+/// <summary>
+/// check the command line argument for which demo to use
+/// </summary>
+/// <param name="args"></param>
+/// <returns></returns>
+Application* ProcessArgs();
+
+/* #if _DEBUG */
+// ~If debug build, connect to the console~ Always use the console, so we can get command line arguments
 #pragma comment( linker, "/subsystem:console" )
 int main(int argc, const char** argv) {
 	return WinMain(GetModuleHandle(NULL), NULL, GetCommandLineA(), SW_SHOWDEFAULT);
 }
 
-#else
+/* #else */
 // otherwise connect to a window
-#pragma comment( linker, "/subsystem:windows")
+/* #pragma comment( linker, "/subsystem:windows") */
 
-#endif
+/* #endif */
 #pragma comment (lib, "opengl32.lib") // ask the linker to connect us to the opengl library
 
 // Boilder plate to work with OpenGL
