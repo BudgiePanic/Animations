@@ -21,15 +21,18 @@ namespace demos {
 		for (unsigned int i = 0, numbMeshes = (unsigned int)this->gpuMeshes.size(); i < numbMeshes; i++) {
 			this->gpuMeshes[i].SyncOpenGL();
 		}
-
+		std::cout << "Looking for \'\\resource\\shaders\\frag_lit.glsl\' in working directory.\n";
+		std::cout << "Looking for \'\\resource\\shaders\\static_vert.glsl\' in working directory.\n";
 		this->cpuShader = new render::Shader(
 			"./resource/shaders/static_vert.glsl",
 			"./resource/shaders/frag_lit.glsl"
 		);
+		std::cout << "Looking for \'\\resource\\shaders\\skinned_vert_simple.glsl\' in working directory.\n";
 		this->gpuShader = new render::Shader(
 			"./resource/shaders/skinned_vert_simple.glsl",
 			"./resource/shaders/frag_lit.glsl"
 		);
+		std::cout << "Looking for \'\\resource\\assets\\Woman.png\' in working directory.\n";
 		this->texture = new render::Texture("./resource/assets/Woman.png");
 
 		unsigned int numbClips = this->clips.size();

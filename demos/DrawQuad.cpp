@@ -6,6 +6,7 @@
 #include "../rotation/quaternion.h"
 #include "../render/Draw.h"
 #include "../render/Uniform.h"
+#include <iostream>
 
 namespace demos {
 
@@ -16,10 +17,13 @@ namespace demos {
 
 	void DrawQuad::Initialize() {
 		this->rotationRadian = 0.0f;
+		std::cout << "Looking for \'\\resource\\shaders\\frag_lit.glsl\' in working directory.\n";
+		std::cout << "Looking for \'\\resource\\shaders\\static_vert.glsl\' in working directory.\n";
 		this->shader = new render::Shader(
 			"./resource/shaders/static_vert.glsl",
 			"./resource/shaders/frag_lit.glsl"
 		);
+		std::cout << "Looking for \'\\resource\\assets\\uv.png\' in working directory.\n";
 		this->quadTexture = new render::Texture(
 			"./resource/assets/uv.png"
 		);
