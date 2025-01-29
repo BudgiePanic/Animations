@@ -227,10 +227,13 @@ namespace demos {
 		this->actorTexture = new render::Texture("./resource/assets/Woman.png");
 
 		// make shaders
+		std::cout << "Looking for \'\\resource\\shaders\\frag_lit.glsl\' in working directory.\n";
+		std::cout << "Looking for \'\\resource\\shaders\\skinned_vert.glsl\' in working directory.\n";
 		this->actorShader = new render::Shader(
 			"./resource/shaders/skinned_vert.glsl",
 			"./resource/shaders/frag_lit.glsl"
 		);
+		std::cout << "Looking for \'\\resource\\shaders\\static_vert.glsl\' in working directory.\n";
 		this->floorShader = new render::Shader(
 			"./resource/shaders/static_vert.glsl",
 			"./resource/shaders/frag_lit.glsl"

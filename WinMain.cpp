@@ -2,20 +2,23 @@
 #define WIN32_LEAN_AND_MEAN
 #define WIN32_EXTRA_LEAN
 
-#include "glad.h"
 #include <windows.h>
+#include <shellapi.h> // to process the command line arguments, if any
+#include <functional> // to map command line arguments to demos
+#include <direct.h> // to find the working directory
 #include <iostream>
-#include <direct.h>
+
+#include "glad.h"
 #include "Application.h"
-#include "demos/DrawQuad.h"
-#include "demos/SimpleAnimationPlayer.h"
-#include "demos/AnimatedModel.h"
-#include "demos/AnimationBlending.h"
-#include "demos/CrossFadedAnimations.h"
 #include "demos/AnimationAdding.h"
-#include "demos/InverseKinematicsDemo.h"
-#include "demos/WalkingDemo.h"
+#include "demos/AnimationBlending.h"
+#include "demos/AnimatedModel.h"
+#include "demos/CrossFadedAnimations.h"
+#include "demos/DrawQuad.h"
 #include "demos/DualQuaternionSkinning.h"
+#include "demos/InverseKinematicsDemo.h"
+#include "demos/SimpleAnimationPlayer.h"
+#include "demos/WalkingDemo.h"
 
 // Forward declare functions
 // window entry function
@@ -23,18 +26,25 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, PSTR, int);
 // window event processing function
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
-#if _DEBUG
-// If debug build, connect to the console
+/// <summary>
+/// check the command line argument for which demo to use
+/// </summary>
+/// <param name="args"></param>
+/// <returns></returns>
+Application* ProcessArgs();
+
+/* #if _DEBUG */
+// ~If debug build, connect to the console~ Always use the console, so we can get command line arguments, and show the user useful messages
 #pragma comment( linker, "/subsystem:console" )
 int main(int argc, const char** argv) {
 	return WinMain(GetModuleHandle(NULL), NULL, GetCommandLineA(), SW_SHOWDEFAULT);
 }
 
-#else
+/* #else */
 // otherwise connect to a window
-#pragma comment( linker, "/subsystem:windows")
+/* #pragma comment( linker, "/subsystem:windows") */
 
-#endif
+/* #endif */
 #pragma comment (lib, "opengl32.lib") // ask the linker to connect us to the opengl library
 
 // Boilder plate to work with OpenGL
@@ -55,7 +65,7 @@ Application* gApplication = 0; // global_variable_pointer_application
 GLuint gVertexArrayObject = 0;
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine, int iCmdShow) {
-    gApplication = new demos::DualQuaternionSkinning();
+    gApplication = ProcessArgs();
 	// the window
     WNDCLASSEX wndclass{};
     wndclass.cbSize = sizeof(WNDCLASSEX);
@@ -84,11 +94,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
         bottom = (screenHeight / 2) + (clientHeight / 2);
     RECT windowRect{};
     SetRect(&windowRect, left, top, right, bottom);
-    DWORD windowStyle = (WS_OVERLAPPED, WS_CAPTION, WS_SYSMENU, WS_MINIMIZEBOX, WS_MAXIMIZEBOX);
+    DWORD windowStyle = (WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX);
 
     AdjustWindowRectEx(&windowRect, windowStyle, FALSE, 0);
     const int width = windowRect.right - windowRect.left, height = windowRect.bottom - windowRect.top;
-    HWND hwnd = CreateWindowEx(0, wndclass.lpszClassName, L"Hello Window", windowStyle, 
+    HWND hwnd = CreateWindowEx(0, wndclass.lpszClassName, L"Animation Window", windowStyle, 
         windowRect.left, windowRect.top, width, height, NULL, NULL, hInstance, szCmdLine);
 
     HDC hdc = GetDC(hwnd);
@@ -253,4 +263,46 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam) {
     }
     // remaining cases are sent to default window event processor method
     return DefWindowProc(hwnd, iMsg, wParam, lParam); 
+}
+
+Application* ProcessArgs() {
+    static const std::map<std::string, std::function<Application* ()>> argToDemo = {
+        { "-animated_model", []() { return new demos::AnimatedModel(); }},
+        { "-animation_adding", []() { return new demos::AnimationAdding(); }},
+        { "-animation_blending", []() { return new demos::AnimationBlending(); }},
+        { "-cross_fade_animation", []() { return new demos::CrossFadedAnimations(); }},
+        { "-draw_quad", []() { return new demos::DrawQuad(); }},
+        { "-dual_quaternion_skinning", []() { return new demos::DualQuaternionSkinning(); }},
+        { "-inverse_kinematics", []() { return new demos::InverseKinematicsDemo(); }},
+        { "-skeleton_wireframe", []() { return new demos::SimpleAnimationPlayer(); }},
+        { "-inverse_kinematic_walking", []() { return new demos::WalkingDemo(); }},
+    };
+    // https://stackoverflow.com/questions/12460712/convert-lpwstr-to-string
+    // https://learn.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-commandlinetoargvw
+    int numbArgs;
+    LPWSTR* args = CommandLineToArgvW(GetCommandLineW(), &numbArgs);
+    if (args == NULL) {
+        std::cout << "Could not parse program arguments\n";
+        return new Application();
+    }
+    Application* answer = NULL;
+    for (int i = 0; i < numbArgs; i++) {
+        LPWSTR str = args[i];
+        std::wstring wArg(str);
+        std::string arg = std::string(wArg.begin(), wArg.end());
+        if (argToDemo.find(arg) != argToDemo.end()) {
+            answer = argToDemo.at(arg)();
+            break; // accept the first match only
+        }
+    }
+    LocalFree(args);
+    if (answer == NULL) {
+        answer = new Application();
+        std::cout << "did not recognize any demos in argument list, loading default demo" << std::endl;
+        std::cout << "valid arguments are:" << std::endl;
+        for (auto const& entry : argToDemo) {
+            std::cout << entry.first << std::endl;
+        }
+    }
+    return answer;
 }
