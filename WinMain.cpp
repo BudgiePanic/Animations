@@ -272,7 +272,7 @@ Application* ProcessArgs() {
         { "-animation_blending", []() { return new demos::AnimationBlending(); }},
         { "-cross_fade_animation", []() { return new demos::CrossFadedAnimations(); }},
         { "-draw_quad", []() { return new demos::DrawQuad(); }},
-        { "-dual_duaternion_skinning", []() { return new demos::DualQuaternionSkinning(); }},
+        { "-dual_quaternion_skinning", []() { return new demos::DualQuaternionSkinning(); }},
         { "-inverse_kinematics", []() { return new demos::InverseKinematicsDemo(); }},
         { "-skeleton_wireframe", []() { return new demos::SimpleAnimationPlayer(); }},
         { "-inverse_kinematic_walking", []() { return new demos::WalkingDemo(); }},
