@@ -34,7 +34,7 @@ LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 Application* ProcessArgs();
 
 /* #if _DEBUG */
-// ~If debug build, connect to the console~ Always use the console, so we can get command line arguments
+// ~If debug build, connect to the console~ Always use the console, so we can get command line arguments, and show the user useful messages
 #pragma comment( linker, "/subsystem:console" )
 int main(int argc, const char** argv) {
 	return WinMain(GetModuleHandle(NULL), NULL, GetCommandLineA(), SW_SHOWDEFAULT);
