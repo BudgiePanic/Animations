@@ -1,0 +1,43 @@
+NOTICE
+
+This project includes the following open-source software:
+
+- glad loader generated code
+  URL: https://glad.dav1d.de/
+  License: CCO
+  License URL: https://creativecommons.org/publicdomain/zero/1.0/
+  glad project URL: https://github.com/Dav1dde/glad/
+  
+- khrplatform
+  License: MIT license
+  License Text:
+    -----------------------------------------------------------------------
+    Copyright (c) 2008-2018 The Khronos Group Inc.
+
+    Permission is hereby granted, free of charge, to any person obtaining a
+    copy of this software and/or associated documentation files (the
+    "Materials"), to deal in the Materials without restriction, including
+    without limitation the rights to use, copy, modify, merge, publish,
+    distribute, sublicense, and/or sell copies of the Materials, and to
+    permit persons to whom the Materials are furnished to do so, subject to
+    the following conditions:
+  
+    The above copyright notice and this permission notice shall be included
+    in all copies or substantial portions of the Materials.
+  
+    THE MATERIALS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+    EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+    IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+    CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+    TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+    MATERIALS OR THE USE OR OTHER DEALINGS IN THE MATERIALS.
+    -----------------------------------------------------------------------
+
+- stb_image v2.30
+  License: MIT license
+  license URL: https://github.com/nothings/stb/blob/master/LICENSE
+
+- cgltf v1.14
+  License: MIT License
+  License URL: https://github.com/jkuhlmann/cgltf/blob/master/LICENSE
