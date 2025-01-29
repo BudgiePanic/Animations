@@ -98,7 +98,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
 
     AdjustWindowRectEx(&windowRect, windowStyle, FALSE, 0);
     const int width = windowRect.right - windowRect.left, height = windowRect.bottom - windowRect.top;
-    HWND hwnd = CreateWindowEx(0, wndclass.lpszClassName, L"Hello Window", windowStyle, 
+    HWND hwnd = CreateWindowEx(0, wndclass.lpszClassName, L"Animation Window", windowStyle, 
         windowRect.left, windowRect.top, width, height, NULL, NULL, hInstance, szCmdLine);
 
     HDC hdc = GetDC(hwnd);
