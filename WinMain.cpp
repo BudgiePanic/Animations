@@ -65,7 +65,7 @@ Application* gApplication = 0; // global_variable_pointer_application
 GLuint gVertexArrayObject = 0;
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine, int iCmdShow) {
-    gApplication = new demos::DualQuaternionSkinning();
+    gApplication = ProcessArgs();
 	// the window
     WNDCLASSEX wndclass{};
     wndclass.cbSize = sizeof(WNDCLASSEX);
@@ -263,4 +263,46 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam) {
     }
     // remaining cases are sent to default window event processor method
     return DefWindowProc(hwnd, iMsg, wParam, lParam); 
+}
+
+Application* ProcessArgs() {
+    static const std::map<std::string, std::function<Application* ()>> argToDemo = {
+        { "-animated_model", []() { return new demos::AnimatedModel(); }},
+        { "-animation_adding", []() { return new demos::AnimationAdding(); }},
+        { "-animation_blending", []() { return new demos::AnimationBlending(); }},
+        { "-cross_fade_animation", []() { return new demos::CrossFadedAnimations(); }},
+        { "-draw_quad", []() { return new demos::DrawQuad(); }},
+        { "-dual_duaternion_skinning", []() { return new demos::DualQuaternionSkinning(); }},
+        { "-inverse_kinematics", []() { return new demos::InverseKinematicsDemo(); }},
+        { "-skeleton_wireframe", []() { return new demos::SimpleAnimationPlayer(); }},
+        { "-inverse_kinematic_walking", []() { return new demos::WalkingDemo(); }},
+    };
+    // https://stackoverflow.com/questions/12460712/convert-lpwstr-to-string
+    // https://learn.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-commandlinetoargvw
+    int numbArgs;
+    LPWSTR* args = CommandLineToArgvW(GetCommandLineW(), &numbArgs);
+    if (args == NULL) {
+        std::cout << "Could not parse program arguments\n";
+        return new Application();
+    }
+    Application* answer = NULL;
+    for (int i = 0; i < numbArgs; i++) {
+        LPWSTR str = args[i];
+        std::wstring wArg(str);
+        std::string arg = std::string(wArg.begin(), wArg.end());
+        if (argToDemo.find(arg) != argToDemo.end()) {
+            answer = argToDemo.at(arg)();
+            break; // accept the first match only
+        }
+    }
+    LocalFree(args);
+    if (answer == NULL) {
+        answer = new Application();
+        std::cout << "did not recognize any demos in argument list, loading default demo" << std::endl;
+        std::cout << "valid arguments are:" << std::endl;
+        for (auto const& entry : argToDemo) {
+            std::cout << entry.first << std::endl;
+        }
+    }
+    return answer;
 }
