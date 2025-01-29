@@ -2,20 +2,23 @@
 #define WIN32_LEAN_AND_MEAN
 #define WIN32_EXTRA_LEAN
 
-#include "glad.h"
 #include <windows.h>
+#include <shellapi.h> // to process the command line arguments, if any
+#include <functional> // to map command line arguments to demos
+#include <direct.h> // to find the working directory
 #include <iostream>
-#include <direct.h>
+
+#include "glad.h"
 #include "Application.h"
-#include "demos/DrawQuad.h"
-#include "demos/SimpleAnimationPlayer.h"
-#include "demos/AnimatedModel.h"
-#include "demos/AnimationBlending.h"
-#include "demos/CrossFadedAnimations.h"
 #include "demos/AnimationAdding.h"
-#include "demos/InverseKinematicsDemo.h"
-#include "demos/WalkingDemo.h"
+#include "demos/AnimationBlending.h"
+#include "demos/AnimatedModel.h"
+#include "demos/CrossFadedAnimations.h"
+#include "demos/DrawQuad.h"
 #include "demos/DualQuaternionSkinning.h"
+#include "demos/InverseKinematicsDemo.h"
+#include "demos/SimpleAnimationPlayer.h"
+#include "demos/WalkingDemo.h"
 
 // Forward declare functions
 // window entry function
