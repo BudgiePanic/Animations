@@ -94,7 +94,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
         bottom = (screenHeight / 2) + (clientHeight / 2);
     RECT windowRect{};
     SetRect(&windowRect, left, top, right, bottom);
-    DWORD windowStyle = (WS_OVERLAPPED, WS_CAPTION, WS_SYSMENU, WS_MINIMIZEBOX, WS_MAXIMIZEBOX);
+    DWORD windowStyle = (WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX);
 
     AdjustWindowRectEx(&windowRect, windowStyle, FALSE, 0);
     const int width = windowRect.right - windowRect.left, height = windowRect.bottom - windowRect.top;
